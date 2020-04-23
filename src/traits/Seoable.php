@@ -11,6 +11,7 @@ trait Seoable
 	public function useForSeo ()
 	{
 		Seo::set($this);
+		return $this;
 	}
 	/**
      * Get SEO title formatter
