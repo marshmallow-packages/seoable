@@ -9,7 +9,6 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Marshmallow\Seoable\Facades\Seo;
 use Marshmallow\Seoable\Fields\Tags;
-// use Marshmallow\Seoable\Fields\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -34,7 +33,7 @@ class Seoable
 
             })->resolveUsing(function ($name, Model $model) {
             	return app('seo')->set($model)->getSeoTitle();
-            }),
+            })->hideFromIndex(),
 
 
             Textarea::make('Description', 'seoable_description')->fillUsing(function (NovaRequest $request, Model $model, $field) {
@@ -47,9 +46,9 @@ class Seoable
 
             })->resolveUsing(function ($name, Model $model) {
             	return app('seo')->set($model)->getSeoDescription();
-            }),
+            })->hideFromIndex(),
 
-            Tags::make('Tags', 'seoable_tags')->withoutSuggestions(),
+            Tags::make('Tags', 'seoable_tags')->withoutSuggestions()->hideFromIndex(),
 
             Select::make('Follow type', 'seoable_follow_type')->options(config('seo.follow_type_options'))->fillUsing(function (NovaRequest $request, Model $model, $field) {
                 /**
@@ -60,7 +59,7 @@ class Seoable
 
             })->resolveUsing(function ($name, Model $model) {
                 return app('seo')->set($model)->getSeoFollowType();
-            }),
+            })->hideFromIndex(),
 
             Image::make('Image', 'seoable_image')->resolveUsing(function ($name, Model $model) {
 
@@ -72,7 +71,7 @@ class Seoable
                 $request->{$requestAttribute} = $storage_location;
                 app('seo')->set($model)->store($request, $requestAttribute, 'image');
 
-            }),
+            })->hideFromIndex(),
         ]);
 	}
 }
