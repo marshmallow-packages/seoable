@@ -4,7 +4,7 @@ This custom nova field, can add SEO related fields to any Model through a morph 
 ## How to install
 To install the package run the install below:
 ```
-composer require marshmallow/seo-meta-nova-field
+composer require marshmallow/seoable
 ```
 
 And then run the migrations:
@@ -14,18 +14,18 @@ php artisan migrate
 
 And then publish the configs:
 ```
-php artisan vendor:publish --provider="Marshmallow\Seoable\FieldServiceProvider"
+php artisan vendor:publish --provider="Marshmallow\Seoable\ServiceProvider"
 ```
 
 ## How to use the field
-Find the model you want to have the SEO fields on, example could be `App\Models\Page`, then add the `SeoableTrait` trait:
+Find the model you want to have the SEO fields on, example could be `App\Models\Page`, then add the `Seoable` trait:
 ```
 ...
-use Marshmallow\Seoable\Traits\SeoableTrait;
+use Marshmallow\Seoable\Traits\Seoable;
 
 class Page extends Model
 {
-    use SeoableTrait;
+    use Seoable;
     ...
 }
 ```
@@ -42,7 +42,7 @@ class Page extends Resource
   {
     return [
       ...,
-      Seoable::make('SEO', 'seo_meta')
+      Seoable::make('Seo'),
     ];
   }
 }
@@ -52,43 +52,47 @@ Then go to the top of your layout blade as default it's `resources/views/welcome
 ```
 ...
 <head>
-    @include('seo-meta::seo')
+    {{ Seo::generate() }}
     ...
 </head>
 ```
 
-Where the `@include('seo-meta::seo', ['page' => $page])`, should have the model instance with the relation to the `SeoableTrait` trait.
-
-If you dont have any selected model/resource on the current page, then get the given SEO data for the page like this:
+Last step! Tell the SEO Facade which model it can use to set the SEO data.
 ```
-use Marshmallow\Seoable\Helper\Seo;
-...
-Route::get('/tester', function(){
-    return view('page', [
-        'seo' => Seo::renderAttributes('SEO title', 'SEO description', 'SEO keywords', 'SEO image', 'index, follow'), // Builds the seo array
-    ]);
-});
-```
+use Marshmallow\Seoable\Facades\Seo;
 
-Here is how the `Seo::renderAttributes` static method looks like:
+class ExampleController extends Controller
+{
+    public function show (Product $product)
+    {
+        $product->useForSeo();
+
+        return view('product')->with([
+            'product' => $product
+        ])
+    }
+}
+
+
+```
 
 ## Setup default values for a model
-If the SEO values should have the same structure every time, then you are able to set the up with the following methods in the trait:
+You can overrule how the seo defaults per model are handled. You can use the methods below.
 ```
 // Return the SEO title for the model
-public function getSeoTitleDefault(): string
+public function getSeoTitle(): ?string
 
 // Return the SEO description for the model
-public function getSeoDescriptionDefault(): string
+public function setSeoDescription(): ?string
 
 // Return the SEO keywords for the model
-public function getSeoKeywordsDefault(): string
+public function setSeoKeywords(): ?array
 
 // Return the SEO image for the model
-public function getSeoImageDefault(): string
+public function setSeoImage(): ?string
 
 // Return the SEO follow type for the model
-public function getSeoFollowDefault(): string
+public function setSeoFollowType(): ?string
 ```
 
 ## Setup Sitemap functionality

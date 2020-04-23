@@ -2,11 +2,16 @@
 
 namespace Marshmallow\Seoable\Traits;
 
+use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Database\Eloquent\Model;
 use Marshmallow\Seoable\Models\SeoableItem;
 
 trait Seoable
 {
+	public function useForSeo ()
+	{
+		Seo::set($this);
+	}
 	/**
      * Get SEO title formatter
      *

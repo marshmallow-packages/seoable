@@ -129,6 +129,10 @@ class Seo
 
 	protected function hasSeoableValue ($field)
 	{
+		if (!$this->model) {
+			return false;
+		}
+
 		if (!$this->model->seoable) {
 			return false;
 		}
@@ -185,14 +189,14 @@ class Seo
 	public function getSeoDescription ()
 	{
 		if ($description = $this->hasSeoableValue('description')) {
-			return $description;
+			return strip_tags($description);
 		}
 
 		if (!$this->description) {
-			return config('seo.defaults.description');
+			return strip_tags(config('seo.defaults.description'));
 		}
 
-		return $this->description;
+		return strip_tags($this->description);
 	}
 
 	public function getSeoKeywords ()

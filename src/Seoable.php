@@ -33,7 +33,7 @@ class Seoable
 
             })->resolveUsing(function ($name, Model $model) {
             	return app('seo')->set($model)->getSeoTitle();
-            })->hideFromIndex(),
+            })->hideFromIndex()->hideWhenCreating(),
 
 
             Textarea::make('Description', 'seoable_description')->fillUsing(function (NovaRequest $request, Model $model, $field) {
@@ -46,9 +46,9 @@ class Seoable
 
             })->resolveUsing(function ($name, Model $model) {
             	return app('seo')->set($model)->getSeoDescription();
-            })->hideFromIndex(),
+            })->hideFromIndex()->hideWhenCreating(),
 
-            Tags::make('Tags', 'seoable_tags')->withoutSuggestions()->hideFromIndex(),
+            Tags::make('Tags', 'seoable_tags')->withoutSuggestions()->hideFromIndex()->hideWhenCreating(),
 
             Select::make('Follow type', 'seoable_follow_type')->options(config('seo.follow_type_options'))->fillUsing(function (NovaRequest $request, Model $model, $field) {
                 /**
@@ -59,19 +59,17 @@ class Seoable
 
             })->resolveUsing(function ($name, Model $model) {
                 return app('seo')->set($model)->getSeoFollowType();
-            })->hideFromIndex(),
+            })->hideFromIndex()->hideWhenCreating(),
 
-            Image::make('Image', 'seoable_image')->resolveUsing(function ($name, Model $model) {
-
-                return app('seo')->set($model)->getSeoImage();
-
-            })->store(function (NovaRequest $request, Model $model, $attribute, $requestAttribute, $disk, $storagePath) {
+            Image::make('Image', 'seoable_image')->store(function (NovaRequest $request, Model $model, $attribute, $requestAttribute, $disk, $storagePath) {
 
                 $storage_location = Storage::disk(config('seo.storage.disk'))->putFile(config('seo.storage.path'), $request->file($requestAttribute));
                 $request->{$requestAttribute} = $storage_location;
                 app('seo')->set($model)->store($request, $requestAttribute, 'image');
 
-            })->hideFromIndex(),
+            })->preview(function ($value, $disk, Model $model) {
+                return app('seo')->set($model)->getSeoImageUrl();
+            })->hideFromIndex()->hideWhenCreating(),
         ]);
 	}
 }
