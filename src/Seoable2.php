@@ -1,20 +1,20 @@
 <?php
 
-namespace Marshmallow\SeoMeta;
+namespace Marshmallow\Seoable;
 
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Facades\Storage;
-use Marshmallow\SeoMeta\Models\SeoMetaItem;
+use Marshmallow\Seoable\Models\SeoableItem;
 
-class SeoMeta extends Field
+class Seoable2 extends Field
 {
     /**
      * The field's component.
      *
      * @var string
      */
-    public $component = 'seo-meta';
+    public $component = 'seoable';
 
     /**
      * Path for the SEO image
@@ -137,7 +137,7 @@ class SeoMeta extends Field
                                                 $attribute)
     {
         $has_change = false;
-        $relationship = $model->{$attribute} ?? new SeoMetaItem;
+        $relationship = $model->{$attribute} ?? new SeoableItem;
 
         if($model->id){
             if(!$relationship->seo_metaable_type){

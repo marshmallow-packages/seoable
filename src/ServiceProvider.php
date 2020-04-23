@@ -1,8 +1,9 @@
 <?php
 
-namespace Marshmallow\SeoMeta;
+namespace Marshmallow\Seoable;
 
 use Laravel\Nova\Nova;
+use Marshmallow\Seoable\Seo;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -15,16 +16,22 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
+        $this->app->singleton(Seo::class, function () {
+            return new Seo();
+        });
+        
+        $this->app->alias(Seo::class, 'seo');
+
         Nova::serving(function (ServingNova $event) {
-            Nova::script('seo-meta', __DIR__.'/../dist/js/field.js');
-            Nova::style('seo-meta', __DIR__.'/../dist/css/field.css');
+            Nova::script('seoable', __DIR__.'/../dist/js/field.js');
+            Nova::style('seoable', __DIR__.'/../dist/css/field.css');
         });
 
         $this->loadMigrationsFrom(__DIR__.'/migrations');
-        $this->loadViewsFrom(__DIR__.'/views', 'seo-meta');
+        $this->loadViewsFrom(__DIR__.'/views', 'seoable');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->publishes([
-            __DIR__ . '/configs/seo.php' => config_path('seo.php'),
+            __DIR__ . '/config/seo.php' => config_path('seo.php'),
         ]);
     }
 
@@ -35,6 +42,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/configs/seo.php', 'seo');
+        $this->mergeConfigFrom(__DIR__ . '/config/seo.php', 'seo');
     }
 }

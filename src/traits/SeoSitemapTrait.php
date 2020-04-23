@@ -1,6 +1,6 @@
 <?php
 
-namespace Marshmallow\SeoMeta\Traits;
+namespace Marshmallow\Seoable\Traits;
 
 trait SeoSitemapTrait
 {

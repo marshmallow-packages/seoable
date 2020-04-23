@@ -1,5 +1,5 @@
 <?php
-namespace Marshmallow\SeoMeta\Helper;
+namespace Marshmallow\Seoable\Helper;
 
 use Illuminate\Support\Facades\Storage;
 

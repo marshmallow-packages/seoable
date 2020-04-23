@@ -2,6 +2,27 @@
 
 return [
 
+    'defaults' => [
+        'title' => env('APP_NAME') . ' from config',
+        'description' => 'Description from config',
+        'keywords' => [env('APP_NAME'), 'from', 'config'],
+        'image' => 'https://marshmallow.dev/cdn/media/mrmallow-250x250.png',
+        // 'image' => 'Vq42Yqlk7PydSr8UfhZ8AuCqU1aEhB9gIOq44BAZ.png',
+        'follow_type' => 'index, follow',
+    ],
+
+    'google' => [
+        'GTM' => '', // GTM-XXXXXXX
+    ],
+
+    /**
+     * For storing the SEO images
+     */
+    'storage' => [
+        'disk' => 'public',
+        'path' => 'seo'
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | SEO status

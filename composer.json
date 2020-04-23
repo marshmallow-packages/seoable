@@ -3,7 +3,7 @@
     "description": "A Laravel Nova field which adds all SEO related meta fields to an Resource.",
     "license": "MIT",
     "type": "library",
-    "homepage": "",
+    "homepage": "https://marshmallow.dev",
     "authors": [
         {
             "name": "Stef van Esch",
@@ -15,18 +15,22 @@
         "nova"
     ],
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "spatie/nova-tags-field": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Marshmallow\\SeoMeta\\": "src/"
+            "Marshmallow\\Seoable\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Marshmallow\\SeoMeta\\FieldServiceProvider"
-            ]
+                "Marshmallow\\Seoable\\FieldServiceProvider"
+            ],
+            "aliases": {
+                "Seo": "Marshmallow\\Seoable\\Facades\\Seo"
+            }
         }
     },
     "config": {

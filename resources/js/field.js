@@ -1,7 +1,7 @@
 Nova.booting((Vue, router, store) => {
-    Vue.component("seo-media", require("./partials/SeoMedia.vue").default);
+    Vue.component("seoable", require("./partials/Seoable.vue").default);
 
-    Vue.component('index-seo-meta', require('./components/IndexField.vue').default)
-    Vue.component('detail-seo-meta', require('./components/DetailField.vue').default)
-    Vue.component('form-seo-meta', require('./components/FormField.vue').default)
+    Vue.component('index-seoable', require('./components/IndexField.vue').default)
+    Vue.component('detail-seoable', require('./components/DetailField.vue').default)
+    Vue.component('form-seoable', require('./components/FormField.vue').default)
 })

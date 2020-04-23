@@ -55,11 +55,11 @@
             </div>
             <div class="form-group mb-3">
                 <label class="mb-1 block">Image:</label>
-                <seo-media
+                <seoable
                     :value="field.image_url"
                     :file="imageFile"
                     @change="imageFile = $event;setHasChanged($event)"
-                ></seo-media>
+                ></seoable>
             </div>
         </template>
     </default-field>

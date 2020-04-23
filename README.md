@@ -14,18 +14,18 @@ php artisan migrate
 
 And then publish the configs:
 ```
-php artisan vendor:publish --provider="Marshmallow\SeoMeta\FieldServiceProvider"
+php artisan vendor:publish --provider="Marshmallow\Seoable\FieldServiceProvider"
 ```
 
 ## How to use the field
-Find the model you want to have the SEO fields on, example could be `App\Models\Page`, then add the `SeoMetaTrait` trait:
+Find the model you want to have the SEO fields on, example could be `App\Models\Page`, then add the `SeoableTrait` trait:
 ```
 ...
-use Marshmallow\SeoMeta\Traits\SeoMetaTrait;
+use Marshmallow\Seoable\Traits\SeoableTrait;
 
 class Page extends Model
 {
-    use SeoMetaTrait;
+    use SeoableTrait;
     ...
 }
 ```
@@ -33,7 +33,7 @@ class Page extends Model
 Then use the field in the nova resource `App\Nova\Page`:
 ```
 ...
-use Marshmallow\SeoMeta\SeoMeta;
+use Marshmallow\Seoable\Seoable;
 
 class Page extends Resource
 {
@@ -42,7 +42,7 @@ class Page extends Resource
   {
     return [
       ...,
-      SeoMeta::make('SEO', 'seo_meta')
+      Seoable::make('SEO', 'seo_meta')
     ];
   }
 }
@@ -57,11 +57,11 @@ Then go to the top of your layout blade as default it's `resources/views/welcome
 </head>
 ```
 
-Where the `@include('seo-meta::seo', ['page' => $page])`, should have the model instance with the relation to the `SeoMetaTrait` trait.
+Where the `@include('seo-meta::seo', ['page' => $page])`, should have the model instance with the relation to the `SeoableTrait` trait.
 
 If you dont have any selected model/resource on the current page, then get the given SEO data for the page like this:
 ```
-use Marshmallow\SeoMeta\Helper\Seo;
+use Marshmallow\Seoable\Helper\Seo;
 ...
 Route::get('/tester', function(){
     return view('page', [
@@ -107,11 +107,11 @@ If you want the sitemap functionality then activate the sitemap by changing the 
 When you want the eloquent model to be shown in the sitemap then you need to add the `SeoSitemapTrait` trait to it:
 ```
 ...
-use Marshmallow\SeoMeta\Traits\SeoSitemapTrait;
+use Marshmallow\Seoable\Traits\SeoSitemapTrait;
 
 class Page extends Model
 {
-    use SeoMetaTrait, SeoSitemapTrait;
+    use SeoableTrait, SeoSitemapTrait;
     ...
 
     /**

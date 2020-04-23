@@ -1,44 +1,26 @@
-@php
-if (isset($page) && $page && method_exists($page, 'getSeoMeta')) {
-    $seo = $page->getSeoMeta();
-} elseif (isset($seo) && $seo && is_array($seo) && isset($seo['title'])) {
-    $seo = $seo;
-} else {
-    $seo = [
-        'title' => config('app.name', 'Laravel'),
-        'description' => null,
-        'keywords' => null
-    ];
-}
+<!-- Marshmallow SEO -->
+<title>{{ Seo::getSeoTitle() }}</title>
+<meta name="description" content="{{ Seo::getSeoDescription() }}" />
+<meta name="keywords" content="{{ Seo::getSeoKeywordsAsString() }}" />
+<meta property="og:title" content="{{ Seo::getSeoTitle() }}" />
+<meta property="og:description" content="{{ Seo::getSeoDescription() }}" />
+<meta property="og:image" content="{{ Seo::getSeoImageUrl() }}" />
+<meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
 
-if(!empty($seo['params'])){
-    if(!empty($seo['params']->title_format)){
-        $seo['title'] = str_replace(':text', $seo['title'], $seo['params']->title_format);
-    }
-}
-@endphp
-
-<title>{{ $seo['title'] }}</title>
-
-@if(config('seo.seo_status'))
-    @if(isset($seo['description']) && $seo['description'])
-    <meta name="description" content="{{ $seo['description'] }}" />
-    @endif
-
-    @if(isset($seo['keywords']) && $seo['keywords'])
-    <meta name="keywords" content="{{ $seo['keywords'] }}" />
-    @endif
-
-    <meta property="og:title" content="{{ $seo['title'] }}" />
-    <meta property="og:description" content="{{ $seo['description'] }}" />
-
-    @if(!empty($seo['image_path']))
-    <meta property="og:image" content="{{ $seo['image_path'] }}" />
-    @endif
-
-    @if(!empty($seo['follow_type']))
-    <meta name="robots" content="{{ $seo['follow_type'] }}" />
-    @endif
-@else
-
+@if (Seo::hasSchema())
+<script type="application/ld+json">
+	{!! Seo::getSchema() !!}
+</script>
 @endif
+
+@if (config('seo.google.GTM'))
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{ config('seo.google.GTM') }}');</script>
+
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ config('seo.google.GTM') }}"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+@endif
+<!-- Marshmallow SEO -->

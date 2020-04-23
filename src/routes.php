@@ -1,6 +1,6 @@
 <?php
 
-use Marshmallow\SeoMeta\Helper\SeoSitemap;
+use Marshmallow\Seoable\Helper\SeoSitemap;
 
 if(config('seo.sitemap_status')){
     Route::get(config('seo.sitemap_path'), function(){
