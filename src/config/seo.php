@@ -12,7 +12,8 @@ return [
     ],
 
     'google' => [
-        'GTM' => '', // GTM-XXXXXXX
+        'GTM' => env('SEO_GTM', ''), // GTM-XXXXXXX
+        'GA' => env('SEO_GA', ''), // GTM-XXXXXXX
     ],
 
     /**
@@ -22,7 +23,7 @@ return [
         'disk' => 'public',
         'path' => 'seo'
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | SEO status

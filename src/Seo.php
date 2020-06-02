@@ -84,7 +84,7 @@ class Seo
 		if (!$model->seoable) {
 			$model->seoable()->create($data);
 		} else {
-			$model->seoable()->update($data);			
+			$model->seoable()->update($data);
 		}
 
 		/**
@@ -256,4 +256,9 @@ class Seo
 	{
 		return view('seoable::seo');
 	}
+
+    public function generateBody ()
+    {
+        return view('seoable::seo_body');
+    }
 }
