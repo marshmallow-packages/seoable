@@ -76,6 +76,18 @@ class ExampleController extends Controller
 
 ```
 
+## Use routes
+```bash
+php artisan marshmallow:resource Route Seoable
+```
+
+Add the following to your `routes/web.php`.
+```php
+use Marshmallow\Seoable\Seoable;
+
+Seoable::routes();
+```
+
 ## Setup default values for a model
 You can overrule how the seo defaults per model are handled. You can use the methods below.
 ```

@@ -1,10 +1,10 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schema;
+namespace Marshmallow\Seoable\Helper\Schemas;
 
-use Marshmallow\Seoable\Helper\Schema\Schema;
-use Marshmallow\Seoable\Helper\Schema\SchemaListItem;
-use Marshmallow\Seoable\Helper\Schema\Traits\Makeable;
+use Marshmallow\Seoable\Helper\Schemas\Schema;
+use Marshmallow\Seoable\Helper\Schemas\SchemaListItem;
+use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
 
 class SchemaBreadcrumbList extends Schema
 {

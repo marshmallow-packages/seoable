@@ -1,6 +1,6 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schema\Traits;
+namespace Marshmallow\Seoable\Helper\Schemas\Traits;
 
 trait Makeable
 {

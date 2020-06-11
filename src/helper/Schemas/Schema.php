@@ -1,12 +1,12 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schema;
+namespace Marshmallow\Seoable\Helper\Schemas;
 
 use Carbon\Carbon;
-use Marshmallow\Seoable\Helper\Schema\SchemaBrand;
-use Marshmallow\Seoable\Helper\Schema\SchemaOffer;
-use Marshmallow\Seoable\Helper\Schema\SchemaReview;
-use Marshmallow\Seoable\Helper\Schema\SchemaAggregateRating;
+use Marshmallow\Seoable\Helper\Schemas\SchemaBrand;
+use Marshmallow\Seoable\Helper\Schemas\SchemaOffer;
+use Marshmallow\Seoable\Helper\Schemas\SchemaReview;
+use Marshmallow\Seoable\Helper\Schemas\SchemaAggregateRating;
 
 class Schema
 {

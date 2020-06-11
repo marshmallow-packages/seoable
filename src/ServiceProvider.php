@@ -19,7 +19,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->app->singleton(Seo::class, function () {
             return new Seo();
         });
-        
+
         $this->app->alias(Seo::class, 'seo');
 
         Nova::serving(function (ServingNova $event) {
@@ -27,11 +27,11 @@ class ServiceProvider extends BaseServiceProvider
             Nova::style('seoable', __DIR__.'/../dist/css/field.css');
         });
 
-        $this->loadMigrationsFrom(__DIR__.'/migrations');
-        $this->loadViewsFrom(__DIR__.'/views', 'seoable');
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'seoable');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->publishes([
-            __DIR__ . '/config/seo.php' => config_path('seo.php'),
+            __DIR__ . '/../config/seo.php' => config_path('seo.php'),
         ]);
     }
 
@@ -42,6 +42,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/seo.php', 'seo');
+        $this->mergeConfigFrom(__DIR__ . '/../config/seo.php', 'seo');
     }
 }

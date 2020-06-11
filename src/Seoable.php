@@ -7,11 +7,12 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
-use Marshmallow\Seoable\Facades\Seo;
 use Marshmallow\Seoable\Fields\Tags;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Marshmallow\Seoable\Models\Route as RouteModel;
 
 class Seoable
 {
@@ -37,7 +38,7 @@ class Seoable
 
 
             Textarea::make('Description', 'seoable_description')->fillUsing(function (NovaRequest $request, Model $model, $field) {
-            	
+
                 /**
             	 * Only call the store method on the title.
             	 * This method will store all the available fields.
@@ -72,4 +73,20 @@ class Seoable
             })->hideFromIndex()->hideWhenCreating(),
         ]);
 	}
+
+    public static function routes ()
+    {
+        $routes = RouteModel::ordered()->get();
+        foreach ($routes as $route) {
+            $method = $route->method;
+
+            $_route = Route::{$method}($route->path, $route->controller);
+            if ($route->name) {
+                $_route = $_route->name($route->name);
+            }
+            if ($route->middleware) {
+                $_route = $_route->middleware($route->middleware);
+            }
+        }
+    }
 }

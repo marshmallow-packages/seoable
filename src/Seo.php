@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Marshmallow\Seoable\Helper\Schema\Schema;
+use Marshmallow\Seoable\Helper\Schemas\Schema;
 
 class Seo
 {

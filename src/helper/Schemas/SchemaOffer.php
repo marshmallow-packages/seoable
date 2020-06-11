@@ -1,11 +1,11 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schema;
+namespace Marshmallow\Seoable\Helper\Schemas;
 
 use Money\Money;
 use Illuminate\Support\Str;
-use Marshmallow\Seoable\Helper\Schema\Schema;
-use Marshmallow\Seoable\Helper\Schema\Traits\Makeable;
+use Marshmallow\Seoable\Helper\Schemas\Schema;
+use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
 
 class SchemaOffer extends Schema
 {
