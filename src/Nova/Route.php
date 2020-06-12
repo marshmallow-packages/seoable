@@ -48,7 +48,7 @@ class Route extends Resource
             Text::make('Path')
                 ->sortable()
                 ->required()
-                ->help('Please note that if you change this value all indexed urls will be forwarded to the new version.'),
+                ->help('Please note that if you change this value all indexed urls will be forwarded to the new version. Also, it can take up to 5 minutes for your changes to take affect because of caching so please be patient if your change isnt visable directly.'),
 
             Select::make('Method')
                 ->sortable()

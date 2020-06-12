@@ -17,6 +17,9 @@ And then publish the configs:
 php artisan vendor:publish --provider="Marshmallow\Seoable\ServiceProvider"
 ```
 
+## PLEASE NOTE
+If you are using route caching you need to make sure you have a queue:work running. If you change a route we will recache your routes automaticly but this is done via a queue.
+
 ## How to use the field
 Find the model you want to have the SEO fields on, example could be `App\Models\Page`, then add the `Seoable` trait:
 ```
