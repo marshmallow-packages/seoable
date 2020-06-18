@@ -6,6 +6,7 @@
 <meta property="og:description" content="{{ Seo::getSeoDescription() }}" />
 <meta property="og:image" content="{{ Seo::getSeoImageUrl() }}" />
 <meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
+<meta name="author" content="Marshmallow.dev">
 
 @if (Seo::hasSchema())
 <script type="application/ld+json">
