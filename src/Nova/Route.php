@@ -103,6 +103,9 @@ class Route extends Resource
                         return (!User::isMarshmallow(request()->user()));
                     }
                 )
+                ->withMeta($this->sequence ? [] : [
+	                'value' => 999,
+	            ])
                 ->help('This can only be changed by Marshmallow employees.'),
 
         ];
