@@ -13,7 +13,7 @@ return [
 
     'google' => [
         'GTM' => env('SEO_GTM', ''), // GTM-XXXXXXX
-        'GA' => env('SEO_GA', ''), // GTM-XXXXXXX
+        'GA' => env('SEO_GA', ''), // GA-XXXXXXX-XX
     ],
 
     /**
