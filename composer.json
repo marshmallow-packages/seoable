@@ -18,7 +18,8 @@
     "require": {
         "php": ">=7.1.0",
         "spatie/nova-tags-field": "^3.0",
-        "marshmallow/commands": "^1.0"
+        "marshmallow/commands": "^1.0",
+        "marshmallow/mr-mallow": "^1.0"
     },
     "autoload": {
         "psr-4": {
