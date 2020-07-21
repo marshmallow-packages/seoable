@@ -3,17 +3,28 @@
 return [
 
     'defaults' => [
+    	'sitename' => env('APP_NAME'),
         'title' => env('APP_NAME') . ' from config',
         'description' => 'Description from config',
-        'keywords' => [env('APP_NAME'), 'from', 'config'],
+        'keywords' => [env('APP_NAME'), 'Marshmallow Alphen'],
         'image' => 'https://marshmallow.dev/cdn/media/mrmallow-250x250.png',
-        // 'image' => 'Vq42Yqlk7PydSr8UfhZ8AuCqU1aEhB9gIOq44BAZ.png',
         'follow_type' => 'index, follow',
+        'page_type' => 'website'
     ],
 
     'google' => [
         'GTM' => env('SEO_GTM', ''), // GTM-XXXXXXX
         'GA' => env('SEO_GA', ''), // GA-XXXXXXX-XX
+    ],
+
+    'facebook' => [
+		'admins' => env('FACEBOOK_ADMINS', ''),
+		'app_id' => env('FACEBOOK_APP_ID', ''),
+    ],
+
+    'twitter' => [
+    	'site' => '', 	 // @marshmallowdev
+    	'creator' => '', // @stefvanesch
     ],
 
     /**
@@ -74,6 +85,14 @@ return [
         'noindex, follow' => 'No index and follow',
         'index, nofollow' => 'Index and no follow',
         'noindex, nofollow' => 'No index and no follow',
+    ],
+
+
+    'page_types' => [
+    	'website' => 'Website',
+        'article' => 'Article',
+        'book' => 'Book',
+        'profile' => 'Profile',
     ],
 
     /*

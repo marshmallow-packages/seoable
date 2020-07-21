@@ -19,6 +19,7 @@ class Seo
 	protected $image;
 	protected $follow_type;
 	protected $schemas;
+	protected $page_type;
 
 	public function set($model)
 	{
@@ -176,6 +177,11 @@ class Seo
 		return $this->getDefault('image');
 	}
 
+	protected function getDefaultSeoPageType()
+	{
+		return $this->getDefault('page_type');
+	}
+
 	public function getSeoTitle()
 	{
 		if ($title = $this->hasSeoableValue('title')) {
@@ -228,6 +234,24 @@ class Seo
 		return $this->image;
 	}
 
+	public function getSeoPageType()
+	{
+		if ($page_type = $this->hasSeoableValue('page_type')) {
+			return $page_type;
+		}
+
+		if (!$this->page_type || empty($this->page_type)) {
+			return config('seo.defaults.page_type');
+		}
+
+		return $this->page_type;
+	}
+
+	public function getSeoLocale()
+	{
+		return app()->getLocale() . '_' . Str::upper(app()->getLocale());
+	}
+
 	public function getSeoImageUrl()
 	{
 		if ($image = $this->hasSeoableValue('image')) {
@@ -235,6 +259,11 @@ class Seo
 		}
 
 		return $this->getDefaultSeoImage();
+	}
+
+	public function getSeoCanonicalUrl()
+	{
+		return request()->url();
 	}
 
 	public function getSeoFollowType()
