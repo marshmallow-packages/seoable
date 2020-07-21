@@ -1,39 +1,39 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schemas;
+namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helper\Schemas\Schema;
-use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
+use Marshmallow\Seoable\Helpers\Schemas\Schema;
+use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
 
 class SchemaProduct extends Schema
 {
 	use Makeable;
 
-	public function sku ($sku)
+	public function sku($sku)
 	{
 		$this->sku = $sku;
 		return $this;
 	}
 
-	public function mpn ($mpn)
+	public function mpn($mpn)
 	{
 		$this->mpn = $mpn;
 		return $this;
 	}
 
-	public function gtin ($gtin)
+	public function gtin($gtin)
 	{
 		$this->gtin = $gtin;
 		return $this;
 	}
 
-	public function isbn ($isbn)
+	public function isbn($isbn)
 	{
 		$this->isbn = $isbn;
 		return $this;
 	}
 
-	public function toJson ()
+	public function toJson()
 	{
 		return [
 			'@context' => 'https://schema.org/',

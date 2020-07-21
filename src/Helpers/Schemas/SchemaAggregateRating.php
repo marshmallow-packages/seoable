@@ -1,13 +1,12 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schemas;
+namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helper\Schemas\Schema;
-use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
+use Marshmallow\Seoable\Helpers\Schemas\Schema;
 
 class SchemaAggregateRating extends Schema
 {
-	public static function make (float $ratingValue, float $reviewCount)
+	public static function make(float $ratingValue, float $reviewCount)
 	{
 		$schema = new self;
 		$schema->ratingValue = $ratingValue;
@@ -15,7 +14,7 @@ class SchemaAggregateRating extends Schema
 		return $schema;
 	}
 
-	public function toJson ()
+	public function toJson()
 	{
 		return [
 			'@type' => 'AggregateRating',

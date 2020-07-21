@@ -1,27 +1,27 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schemas;
+namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helper\Schemas\Schema;
-use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
+use Marshmallow\Seoable\Helpers\Schemas\Schema;
+use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
 
 class SchemaListItem extends Schema
 {
 	use Makeable;
 
-	public function position ($position)
+	public function position($position)
 	{
 		$this->position = $position;
 		return $this;
 	}
 
-	public function url ($url)
+	public function url($url)
 	{
 		$this->item = $url;
 		return $this;
 	}
 
-	public function toJson ()
+	public function toJson()
 	{
 		$array = [
 			'@type' => 'ListItem',

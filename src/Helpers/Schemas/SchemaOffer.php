@@ -1,11 +1,10 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schemas;
+namespace Marshmallow\Seoable\Helpers\Schemas;
 
 use Money\Money;
 use Illuminate\Support\Str;
-use Marshmallow\Seoable\Helper\Schemas\Schema;
-use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
+use Marshmallow\Seoable\Helpers\Schemas\Schema;
 
 class SchemaOffer extends Schema
 {
@@ -21,20 +20,20 @@ class SchemaOffer extends Schema
 
 	protected $availability = self::IN_STOCK;
 
-	public static function make (Money $price)
+	public static function make(Money $price)
 	{
 		$schema = new self;
 		$schema->price = $price;
 		return $schema;
 	}
 
-	public function availability ($availability)
+	public function availability($availability)
 	{
 		$this->availability = $availability;
 		return $this;
 	}
 
-	public function toJson ()
+	public function toJson()
 	{
 		return [
 			'@type' => 'Offer',

@@ -1,28 +1,29 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schemas;
+namespace Marshmallow\Seoable\Helpers\Schemas;
 
 use Carbon\Carbon;
-use Marshmallow\Seoable\Helper\Schemas\SchemaBrand;
-use Marshmallow\Seoable\Helper\Schemas\SchemaOffer;
-use Marshmallow\Seoable\Helper\Schemas\SchemaReview;
-use Marshmallow\Seoable\Helper\Schemas\SchemaAggregateRating;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaBrand;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaOffer;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaRating;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaReview;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaAggregateRating;
 
 class Schema
 {
-	public function brand (string $name)
+	public function brand(string $name)
 	{
 		$this->brand = SchemaBrand::make($name)->toJson();
 		return $this;
 	}
 
-	public function offer (SchemaOffer $offer)
+	public function offer(SchemaOffer $offer)
 	{
 		$this->offers([$offer]);
 		return $this;
 	}
 
-	public function offers (array $offers)
+	public function offers(array $offers)
 	{
 		foreach ($offers as $offer) {
 			if (!$offer instanceof SchemaOffer) {
@@ -33,19 +34,19 @@ class Schema
 		return $this;
 	}
 
-	public function rating (SchemaRating $rating)
+	public function rating(SchemaRating $rating)
 	{
 		$this->rating = $rating;
 		return $this;
 	}
 
-	public function review (SchemaReview $review)
+	public function review(SchemaReview $review)
 	{
 		$this->reviews[] = $review->toJson();
 		return $this;
 	}
 
-	public function reviews (array $reviews)
+	public function reviews(array $reviews)
 	{
 		foreach ($reviews as $review) {
 			$this->review($review);
@@ -53,31 +54,31 @@ class Schema
 		return $this;
 	}
 
-	public function aggregateRating (SchemaAggregateRating $aggregateRating)
+	public function aggregateRating(SchemaAggregateRating $aggregateRating)
 	{
 		$this->aggregateRating = $aggregateRating->toJson();
 		return $this;
 	}
 
-	public function image (string $image)
+	public function image(string $image)
 	{
 		$this->images[] = $image;
 		return $this;
 	}
 
-	public function images (array $images)
+	public function images(array $images)
 	{
 		$this->images = array_merge($this->images, $images);
 		return $this;
 	}
 
-	public function datePublished (Carbon $date)
+	public function datePublished(Carbon $date)
 	{
 		$this->datePublished = $date;
 		return $this;
 	}
 
-	public function description (string $description)
+	public function description(string $description)
 	{
 		$this->description = $description;
 		return $this;

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Marshmallow\Seoable\Helper\Schemas\Schema;
+use Marshmallow\Seoable\Helpers\Schemas\Schema;
 
 class Seo
 {
@@ -20,7 +20,7 @@ class Seo
 	protected $follow_type;
 	protected $schemas;
 
-	public function set ($model)
+	public function set($model)
 	{
 		if ($model instanceof Model) {
 			$this->setFromModel($model);
@@ -29,19 +29,19 @@ class Seo
 		return $this;
 	}
 
-	public function addSchema (Schema $schema)
+	public function addSchema(Schema $schema)
 	{
 		$this->schemas[] = $schema;
 	}
 
-	public function addSchemas (array $schemas)
+	public function addSchemas(array $schemas)
 	{
 		foreach ($schemas as $schema) {
 			$this->addSchema($schema);
 		}
 	}
 
-	public function getSchema ()
+	public function getSchema()
 	{
 		$schema_output = [];
 		foreach ($this->schemas as $schema) {
@@ -50,18 +50,18 @@ class Seo
 		return json_encode($schema_output);
 	}
 
-	public function hasSchema ()
+	public function hasSchema()
 	{
 		return ($this->schemas);
 	}
 
-	protected function isTheDefaultSeoValue ($value, $database_column)
+	protected function isTheDefaultSeoValue($value, $database_column)
 	{
 		$default_value = $this->getDefaultValue($database_column);
 		return ($value == $default_value);
 	}
 
-	public function store (NovaRequest $request, $request_param, $database_column)
+	public function store(NovaRequest $request, $request_param, $database_column)
 	{
 		/**
 		 * Value to be stored in the database
@@ -93,7 +93,6 @@ class Seo
 		 */
 
 		if ($seoable = $this->model->fresh()->seoable) {
-
 			if (!Storage::disk(config('seo.storage.disk'))->exists($seoable->image)) {
 				$seoable->update([
 					'image' => null,
@@ -104,16 +103,15 @@ class Seo
 				$seoable->delete();
 			}
 		}
-
 	}
 
-	protected function getDefaultValue ($database_column)
+	protected function getDefaultValue($database_column)
 	{
 		$method_name = 'getDefaultSeo' . Str::of($database_column)->camel()->ucfirst();
 		return $this->$method_name();
 	}
 
-	public function setFromModel (Model $model)
+	public function setFromModel(Model $model)
 	{
 		if (!in_array(Seoable::class, class_uses($model))) {
 			throw new Exception(get_class($model) . ' should implement ' . Seoable::class);
@@ -127,7 +125,7 @@ class Seo
 		$this->follow_type = $model->setSeoFollowType();
 	}
 
-	protected function hasSeoableValue ($field)
+	protected function hasSeoableValue($field)
 	{
 		if (!$this->model) {
 			return false;
@@ -144,7 +142,7 @@ class Seo
 		return $this->model->seoable->{$field};
 	}
 
-	protected function getDefault ($column)
+	protected function getDefault($column)
 	{
 		if (!$this->{$column}) {
 			return config('seo.defaults.' . $column);
@@ -153,32 +151,32 @@ class Seo
 		return $this->{$column};
 	}
 
-	protected function getDefaultSeoTitle ()
+	protected function getDefaultSeoTitle()
 	{
 		return $this->getDefault('title');
 	}
 
-	protected function getDefaultSeoDescription ()
+	protected function getDefaultSeoDescription()
 	{
 		return $this->getDefault('description');
 	}
 
-	protected function getDefaultSeoKeywords ()
+	protected function getDefaultSeoKeywords()
 	{
 		return $this->getDefault('keywords');
 	}
 
-	protected function getDefaultSeoFollowType ()
+	protected function getDefaultSeoFollowType()
 	{
 		return $this->getDefault('follow_type');
 	}
 
-	protected function getDefaultSeoImage ()
+	protected function getDefaultSeoImage()
 	{
 		return $this->getDefault('image');
 	}
 
-	public function getSeoTitle ()
+	public function getSeoTitle()
 	{
 		if ($title = $this->hasSeoableValue('title')) {
 			return $title;
@@ -186,7 +184,7 @@ class Seo
 		return $this->getDefaultSeoTitle();
 	}
 
-	public function getSeoDescription ()
+	public function getSeoDescription()
 	{
 		if ($description = $this->hasSeoableValue('description')) {
 			return strip_tags($description);
@@ -199,7 +197,7 @@ class Seo
 		return strip_tags($this->description);
 	}
 
-	public function getSeoKeywords ()
+	public function getSeoKeywords()
 	{
 		if ($keywords = $this->hasSeoableValue('keywords')) {
 			return $keywords;
@@ -212,12 +210,12 @@ class Seo
 		return $this->keywords;
 	}
 
-	public function getSeoKeywordsAsString ()
+	public function getSeoKeywordsAsString()
 	{
 		return join(',', $this->getSeoKeywords());
 	}
 
-	public function getSeoImage ()
+	public function getSeoImage()
 	{
 		if ($image = $this->hasSeoableValue('image')) {
 			return $image;
@@ -230,7 +228,7 @@ class Seo
 		return $this->image;
 	}
 
-	public function getSeoImageUrl ()
+	public function getSeoImageUrl()
 	{
 		if ($image = $this->hasSeoableValue('image')) {
 			return Storage::disk('public')->url($image);
@@ -239,7 +237,7 @@ class Seo
 		return $this->getDefaultSeoImage();
 	}
 
-	public function getSeoFollowType ()
+	public function getSeoFollowType()
 	{
 		if ($follow_type = $this->hasSeoableValue('follow_type')) {
 			return $follow_type;
@@ -252,12 +250,12 @@ class Seo
 		return $this->follow_type;
 	}
 
-	public function generate ()
+	public function generate()
 	{
 		return view('seoable::seo');
 	}
 
-    public function generateBody ()
+    public function generateBody()
     {
         return view('seoable::seo_body');
     }

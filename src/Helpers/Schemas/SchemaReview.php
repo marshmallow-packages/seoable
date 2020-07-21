@@ -1,28 +1,28 @@
 <?php
 
-namespace Marshmallow\Seoable\Helper\Schemas;
+namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helper\Schemas\Schema;
-use Marshmallow\Seoable\Helper\Schemas\SchemaRating;
-use Marshmallow\Seoable\Helper\Schemas\Traits\Makeable;
+use Marshmallow\Seoable\Helpers\Schemas\Schema;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaRating;
+use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
 
 class SchemaReview extends Schema
 {
 	use Makeable;
 
-	public function author ($author)
+	public function author($author)
 	{
 		$this->author = $author;
 		return $this;
 	}
 
-	public function ratingValue ($ratingValue)
+	public function ratingValue($ratingValue)
 	{
 		$this->ratingValue = $ratingValue;
 		return $this;
 	}
 
-	public function toJson ()
+	public function toJson()
 	{
 		return [
 			'@type' => 'Review',

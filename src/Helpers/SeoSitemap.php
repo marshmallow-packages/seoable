@@ -1,7 +1,8 @@
 <?php
-namespace Marshmallow\Seoable\Helper;
+namespace Marshmallow\Seoable\Helpers;
 
-class SeoSitemap {
+class SeoSitemap
+{
     /**
      * Array of the all the items in the sitemap
      *
@@ -34,7 +35,7 @@ class SeoSitemap {
             $items = $sitemap_model::getSitemapItems();
 
             if ($items && $items->count() > 0) {
-                $this->items = array_merge($this->items, $items->map(function($item){
+                $this->items = array_merge($this->items, $items->map(function ($item) {
                     return (object)[
                         'url'     => $item->getSitemapItemUrl(),
                         'lastmod' => $item->getSitemapItemLastModified(),
@@ -52,7 +53,8 @@ class SeoSitemap {
      *
      * @return SeoSitemap
      */
-    public function attachCustom($path, $lastmod = null){
+    public function attachCustom($path, $lastmod = null)
+    {
         $this->items[] = (object)[
             'url' => url($path),
             'lastmod' => $lastmod
@@ -65,7 +67,8 @@ class SeoSitemap {
      *
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return $this->items;
     }
 
@@ -74,7 +77,8 @@ class SeoSitemap {
      *
      * @return string
      */
-    public function toXml(){
+    public function toXml()
+    {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         $lastmod = null;
