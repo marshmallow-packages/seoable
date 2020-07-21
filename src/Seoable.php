@@ -3,13 +3,13 @@
 namespace Marshmallow\Seoable;
 
 use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Marshmallow\Seoable\Fields\Tags;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Marshmallow\AdvancedImage\AdvancedImage;
 use Marshmallow\CharcountedFields\TextCounted;
 use Marshmallow\CharcountedFields\TextareaCounted;
 use Marshmallow\Seoable\Models\Route as RouteModel;
@@ -90,21 +90,66 @@ class Seoable
 		        ->hideFromIndex()
 		        ->hideWhenCreating(),
 
-            Image::make('Image', 'seoable_image')
+            AdvancedImage::make(
+            	'Image',
+            	'seoable_image',
+            	config('seo.storage.disk')
+            )
+            	->croppable(1.91/1)
+            	->resize(1200, 630)
+            	->help('Your social share image should have a ratio of 1.91:1. We will resize the selected image to 1200x630')
+            	->setCustomCallback(function ($request, $requestAttribute, $model, $attribute, $fileName) {
+		                $request->{$requestAttribute} = $fileName;
+		                app('seo')
+		                	->set($model)
+		                	->store($request, $requestAttribute, 'image');
+            	})
             	->store(
             		function (NovaRequest $request, Model $model, $attribute, $requestAttribute, $disk, $storagePath) {
-		                $storage_location = Storage::disk(config('seo.storage.disk'))->putFile(config('seo.storage.path'), $request->file($requestAttribute));
+
+		                $storage_location = Storage::disk(config('seo.storage.disk'))
+		                							->putFile(
+		                								config('seo.storage.path'),
+		                								$request->file($requestAttribute)
+		                							);
+
 		                $request->{$requestAttribute} = $storage_location;
 		                app('seo')
 		                	->set($model)
 		                	->store($request, $requestAttribute, 'image');
 		            }
 		        )
-            	->preview(
+            	->customPreview(
             		function ($value, $disk, Model $model) {
-		                return app('seo')
+            			return app('seo')
 	                			->set($model)
 	                			->getSeoImageUrl();
+		            }
+		        )
+		        ->customThumbnail(
+            		function ($value, $disk, Model $model) {
+            			return app('seo')
+	                			->set($model)
+	                			->getSeoImageUrl();
+		            }
+		        )
+		        ->hideFromIndex()
+		        ->hideWhenCreating(),
+
+		     Select::make('Page type', 'seoable_page_type')
+            	->options(config('seo.page_types'))
+            	->fillUsing(
+            		function (NovaRequest $request, Model $model, $field) {
+		                /**
+		                 * Only call the store method on the title.
+		                 * This method will store all the available fields.
+		                 */
+		                app('seo')->set($model)->store($request, $field, 'page_type');
+		            }
+            	)
+            	->resolveUsing(
+            		function ($name, Model $model) {
+		                return app('seo')->set($model)->getSeoPageType();
 		            }
 		        )
 		        ->hideFromIndex()
