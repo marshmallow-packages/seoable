@@ -13,8 +13,21 @@ return [
     ],
 
     'google' => [
-        'GTM' => env('SEO_GTM', ''), // GTM-XXXXXXX
-        'GA' => env('SEO_GA', ''), // GA-XXXXXXX-XX
+        'GTM' => env('SEO_GTM', ''),            // GTM-XXXXXXX
+        'GA' => env('SEO_GA', ''),              // GA-XXXXXXX-XX
+    ],
+
+    'google_optimize' => [
+        'container' => env('SEO_GO', ''),   // GTM-XXXXXXX
+
+        /**
+         * If you add Google Optimize via GTM then we need
+         * to initiate it in a different way. We will use
+         * the config google.GTM to initiate optimize, the
+         * container id is not required then and won't be
+         * used.
+         */
+        'via_gtm' => env('SEO_GO_VIA_GTM', false),
     ],
 
     'facebook' => [

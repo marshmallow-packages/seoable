@@ -1,5 +1,7 @@
 	<x-mr-mallow-ascii/>
 
+    {{ Seo::googleOptimize() }}
+
 	<!-- Marshmallow SEO -->
 	<title>{{ Seo::getSeoTitle() }}</title>
 	<meta name="description" content="{{ Seo::getSeoDescription() }}" />
@@ -28,9 +30,6 @@
 	@if (config('seo.twitter.creator'))
     <meta name="twitter:creator" content="{{ config('seo.twitter.creator') }}" />
 	@endif
-
-
-
 
 	@if (Seo::hasSchema())
 	<script type="application/ld+json">

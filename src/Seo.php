@@ -279,6 +279,25 @@ class Seo
 		return $this->follow_type;
 	}
 
+    public function googleOptimize()
+    {
+        $via = null;
+        if (config('seo.google.GTM') && config('seo.google_optimize.via_gtm')) {
+            $via = 'GTM';
+            $container = config('seo.google.GTM');
+        } elseif (config('seo.google_optimize.container')) {
+            $via = 'container';
+            $container = config('seo.google_optimize.container');
+        }
+
+        if ($via) {
+            return view('seoable::google.optimize')->with([
+                'via' => $via,
+                'container' => $container,
+            ]);
+        }
+    }
+
 	public function generate()
 	{
 		return view('seoable::seo');
