@@ -80,7 +80,7 @@ class ExampleController extends Controller
 ```
 
 ## Use sluggable
-This package also includes `spatie/laravel-sluggable` by default. We do this because to make sure all seo driven website will use the same logic for building slugs. The package it self does not use `spatie/laravel-sluggable` so you can choose any other sluggable package if you wish to do so.
+This package also includes `marshmallow/sluggable` by default. We do this because to make sure all seo driven website will use the same logic for building slugs. The package it self does not use `marshmallow/sluggable` so you can choose any other sluggable package if you wish to do so.
 
 ```php
 class YourEloquentModel extends Model
