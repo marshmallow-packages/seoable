@@ -2,6 +2,7 @@
 
 namespace Marshmallow\Seoable;
 
+use Exception;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Select;
 use Marshmallow\Seoable\Fields\Tags;
@@ -163,12 +164,20 @@ class Seoable
         foreach ($routes as $route) {
             $method = $route->method;
 
-            $_route = Route::{$method}($route->path, $route->controller);
-            if ($route->name) {
-                $_route = $_route->name($route->name);
-            }
-            if ($route->middleware) {
-                $_route = $_route->middleware($route->middleware);
+            try {
+                $_route = Route::{$method}($route->path, $route->controller);
+                if ($route->name) {
+                    $_route = $_route->name($route->name);
+                }
+                if ($route->middleware) {
+                    $_route = $_route->middleware($route->middleware);
+                }
+            } catch (Exception $e) {
+                /**
+                 * We only catch this Exception so no error's will be thrown
+                 * if a controller of method doesnt exist. If we through this
+                 * error, people won't be able to fix there mistake.
+                 */
             }
         }
     }
