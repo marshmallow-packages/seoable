@@ -62,6 +62,24 @@ class Seo
 		return ($value == $default_value);
 	}
 
+	protected function shouldStoreValues($value, $database_column)
+	{
+		if ($this->model && $this->model->shouldStoreRecordOnInsert()) {
+			return true;
+		}
+
+		if ($this->isTheDefaultSeoValue($value, $database_column)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	protected function shouldNotStoreValues($value, $database_column)
+	{
+		return (!$this->shouldStoreValues($value, $database_column));
+	}
+
 	public function store(NovaRequest $request, $request_param, $database_column)
 	{
 		/**
@@ -69,7 +87,7 @@ class Seo
 		 */
 		$value = $request->{$request_param};
 
-		if ($this->isTheDefaultSeoValue($value, $database_column)) {
+		if ($this->shouldNotStoreValues($value, $database_column)) {
 			/**
 			 * Don't this data in the database if it's not manualy adjusted.
 			 */
@@ -85,7 +103,7 @@ class Seo
 		if (!$model->seoable) {
 			$model->seoable()->create($data);
 		} else {
-			$model->seoable()->update($data);
+			$model->seoable()->first()->update($data);
 		}
 
 		/**

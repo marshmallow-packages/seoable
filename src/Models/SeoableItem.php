@@ -4,16 +4,19 @@ namespace Marshmallow\Seoable\Models;
 
 use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
+use Marshmallow\Translatable\Traits\Translatable;
 
 class SeoableItem extends Model
 {
+	use Translatable;
+
     /**
      * Guarded variables
      *
      * @var array
      */
     protected $guarded = ['id'];
-    
+
     /**
      * Hidden variables
      *
@@ -36,7 +39,7 @@ class SeoableItem extends Model
      * @var array
      */
     protected $casts = [
-        'params' => 'object',
+        // 'params' => 'object',
         'keywords' => 'array',
     ];
 
