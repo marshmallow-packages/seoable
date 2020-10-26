@@ -267,7 +267,11 @@ class Seo
 
 	public function getSeoLocale()
 	{
-		return app()->getLocale() . '_' . Str::upper(app()->getLocale());
+        $locale = app()->getLocale();
+        if (strpos($locale, '_') === false) {
+            $locale .= '_' . Str::upper(app()->getLocale());
+        }
+        return $locale;
 	}
 
 	public function getSeoImageUrl()
