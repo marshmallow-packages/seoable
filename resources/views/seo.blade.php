@@ -39,5 +39,6 @@
 
 	@include('seoable::google.gtm-head')
 	@include('seoable::google.ga-head')
+    @include('seoable::microsoft.head')
 
 	<!-- Marshmallow SEO -->

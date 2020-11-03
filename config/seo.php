@@ -40,6 +40,12 @@ return [
     	'creator' => '', // @stefvanesch
     ],
 
+    'microsoft' => [
+        'clarity' => [
+            'tracking_id' => null,
+        ],
+    ],
+
     /**
      * For storing the SEO images
      */
