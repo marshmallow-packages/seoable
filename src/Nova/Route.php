@@ -4,9 +4,9 @@ namespace Marshmallow\Seoable\Nova;
 
 use App\Nova\Resource;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Marshmallow\HelperFunctions\Facades\User;
 
 class Route extends Resource
@@ -41,7 +41,6 @@ class Route extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function fields(Request $request)
@@ -65,7 +64,7 @@ class Route extends Resource
                 )->displayUsingLabels()
                 ->readonly(
                     function () {
-                        return (!User::isMarshmallow(request()->user()));
+                        return !User::isMarshmallow(request()->user());
                     }
                 )
                 ->help('This can only be changed by Marshmallow employees.'),
@@ -75,7 +74,7 @@ class Route extends Resource
                 ->required()
                 ->readonly(
                     function () {
-                        return (!User::isMarshmallow(request()->user()));
+                        return !User::isMarshmallow(request()->user());
                     }
                 )
                 ->help('This can only be changed by Marshmallow employees.'),
@@ -84,7 +83,7 @@ class Route extends Resource
                 ->sortable()
                 ->readonly(
                     function () {
-                        return (!User::isMarshmallow(request()->user()));
+                        return !User::isMarshmallow(request()->user());
                     }
                 )
                 ->help('This can only be changed by Marshmallow employees.'),
@@ -93,7 +92,7 @@ class Route extends Resource
                 ->sortable()
                 ->readonly(
                     function () {
-                        return (!User::isMarshmallow(request()->user()));
+                        return !User::isMarshmallow(request()->user());
                     }
                 )
                 ->help('This can only be changed by Marshmallow employees.'),
@@ -102,21 +101,19 @@ class Route extends Resource
                 ->sortable()
                 ->readonly(
                     function () {
-                        return (!User::isMarshmallow(request()->user()));
+                        return !User::isMarshmallow(request()->user());
                     }
                 )
                 ->withMeta($this->sequence ? [] : [
-	                'value' => 999,
-	            ])
+                    'value' => 999,
+                ])
                 ->help('This can only be changed by Marshmallow employees.'),
-
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function cards(Request $request)
@@ -127,7 +124,6 @@ class Route extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function filters(Request $request)
@@ -138,7 +134,6 @@ class Route extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function lenses(Request $request)
@@ -149,7 +144,6 @@ class Route extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function actions(Request $request)

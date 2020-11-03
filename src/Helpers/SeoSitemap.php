@@ -1,17 +1,18 @@
 <?php
+
 namespace Marshmallow\Seoable\Helpers;
 
 class SeoSitemap
 {
     /**
-     * Array of the all the items in the sitemap
+     * Array of the all the items in the sitemap.
      *
      * @var array
      */
     private $items = [];
 
     /**
-     * Construct the sitemap class
+     * Construct the sitemap class.
      *
      * @return void
      */
@@ -23,9 +24,7 @@ class SeoSitemap
     }
 
     /**
-     * Attach the model items
-     *
-     * @param array $sitemap_models
+     * Attach the model items.
      *
      * @return void
      */
@@ -36,8 +35,8 @@ class SeoSitemap
 
             if ($items && $items->count() > 0) {
                 $this->items = array_merge($this->items, $items->map(function ($item) {
-                    return (object)[
-                        'url'     => $item->getSitemapItemUrl(),
+                    return (object) [
+                        'url' => $item->getSitemapItemUrl(),
                         'lastmod' => $item->getSitemapItemLastModified(),
                     ];
                 })->toArray());
@@ -46,7 +45,7 @@ class SeoSitemap
     }
 
     /**
-     * Attach a custom sitemap item
+     * Attach a custom sitemap item.
      *
      * @param string $path    Path on the current site
      * @param string $lastmod Date of last edit
@@ -55,15 +54,16 @@ class SeoSitemap
      */
     public function attachCustom($path, $lastmod = null)
     {
-        $this->items[] = (object)[
+        $this->items[] = (object) [
             'url' => url($path),
-            'lastmod' => $lastmod
+            'lastmod' => $lastmod,
         ];
+
         return $this;
     }
 
     /**
-     * Return sitemap items as array
+     * Return sitemap items as array.
      *
      * @return array
      */
@@ -73,7 +73,7 @@ class SeoSitemap
     }
 
     /**
-     * Return xml for sitemap items
+     * Return xml for sitemap items.
      *
      * @return string
      */
@@ -85,8 +85,8 @@ class SeoSitemap
 
         foreach ($this->items as $item) {
             $xml .= '<url>'.
-                '<loc>' . (substr($item->url, 0, 1) == '/' ? url($item->url) : $item->url) . '</loc>'.
-                '<lastmod>' . ($item->lastmod ?? $lastmod) . '</lastmod>'.
+                '<loc>'.('/' == substr($item->url, 0, 1) ? url($item->url) : $item->url).'</loc>'.
+                '<lastmod>'.($item->lastmod ?? $lastmod).'</lastmod>'.
             '</url>';
 
             if ($item->lastmod) {

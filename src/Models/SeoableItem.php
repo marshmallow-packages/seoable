@@ -2,39 +2,38 @@
 
 namespace Marshmallow\Seoable\Models;
 
-use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
 use Marshmallow\Translatable\Traits\Translatable;
 
 class SeoableItem extends Model
 {
-	use Translatable;
+    use Translatable;
 
     /**
-     * Guarded variables
+     * Guarded variables.
      *
      * @var array
      */
     protected $guarded = ['id'];
 
     /**
-     * Hidden variables
+     * Hidden variables.
      *
      * @var array
      */
     protected $hidden = [
-        'seoable_type', 'created_at', 'updated_at'
+        'seoable_type', 'created_at', 'updated_at',
     ];
 
     /**
-     * Table name for the model
+     * Table name for the model.
      *
      * @var string
      */
     protected $table = 'seoable';
 
     /**
-     * Casts variables
+     * Casts variables.
      *
      * @var array
      */
@@ -43,7 +42,7 @@ class SeoableItem extends Model
         'keywords' => 'array',
     ];
 
-    public function isEmpty ()
+    public function isEmpty()
     {
         $empty_check = [
             'title',
@@ -54,10 +53,11 @@ class SeoableItem extends Model
         ];
 
         foreach ($empty_check as $column) {
-            if ($this->{$column} !== null) {
+            if (null !== $this->{$column}) {
                 return false;
             }
         }
+
         return true;
     }
 

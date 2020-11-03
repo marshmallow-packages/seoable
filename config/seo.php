@@ -1,15 +1,14 @@
 <?php
 
 return [
-
     'defaults' => [
-    	'sitename' => env('APP_NAME'),
-        'title' => env('APP_NAME') . ' from config',
+        'sitename' => env('APP_NAME'),
+        'title' => env('APP_NAME').' from config',
         'description' => 'Description from config',
         'keywords' => [env('APP_NAME'), 'Marshmallow Alphen'],
         'image' => 'https://marshmallow.dev/cdn/media/mrmallow-250x250.png',
         'follow_type' => 'index, follow',
-        'page_type' => 'website'
+        'page_type' => 'website',
     ],
 
     'google' => [
@@ -20,7 +19,7 @@ return [
     'google_optimize' => [
         'container' => env('SEO_GO', ''),   // GTM-XXXXXXX
 
-        /**
+        /*
          * If you add Google Optimize via GTM then we need
          * to initiate it in a different way. We will use
          * the config google.GTM to initiate optimize, the
@@ -31,13 +30,13 @@ return [
     ],
 
     'facebook' => [
-		'admins' => env('FACEBOOK_ADMINS', ''),
-		'app_id' => env('FACEBOOK_APP_ID', ''),
+        'admins' => env('FACEBOOK_ADMINS', ''),
+        'app_id' => env('FACEBOOK_APP_ID', ''),
     ],
 
     'twitter' => [
-    	'site' => '', 	 // @marshmallowdev
-    	'creator' => '', // @stefvanesch
+        'site' => '', 	 // @marshmallowdev
+        'creator' => '', // @stefvanesch
     ],
 
     'microsoft' => [
@@ -46,12 +45,12 @@ return [
         ],
     ],
 
-    /**
+    /*
      * For storing the SEO images
      */
     'storage' => [
         'disk' => 'public',
-        'path' => 'seo'
+        'path' => 'seo',
     ],
 
     /*
@@ -106,9 +105,8 @@ return [
         'noindex, nofollow' => 'No index and no follow',
     ],
 
-
     'page_types' => [
-    	'website' => 'Website',
+        'website' => 'Website',
         'article' => 'Article',
         'book' => 'Book',
         'profile' => 'Profile',

@@ -1,13 +1,11 @@
-<?php 
+<?php
 
 namespace Marshmallow\Seoable\Facades;
 
-/**
- */
 class Seo extends \Illuminate\Support\Facades\Facade
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function getFacadeAccessor()
     {

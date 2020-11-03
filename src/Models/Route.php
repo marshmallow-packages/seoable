@@ -2,9 +2,9 @@
 
 namespace Marshmallow\Seoable\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Database\Eloquent\Builder;
 
 class Route extends Model
 {
