@@ -9,6 +9,7 @@
 	<meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
 	<meta name="author" content="Marshmallow.dev">
 	<meta name="twitter:card" content="{{ Seo::getSeoDescription() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<meta property="og:title" content="{{ Seo::getSeoTitle() }}" />
 	<meta property="og:description" content="{{ Seo::getSeoDescription() }}" />
