@@ -8,6 +8,17 @@ class SchemaProduct extends Schema
 {
     use Makeable;
 
+    public $sku;
+    public $mpn;
+    public $gtin;
+    public $isbn;
+    public $brand;
+    public $offers;
+    public $images;
+    public $reviews;
+    public $description;
+    public $aggregateRating;
+
     public function sku($sku)
     {
         $this->sku = $sku;
@@ -36,7 +47,7 @@ class SchemaProduct extends Schema
         return $this;
     }
 
-    public function toJson()
+    public function toArray()
     {
         return [
             '@context' => 'https://schema.org/',
