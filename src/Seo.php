@@ -3,14 +3,14 @@
 namespace Marshmallow\Seoable;
 
 use Exception;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Marshmallow\Seoable\Traits\Seoable;
+use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\Seoable\Helpers\Schemas\Schema;
-use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
+use Marshmallow\Seoable\Traits\Seoable;
 
 class Seo
 {
@@ -67,6 +67,7 @@ class Seo
             }
             $schema_output[] = $breadcrumb_list->toJson();
         }
+
         return json_encode($schema_output);
     }
 
@@ -258,9 +259,10 @@ class Seo
 
     public function getSeoKeywordsAsString()
     {
-        if (!$this->getSeoKeywords() || ! is_array($this->getSeoKeywords())) {
+        if (!$this->getSeoKeywords() || !is_array($this->getSeoKeywords())) {
             return null;
         }
+
         return join(',', $this->getSeoKeywords());
     }
 
