@@ -178,6 +178,13 @@ class Page extends Model
 
 Know you should be able to go to the `seo.sitemap_path` which is `/sitemap` as default. Then you should get an xml in the correct sitemap structure for [Google Search Console](https://search.google.com/search-console/about).
 
+## Structured Data
+```php
+$faq = \Marshmallow\Seoable\Helpers\Schemas\SchemaFaqPage::make();
+$faq->addQuestionAndAnswer('What is the name of this company?', 'Marshmallow');
+
+\Marshmallow\Seoable\Facades\Seo::addSchema($faq);
+```
 
 ## How does it look in Laravel Nova
 If the field is shown **in the index view** of the Resource, then you should see a column with a dot:
