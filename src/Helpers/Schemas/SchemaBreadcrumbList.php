@@ -26,7 +26,7 @@ class SchemaBreadcrumbList extends Schema
         $this->itemListElement[] = $item->position($position)->toJson();
     }
 
-    public function toJson()
+    public function toArray()
     {
         return [
             '@context' => 'https://schema.org',

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\Seoable\Helpers\Schemas\Schema;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
 use Marshmallow\Seoable\Traits\Seoable;
 
 class Seo
@@ -19,6 +21,7 @@ class Seo
     protected $image;
     protected $follow_type;
     protected $schemas;
+    protected $breadcrumbs;
     protected $page_type;
 
     public function set($model)
@@ -42,11 +45,27 @@ class Seo
         }
     }
 
+    public function addBreadcrumb(SchemaListItem $breadcrumb)
+    {
+        $this->breadcrumbs[] = $breadcrumb;
+    }
+
     public function getSchema()
     {
         $schema_output = [];
-        foreach ($this->schemas as $schema) {
-            $schema_output[] = $schema->toJson();
+
+        if ($this->schemas) {
+            foreach ($this->schemas as $schema) {
+                $schema_output[] = $schema->toJson();
+            }
+        }
+
+        if ($this->breadcrumbs) {
+            $breadcrumb_list = SchemaBreadcrumbList::make();
+            foreach ($this->breadcrumbs as $breadcrumb) {
+                $breadcrumb_list->addItem($breadcrumb);
+            }
+            $schema_output[] = $breadcrumb_list->toJson();
         }
 
         return json_encode($schema_output);
@@ -54,7 +73,7 @@ class Seo
 
     public function hasSchema()
     {
-        return $this->schemas;
+        return $this->schemas || $this->breadcrumbs;
     }
 
     protected function isTheDefaultSeoValue($value, $database_column)
@@ -240,9 +259,10 @@ class Seo
 
     public function getSeoKeywordsAsString()
     {
-        if (!$this->getSeoKeywords() || ! is_array($this->getSeoKeywords())) {
+        if (!$this->getSeoKeywords() || !is_array($this->getSeoKeywords())) {
             return null;
         }
+
         return join(',', $this->getSeoKeywords());
     }
 
