@@ -3,7 +3,7 @@
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
 use Illuminate\Support\Str;
-use Money\Money;
+use Marshmallow\Priceable\Models\Price;
 
 class SchemaOffer extends Schema
 {
@@ -17,12 +17,32 @@ class SchemaOffer extends Schema
     const PRE_SALE = 'PreSale';
     const SOLD_OUT = 'SoldOut';
 
+    const CONDITION_DAMAGED = 'DamagedCondition';
+    const CONDITION_NEW = 'NewCondition';
+    const CONDITION_REFURBISHED = 'RefurbishedCondition';
+    const CONDITION_USED = 'UsedCondition';
+
+    protected $url;
+
+    protected $price;
+
+    protected $priceCurrency;
+
+    protected $priceValidUntil;
+
     protected $availability = self::IN_STOCK;
 
-    public static function make(Money $price)
+    protected $itemCondition = self::CONDITION_NEW;
+
+    public static function make(Price $price)
     {
         $schema = new self();
-        $schema->price = $price;
+        $schema->price = $price->price();
+        $schema->priceCurrency = $price->currency->iso_4217;
+
+        if ($price->valid_till) {
+            $schema->priceValidUntil = $price->valid_till->format('Y-m-d');
+        }
 
         return $schema;
     }
@@ -34,13 +54,29 @@ class SchemaOffer extends Schema
         return $this;
     }
 
-    public function toJson()
+    public function itemCondition($itemCondition)
+    {
+        $this->itemCondition = $itemCondition;
+
+        return $this;
+    }
+
+    public function url(string $url): self
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    public function toArray()
     {
         return [
             '@type' => 'Offer',
+            'url' => $this->url,
             'availability' => 'http://schema.org/'.$this->availability,
+            'itemCondition' => 'http://schema.org/'.$this->itemCondition,
             'price' => $this->price,
-            'priceCurrency' => Str::of(env('CASHIER_CURRENCY'))->upper(),
+            'priceValidUntil' => $this->priceValidUntil,
+            'priceCurrency' => $this->priceCurrency,
         ];
     }
 }
