@@ -2,7 +2,6 @@
 
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Illuminate\Support\Str;
 use Marshmallow\Priceable\Models\Price;
 
 class SchemaOffer extends Schema
@@ -64,6 +63,7 @@ class SchemaOffer extends Schema
     public function url(string $url): self
     {
         $this->url = $url;
+
         return $this;
     }
 
