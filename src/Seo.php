@@ -240,6 +240,9 @@ class Seo
 
     public function getSeoKeywordsAsString()
     {
+        if (!$this->getSeoKeywords() || ! is_array($this->getSeoKeywords())) {
+            return null;
+        }
         return join(',', $this->getSeoKeywords());
     }
 
