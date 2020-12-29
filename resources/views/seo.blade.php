@@ -5,7 +5,9 @@
 	<!-- Marshmallow SEO -->
 	<title>{{ Seo::getSeoTitle() }}</title>
 	<meta name="description" content="{{ Seo::getSeoDescription() }}" />
+    @if (Seo::getSeoKeywordsAsString())
 	<meta name="keywords" content="{{ Seo::getSeoKeywordsAsString() }}" />
+    @endif
 	<meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
 	<meta name="author" content="Marshmallow.dev">
 	<meta name="twitter:card" content="{{ Seo::getSeoDescription() }}" />

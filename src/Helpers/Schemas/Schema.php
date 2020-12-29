@@ -94,6 +94,7 @@ class Schema
     {
         $array = $this->toArray();
         $array = array_filter($array);
+
         return $array;
     }
 }
