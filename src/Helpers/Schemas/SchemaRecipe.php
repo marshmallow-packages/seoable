@@ -49,45 +49,53 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    public function prepTime(int $minutes)
+    public function prepTime(int $minutes = null)
     {
         return $this->setTimeUnit('prepTime', $minutes);
     }
 
-    public function cookTime(int $minutes)
+    public function cookTime(int $minutes = null)
     {
         return $this->setTimeUnit('cookTime', $minutes);
     }
 
-    public function totalTime(int $minutes)
+    public function totalTime(int $minutes = null)
     {
         return $this->setTimeUnit('totalTime', $minutes);
     }
 
-    public function keywords(array $keywords)
+    public function keywords(array $keywords = null)
     {
-        $this->keywords = join(', ', $keywords);
+        if ($keywords) {
+            $this->keywords = join(', ', $keywords);
+        }
 
         return $this;
     }
 
-    public function recipeYield(int $recipeYield)
+    public function recipeYield(int $recipeYield = null)
     {
-        $this->recipeYield = $recipeYield;
+        if ($recipeYield) {
+            $this->recipeYield = $recipeYield;
+        }
 
         return $this;
     }
 
-    public function recipeCategory(string $recipeCategory)
+    public function recipeCategory(string $recipeCategory = null)
     {
-        $this->recipeCategory = $recipeCategory;
+        if ($recipeCategory) {
+            $this->recipeCategory = $recipeCategory;
+        }
 
         return $this;
     }
 
-    public function recipeCuisine(string $recipeCuisine)
+    public function recipeCuisine(string $recipeCuisine = null)
     {
-        $this->recipeCuisine = $recipeCuisine;
+        if ($recipeCuisine) {
+            $this->recipeCuisine = $recipeCuisine;
+        }
 
         return $this;
     }
@@ -99,9 +107,11 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    public function ingredients(array $ingredients)
+    public function ingredients(array $ingredients = [])
     {
-        $this->recipeIngredient = $ingredients;
+        if ($ingredients) {
+            $this->recipeIngredient = $ingredients;
+        }
 
         return $this;
     }
@@ -115,9 +125,11 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    protected function setTimeUnit(string $column, int $minutes)
+    protected function setTimeUnit(string $column, int $minutes = null)
     {
-        $this->{$column} = "PT{$minutes}M";
+        if ($minutes) {
+            $this->{$column} = "PT{$minutes}M";
+        }
 
         return $this;
     }

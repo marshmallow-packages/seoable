@@ -23,42 +23,52 @@ class SchemaVideoObject extends Schema
 
     protected $expires;
 
-    public function thumbnail(string $public_path)
+    public function thumbnail(string $public_path = null)
     {
-        $this->thumbnailUrl[] = $public_path;
+        if ($public_path) {
+            $this->thumbnailUrl[] = $public_path;
+        }
 
         return $this;
     }
 
-    public function contentUrl(string $video_url)
+    public function contentUrl(string $video_url = null)
     {
-        $this->contentUrl = $video_url;
+        if ($video_url) {
+            $this->contentUrl = $video_url;
+        }
 
         return $this;
     }
 
-    public function embedUrl(string $embed_url)
+    public function embedUrl(string $embed_url = null)
     {
-        $this->embedUrl = $embed_url;
+        if ($embed_url) {
+            $this->embedUrl = $embed_url;
+        }
 
         return $this;
     }
 
-    public function uploadDate(Carbon $date)
+    public function uploadDate(Carbon $date = null)
     {
-        $this->uploadDate = $date;
+        if ($date) {
+            $this->uploadDate = $date;
+        }
 
         return $this;
     }
 
-    public function duration(int $seconds)
+    public function duration(int $seconds = null)
     {
         return $this->getDurationStringFromSeconds('duration', $seconds);
     }
 
-    public function expires(Carbon $date)
+    public function expires(Carbon $date = null)
     {
-        $this->expires = $date;
+        if ($date) {
+            $this->expires = $date;
+        }
 
         return $this;
     }

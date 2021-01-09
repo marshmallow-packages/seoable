@@ -8,16 +8,20 @@ class SchemaListItem extends Schema
 {
     use Makeable;
 
-    public function position($position)
+    public function position($position = null)
     {
-        $this->position = $position;
+        if ($position) {
+            $this->position = $position;
+        }
 
         return $this;
     }
 
-    public function url($url)
+    public function url($url = null)
     {
-        $this->item = $url;
+        if ($url) {
+            $this->item = $url;
+        }
 
         return $this;
     }

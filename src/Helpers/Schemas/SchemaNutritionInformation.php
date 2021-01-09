@@ -23,71 +23,75 @@ class SchemaNutritionInformation extends Schema
         return $schema;
     }
 
-    public function calories(float $amount)
+    public function calories(float $amount = null)
     {
         return $this->addMass('calories', $amount, 'calories');
     }
 
-    public function carbohydrate(float $amount)
+    public function carbohydrate(float $amount = null)
     {
         return $this->addMass('carbohydrateContent', $amount);
     }
 
-    public function cholesterol(float $amount)
+    public function cholesterol(float $amount = null)
     {
         return $this->addMass('cholesterolContent', $amount, 'milligrams');
     }
 
-    public function fat(float $amount)
+    public function fat(float $amount = null)
     {
         return $this->addMass('fatContent', $amount);
     }
 
-    public function fiber(float $amount)
+    public function fiber(float $amount = null)
     {
         return $this->addMass('fiberContent', $amount);
     }
 
-    public function protein(float $amount)
+    public function protein(float $amount = null)
     {
         return $this->addMass('proteinContent', $amount);
     }
 
-    public function saturatedFat(float $amount)
+    public function saturatedFat(float $amount = null)
     {
         return $this->addMass('saturatedFatContent', $amount);
     }
 
-    public function servingSize($servingSize)
+    public function servingSize($serving_size = null)
     {
-        $this->servingSize = $servingSize;
+        if ($serving_size) {
+            $this->servingSize = $serving_size;
+        }
 
         return $this;
     }
 
-    public function sodium(float $amount)
+    public function sodium(float $amount = null)
     {
         return $this->addMass('sodiumContent', $amount, 'milligrams');
     }
 
-    public function sugar(float $amount)
+    public function sugar(float $amount = null)
     {
         return $this->addMass('sugarContent', $amount);
     }
 
-    public function transFat(float $amount)
+    public function transFat(float $amount = null)
     {
         return $this->addMass('transFatContent', $amount);
     }
 
-    public function unsaturatedFat(float $amount)
+    public function unsaturatedFat(float $amount = null)
     {
         return $this->addMass('unsaturatedFatContent', $amount);
     }
 
-    protected function addMass(string $column, float $amount, string $mass = 'grams')
+    protected function addMass(string $column, float $amount = null, string $mass = 'grams')
     {
-        $this->{$column} = "$amount $mass";
+        if ($amount) {
+            $this->{$column} = "$amount $mass";
+        }
 
         return $this;
     }

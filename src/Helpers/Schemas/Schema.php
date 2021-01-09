@@ -26,9 +26,11 @@ class Schema
 
     protected $reviews = [];
 
-    public function brand(string $name)
+    public function brand(string $name = null)
     {
-        $this->brand = SchemaBrand::make($name)->toJson();
+        if ($name) {
+            $this->brand = SchemaBrand::make($name)->toJson();
+        }
 
         return $this;
     }
@@ -40,8 +42,12 @@ class Schema
         return $this;
     }
 
-    public function offers(array $offers)
+    public function offers(array $offers = [])
     {
+        if (!$offers) {
+            return $this;
+        }
+
         foreach ($offers as $offer) {
             if (!$offer instanceof SchemaOffer) {
                 continue;
@@ -66,10 +72,12 @@ class Schema
         return $this;
     }
 
-    public function reviews(array $reviews)
+    public function reviews(array $reviews = [])
     {
-        foreach ($reviews as $review) {
-            $this->review($review);
+        if ($reviews) {
+            foreach ($reviews as $review) {
+                $this->review($review);
+            }
         }
 
         return $this;
@@ -82,30 +90,38 @@ class Schema
         return $this;
     }
 
-    public function image(string $image)
+    public function image(string $image = null)
     {
-        $this->images[] = $image;
+        if ($image) {
+            $this->images[] = $image;
+        }
 
         return $this;
     }
 
-    public function images(array $images)
+    public function images(array $images = [])
     {
-        $this->images = array_merge($this->images, $images);
+        if ($images) {
+            $this->images = array_merge($this->images, $images);
+        }
 
         return $this;
     }
 
-    public function datePublished(Carbon $date)
+    public function datePublished(Carbon $date = null)
     {
-        $this->datePublished = $date;
+        if ($date) {
+            $this->datePublished = $date;
+        }
 
         return $this;
     }
 
-    public function description(string $description)
+    public function description(string $description = null)
     {
-        $this->description = $description;
+        if ($description) {
+            $this->description = $description;
+        }
 
         return $this;
     }
@@ -124,8 +140,12 @@ class Schema
         return $this;
     }
 
-    protected function getDurationStringFromSeconds(string $column, int $seconds)
+    protected function getDurationStringFromSeconds(string $column, int $seconds = null)
     {
+        if (!$seconds) {
+            return $this;
+        }
+
         $time = gmdate('H:i:s', $seconds);
         $parts = collect(explode(':', $time))->map(function ($part) {
             return intval($part);

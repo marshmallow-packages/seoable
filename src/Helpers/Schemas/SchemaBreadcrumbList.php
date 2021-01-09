@@ -11,10 +11,12 @@ class SchemaBreadcrumbList extends Schema
         return new self();
     }
 
-    public function addItems(array $items)
+    public function addItems(array $items = [])
     {
-        foreach ($items as $item) {
-            $this->addItem($item);
+        if ($items) {
+            foreach ($items as $item) {
+                $this->addItem($item);
+            }
         }
 
         return $this;

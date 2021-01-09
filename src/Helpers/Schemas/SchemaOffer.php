@@ -46,23 +46,29 @@ class SchemaOffer extends Schema
         return $schema;
     }
 
-    public function availability($availability)
+    public function availability($availability = null)
     {
-        $this->availability = $availability;
+        if ($availability) {
+            $this->availability = $availability;
+        }
 
         return $this;
     }
 
-    public function itemCondition($itemCondition)
+    public function itemCondition($itemCondition = null)
     {
-        $this->itemCondition = $itemCondition;
+        if ($itemCondition) {
+            $this->itemCondition = $itemCondition;
+        }
 
         return $this;
     }
 
-    public function url(string $url): self
+    public function url(string $url = null): self
     {
-        $this->url = $url;
+        if ($url) {
+            $this->url = $url;
+        }
 
         return $this;
     }

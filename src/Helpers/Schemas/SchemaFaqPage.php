@@ -13,8 +13,12 @@ class SchemaFaqPage extends Schema
         return $schema;
     }
 
-    public function addQuestionAndAnswer($question, $answer)
+    public function addQuestionAndAnswer($question = null, $answer = null)
     {
+        if (! $question || ! $answer) {
+            return $this;
+        }
+
         $question = SchemaQuestion::make($question);
         $question->addAnswer(
             SchemaAnswer::make($answer)
