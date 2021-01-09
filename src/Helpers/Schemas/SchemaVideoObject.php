@@ -26,24 +26,28 @@ class SchemaVideoObject extends Schema
     public function thumbnail(string $public_path)
     {
         $this->thumbnailUrl[] = $public_path;
+
         return $this;
     }
 
     public function contentUrl(string $video_url)
     {
         $this->contentUrl = $video_url;
+
         return $this;
     }
 
     public function embedUrl(string $embed_url)
     {
         $this->embedUrl = $embed_url;
+
         return $this;
     }
 
     public function uploadDate(Carbon $date)
     {
         $this->uploadDate = $date;
+
         return $this;
     }
 
@@ -55,6 +59,7 @@ class SchemaVideoObject extends Schema
     public function expires(Carbon $date)
     {
         $this->expires = $date;
+
         return $this;
     }
 

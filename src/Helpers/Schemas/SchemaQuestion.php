@@ -2,7 +2,6 @@
 
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helpers\Schemas\SchemaAnswer;
 use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
 
 class SchemaQuestion extends Schema
@@ -14,6 +13,7 @@ class SchemaQuestion extends Schema
     public function addAnswer(SchemaAnswer $answer)
     {
         $this->answer = $answer;
+
         return $this;
     }
 

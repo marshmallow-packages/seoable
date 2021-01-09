@@ -17,6 +17,7 @@ class SchemaHowToStep extends Schema
     public function image(string $image)
     {
         $this->image = $image;
+
         return $this;
     }
 

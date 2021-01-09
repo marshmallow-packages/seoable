@@ -3,7 +3,6 @@
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
 use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
-use Marshmallow\Seoable\Helpers\Schemas\SchemaNutritionInformation;
 
 class SchemaRecipe extends Schema
 {
@@ -46,6 +45,7 @@ class SchemaRecipe extends Schema
     public function author($name)
     {
         $this->person = SchemaPerson::make($name);
+
         return $this;
     }
 
@@ -67,36 +67,42 @@ class SchemaRecipe extends Schema
     public function keywords(array $keywords)
     {
         $this->keywords = join(', ', $keywords);
+
         return $this;
     }
 
     public function recipeYield(int $recipeYield)
     {
         $this->recipeYield = $recipeYield;
+
         return $this;
     }
 
     public function recipeCategory(string $recipeCategory)
     {
         $this->recipeCategory = $recipeCategory;
+
         return $this;
     }
 
     public function recipeCuisine(string $recipeCuisine)
     {
         $this->recipeCuisine = $recipeCuisine;
+
         return $this;
     }
 
     public function nutrition(SchemaNutritionInformation $nutrition)
     {
         $this->nutrition = $nutrition;
+
         return $this;
     }
 
     public function ingredients(array $ingredients)
     {
         $this->recipeIngredient = $ingredients;
+
         return $this;
     }
 
@@ -105,12 +111,14 @@ class SchemaRecipe extends Schema
         foreach ($instructions as $instruction) {
             $this->recipeInstructions[] = $instruction->toJson();
         }
+
         return $this;
     }
 
     protected function setTimeUnit(string $column, int $minutes)
     {
         $this->{$column} = "PT{$minutes}M";
+
         return $this;
     }
 

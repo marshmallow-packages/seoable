@@ -2,9 +2,6 @@
 
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helpers\Schemas\SchemaAnswer;
-use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
-
 class SchemaFaqPage extends Schema
 {
     protected $questions = [];
@@ -12,6 +9,7 @@ class SchemaFaqPage extends Schema
     public static function make()
     {
         $schema = new self();
+
         return $schema;
     }
 
@@ -23,6 +21,7 @@ class SchemaFaqPage extends Schema
         );
 
         $this->questions[] = $question->toArray();
+
         return $this;
     }
 

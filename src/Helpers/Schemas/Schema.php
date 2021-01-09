@@ -3,7 +3,6 @@
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
 use Carbon\Carbon;
-use Marshmallow\Seoable\Helpers\Schemas\SchemaInteractionCounter;
 
 class Schema
 {
@@ -30,12 +29,14 @@ class Schema
     public function brand(string $name)
     {
         $this->brand = SchemaBrand::make($name)->toJson();
+
         return $this;
     }
 
     public function offer(SchemaOffer $offer)
     {
         $this->offers([$offer]);
+
         return $this;
     }
 
@@ -47,12 +48,14 @@ class Schema
             }
             $this->offers[] = $offer->toJson();
         }
+
         return $this;
     }
 
     public function rating(SchemaRating $rating)
     {
         $this->rating = $rating;
+
         return $this;
     }
 
@@ -110,37 +113,41 @@ class Schema
     public function video(SchemaVideoObject $video)
     {
         $this->video = $video;
+
         return $this;
     }
 
     public function interactionStatistic(SchemaInteractionCounter $counter)
     {
         $this->interactionStatistic = $counter;
+
         return $this;
     }
 
     protected function getDurationStringFromSeconds(string $column, int $seconds)
     {
-        $time = gmdate("H:i:s", $seconds);
+        $time = gmdate('H:i:s', $seconds);
         $parts = collect(explode(':', $time))->map(function ($part) {
             return intval($part);
         })->toArray();
 
         $duration = 'PT';
-        $duration .= $parts[0] . 'H';
-        $duration .= $parts[1] . 'M';
-        $duration .= $parts[2] . 'S';
+        $duration .= $parts[0].'H';
+        $duration .= $parts[1].'M';
+        $duration .= $parts[2].'S';
 
         $this->{$column} = $duration;
+
         return $this;
     }
 
     protected function getJsonSchema($column)
     {
-        if (! $this->{$column}) {
+        if (!$this->{$column}) {
             return null;
         }
         $data = $this->{$column}->toJson();
+
         return array_filter($data);
     }
 
@@ -155,6 +162,7 @@ class Schema
     public function __call($parameter, $arguments)
     {
         $this->{$parameter} = $arguments[0];
+
         return $this;
     }
 

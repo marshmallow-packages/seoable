@@ -2,8 +2,6 @@
 
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helpers\Schemas\Schema;
-
 class SchemaInteractionCounter extends Schema
 {
     protected $type;
@@ -13,6 +11,7 @@ class SchemaInteractionCounter extends Schema
     public static function make(string $type, int $count)
     {
         $counter = new self();
+
         return $counter->type($type)
                        ->count($count);
     }
@@ -22,7 +21,7 @@ class SchemaInteractionCounter extends Schema
         return [
             '@type' => 'InteractionCounter',
             'interactionType' => [
-                '@type' => 'http://schema.org/' . $this->type,
+                '@type' => 'http://schema.org/'.$this->type,
             ],
             'userInteractionCount' => $this->count,
         ];

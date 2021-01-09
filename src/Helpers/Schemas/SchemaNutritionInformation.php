@@ -2,8 +2,6 @@
 
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
-use Marshmallow\Seoable\Helpers\Schemas\Traits\Makeable;
-
 class SchemaNutritionInformation extends Schema
 {
     protected $calories;
@@ -21,6 +19,7 @@ class SchemaNutritionInformation extends Schema
     public static function make()
     {
         $schema = new self();
+
         return $schema;
     }
 
@@ -62,6 +61,7 @@ class SchemaNutritionInformation extends Schema
     public function servingSize($servingSize)
     {
         $this->servingSize = $servingSize;
+
         return $this;
     }
 
@@ -88,6 +88,7 @@ class SchemaNutritionInformation extends Schema
     protected function addMass(string $column, float $amount, string $mass = 'grams')
     {
         $this->{$column} = "$amount $mass";
+
         return $this;
     }
 
