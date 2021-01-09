@@ -4,6 +4,10 @@ namespace Marshmallow\Seoable\Helpers\Schemas;
 
 class SchemaAggregateRating extends Schema
 {
+    protected $bestRating;
+
+    protected $worstRating;
+
     public static function make(float $ratingValue, float $reviewCount)
     {
         $schema = new self();
@@ -19,6 +23,8 @@ class SchemaAggregateRating extends Schema
             '@type' => 'AggregateRating',
             'ratingValue' => $this->ratingValue,
             'reviewCount' => $this->reviewCount,
+            'bestRating' => $this->bestRating,
+            'worstRating' => $this->worstRating,
         ];
     }
 }
