@@ -5,6 +5,7 @@ namespace Marshmallow\Seoable\Helpers\Schemas;
 class SchemaNutritionInformation extends Schema
 {
     protected $calories;
+    protected $cholesterolContent;
     protected $carbohydrateContent;
     protected $fatContent;
     protected $fiberContent;
