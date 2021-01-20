@@ -12,6 +12,7 @@ And then run the migrations:
 php artisan migrate
 ```
 
+
 And then publish the configs:
 ```
 php artisan vendor:publish --provider="Marshmallow\Seoable\ServiceProvider"
