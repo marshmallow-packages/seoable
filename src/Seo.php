@@ -3,14 +3,15 @@
 namespace Marshmallow\Seoable;
 
 use Exception;
+use Illuminate\Support\Str;
+use Marshmallow\TagsField\Tags;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Marshmallow\Seoable\Traits\Seoable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\Seoable\Helpers\Schemas\Schema;
-use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
-use Marshmallow\Seoable\Traits\Seoable;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
 
 class Seo
 {
@@ -101,12 +102,31 @@ class Seo
         return !$this->shouldStoreValues($value, $database_column);
     }
 
+    public function storeKeywordsColumn($value)
+    {
+        if (is_array($value)) {
+            return $value;
+        }
+
+        return array_filter(
+            explode(Tags::EXPLODE_BY, $value)
+        );
+    }
+
     public function store(NovaRequest $request, $request_param, $database_column)
     {
         /**
          * Value to be stored in the database.
          */
         $value = $request->{$request_param};
+
+        /**
+         * Modify the base content
+         */
+        $method  = 'store' . Str::studly($database_column) . 'Column';
+        if (method_exists($this, $method)) {
+            $value = $this->{$method}($value);
+        }
 
         if ($this->shouldNotStoreValues($value, $database_column)) {
             /**

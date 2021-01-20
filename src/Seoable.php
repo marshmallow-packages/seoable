@@ -3,16 +3,16 @@
 namespace Marshmallow\Seoable;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
+use Laravel\Nova\Fields\Select;
+use Marshmallow\TagsField\Tags;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\AdvancedImage\AdvancedImage;
-use Marshmallow\CharcountedFields\TextareaCounted;
 use Marshmallow\CharcountedFields\TextCounted;
-use Marshmallow\Seoable\Fields\Tags;
+use Marshmallow\CharcountedFields\TextareaCounted;
 use Marshmallow\Seoable\Models\Route as RouteModel;
 
 class Seoable
@@ -67,7 +67,23 @@ class Seoable
                 ->warningAt(150)
                 ->hideWhenCreating(),
 
-            Tags::make('Tags', 'seoable_tags')->withoutSuggestions()->hideFromIndex()->hideWhenCreating(),
+            Tags::make('Tags', 'seoable_tags')
+                ->hideFromIndex()
+                ->fillUsing(
+                    function (NovaRequest $request, Model $model, $field) {
+                        /*
+                         * Only call the store method on the title.
+                         * This method will store all the available fields.
+                         */
+                        app('seo')->set($model)->store($request, $field, 'keywords');
+                    }
+                )
+                ->resolveUsing(
+                    function ($name, Model $model) {
+                        return app('seo')->set($model)->getSeoKeywords();
+                    }
+                )
+                ->hideWhenCreating(),
 
             Select::make('Follow type', 'seoable_follow_type')
                 ->options(config('seo.follow_type_options'))
