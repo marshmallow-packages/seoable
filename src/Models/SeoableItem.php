@@ -38,7 +38,6 @@ class SeoableItem extends Model
      * @var array
      */
     protected $casts = [
-        // 'params' => 'object',
         'keywords' => 'array',
     ];
 
