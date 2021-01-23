@@ -9,6 +9,7 @@ return [
         'image' => 'https://marshmallow.dev/cdn/media/mrmallow-250x250.png',
         'follow_type' => 'index, follow',
         'page_type' => 'website',
+        'author' => 'Marshmallow',
     ],
 
     'google' => [

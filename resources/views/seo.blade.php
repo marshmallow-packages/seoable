@@ -1,15 +1,17 @@
-	<x-mr-mallow-ascii/>
+
+    @if (!config('seo.hide_mr_mallow'))
+    <x-mr-mallow-ascii/>
+    <!-- Marshmallow SEO -->
+    @endif
 
     {{ Seo::googleOptimize() }}
-
-	<!-- Marshmallow SEO -->
 	<title>{{ Seo::getSeoTitle() }}</title>
 	<meta name="description" content="{{ Seo::getSeoDescription() }}" />
     @if (Seo::getSeoKeywordsAsString())
 	<meta name="keywords" content="{{ Seo::getSeoKeywordsAsString() }}" />
     @endif
 	<meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
-	<meta name="author" content="Marshmallow.dev">
+	<meta name="author" content="{{ config('seo.defaults.author') }}">
 	<meta name="twitter:card" content="{{ Seo::getSeoDescription() }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -44,4 +46,6 @@
 	@include('seoable::google.ga-head')
     @include('seoable::microsoft.head')
 
-	<!-- Marshmallow SEO -->
+    @if (!config('seo.hide_mr_mallow'))
+	   <!-- Marshmallow SEO -->
+    @endif
