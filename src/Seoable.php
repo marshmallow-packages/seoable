@@ -36,7 +36,8 @@ class Seoable
                     }
                    )
                 ->resolveUsing(
-                    function ($name, Model $model) {
+                    function ($name, Model $model, $field) {
+                        $model = self::resolveModel($model);
                         return app('seo')->set($model)->getSeoTitle();
                     }
                 )
@@ -58,6 +59,7 @@ class Seoable
                 )
                 ->resolveUsing(
                     function ($name, Model $model) {
+                        $model = self::resolveModel($model);
                         return app('seo')->set($model)->getSeoDescription();
                     }
                 )
@@ -80,6 +82,7 @@ class Seoable
                 )
                 ->resolveUsing(
                     function ($name, Model $model) {
+                        $model = self::resolveModel($model);
                         return app('seo')->set($model)->getSeoKeywords();
                     }
                 )
@@ -98,6 +101,7 @@ class Seoable
                 )
                 ->resolveUsing(
                     function ($name, Model $model) {
+                        $model = self::resolveModel($model);
                         return app('seo')->set($model)->getSeoFollowType();
                     }
                 )
@@ -120,6 +124,7 @@ class Seoable
                 })
                 ->store(
                     function (NovaRequest $request, Model $model, $attribute, $requestAttribute, $disk, $storagePath) {
+                        $model = self::resolveModel($model);
                         $storage_location = Storage::disk(config('seo.storage.disk'))
                                                     ->putFile(
                                                         config('seo.storage.path'),
@@ -162,6 +167,7 @@ class Seoable
                 )
                 ->resolveUsing(
                     function ($name, Model $model) {
+                        $model = self::resolveModel($model);
                         return app('seo')->set($model)->getSeoPageType();
                     }
                 )
@@ -192,5 +198,13 @@ class Seoable
                  */
             }
         }
+    }
+
+    public static function resolveModel(Model $model)
+    {
+        if (! $model->fresh()) {
+            $model = get_class($model)::findOrFail(request()->resourceId);
+        }
+        return $model;
     }
 }
