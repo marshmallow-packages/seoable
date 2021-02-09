@@ -202,7 +202,7 @@ class Seoable
 
     public static function resolveModel(Model $model)
     {
-        if (! $model->fresh()) {
+        if (! $model->fresh() && request()->resourceId) {
             $model = get_class($model)::findOrFail(request()->resourceId);
         }
         return $model;
