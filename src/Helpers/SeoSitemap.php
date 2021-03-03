@@ -2,6 +2,8 @@
 
 namespace Marshmallow\Seoable\Helpers;
 
+use Marshmallow\Seoable\Models\SeoableItem;
+
 class SeoSitemap
 {
     /**
@@ -34,7 +36,19 @@ class SeoSitemap
             $items = $sitemap_model::getSitemapItems();
 
             if ($items && $items->count() > 0) {
-                $this->items = array_merge($this->items, $items->map(function ($item) {
+                $this->items = array_merge($this->items, $items->reject(function ($item) {
+                    if ($item->seoable && $item->seoable instanceof SeoableItem) {
+                        if (strpos($item->seoable->follow_type, 'noindex') !== false) {
+                            return true;
+                        }
+                    }
+
+                    if (!$item->showItemInSitemap()) {
+                        return true;
+                    }
+
+                    return false;
+                })->map(function ($item) {
                     return (object) [
                         'url' => $item->getSitemapItemUrl(),
                         'lastmod' => $item->getSitemapItemLastModified(),
