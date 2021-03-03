@@ -68,16 +68,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Sitemap status
-    |--------------------------------------------------------------------------
-    |
-    | Should there be a sitemap available
-    |
-    */
-    'sitemap_status' => env('SITEMAP_STATUS', false),
-
-    /*
-    |--------------------------------------------------------------------------
     | SEO title formatter
     |--------------------------------------------------------------------------
     |
@@ -121,8 +111,17 @@ return [
     | Set the default follow type.
     |
     */
-
     'default_follow_type' => env('SEO_DEFAULT_FOLLOW_TYPE', 'index, follow'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sitemap status
+    |--------------------------------------------------------------------------
+    |
+    | Should there be a sitemap available
+    |
+    */
+    'sitemap_status' => env('SITEMAP_STATUS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -132,7 +131,6 @@ return [
     | Insert all the laravel models which should be in the sitemap
     |
     */
-
     'sitemap_models' => [],
 
     /*
@@ -143,6 +141,5 @@ return [
     | Set the path of the sitemap
     |
     */
-
     'sitemap_path' => '/sitemap',
 ];

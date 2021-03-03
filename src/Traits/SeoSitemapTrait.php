@@ -15,5 +15,10 @@ trait SeoSitemapTrait
         return null;
     }
 
+    public function showItemInSitemap()
+    {
+        return true;
+    }
+
     abstract public static function getSitemapItems();
 }
