@@ -7,6 +7,7 @@ use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Select;
 use Marshmallow\TagsField\Tags;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -34,7 +35,7 @@ class Seoable
                          */
                         app('seo')->set($model)->store($request, $field, 'title');
                     }
-                   )
+                )
                 ->resolveUsing(
                     function ($name, Model $model, $field) {
                         $model = self::resolveModel($model);
@@ -119,17 +120,17 @@ class Seoable
                 ->setCustomCallback(function ($request, $requestAttribute, $model, $attribute, $fileName) {
                     $request->{$requestAttribute} = $fileName;
                     app('seo')
-                            ->set($model)
-                            ->store($request, $requestAttribute, 'image');
+                        ->set($model)
+                        ->store($request, $requestAttribute, 'image');
                 })
                 ->store(
                     function (NovaRequest $request, Model $model, $attribute, $requestAttribute, $disk, $storagePath) {
                         $model = self::resolveModel($model);
                         $storage_location = Storage::disk(config('seo.storage.disk'))
-                                                    ->putFile(
-                                                        config('seo.storage.path'),
-                                                        $request->file($requestAttribute)
-                                                    );
+                            ->putFile(
+                                config('seo.storage.path'),
+                                $request->file($requestAttribute)
+                            );
 
                         $request->{$requestAttribute} = $storage_location;
                         app('seo')
@@ -140,21 +141,21 @@ class Seoable
                 ->customPreview(
                     function ($value, $disk, Model $model) {
                         return app('seo')
-                                ->set($model)
-                                ->getSeoImageUrl();
+                            ->set($model)
+                            ->getSeoImageUrl();
                     }
                 )
                 ->customThumbnail(
                     function ($value, $disk, Model $model) {
                         return app('seo')
-                                ->set($model)
-                                ->getSeoImageUrl();
+                            ->set($model)
+                            ->getSeoImageUrl();
                     }
                 )
                 ->hideFromIndex()
                 ->hideWhenCreating(),
 
-             Select::make('Page type', 'seoable_page_type')
+            Select::make('Page type', 'seoable_page_type')
                 ->options(config('seo.page_types'))
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
@@ -178,31 +179,47 @@ class Seoable
 
     public static function routes()
     {
-        $routes = RouteModel::ordered()->get();
-        foreach ($routes as $route) {
-            $method = $route->method;
+        if (self::shouldLoadRoutes()) {
+            $routes = RouteModel::ordered()->get();
+            foreach ($routes as $route) {
+                $method = $route->method;
 
-            try {
-                $_route = Route::{$method}($route->path, $route->controller);
-                if ($route->name) {
-                    $_route = $_route->name($route->name);
-                }
-                if ($route->middleware) {
-                    $_route = $_route->middleware($route->middleware);
-                }
-            } catch (Exception $e) {
-                /*
+                try {
+                    $_route = Route::{$method}($route->path, $route->controller);
+                    if ($route->name) {
+                        $_route = $_route->name($route->name);
+                    }
+                    if ($route->middleware) {
+                        $_route = $_route->middleware($route->middleware);
+                    }
+                } catch (Exception $e) {
+                    /*
                  * We only catch this Exception so no error's will be thrown
                  * if a controller of method doesnt exist. If we through this
                  * error, people won't be able to fix there mistake.
                  */
+                }
             }
         }
     }
 
+    protected static function shouldLoadRoutes(): bool
+    {
+        if (!Schema::hasTable('routes')) {
+            /**
+             * Don't load the routes if the pages table
+             * doesnt exist. If this is the case, the
+             * migrations haven't fully run yet.
+             */
+            return false;
+        }
+
+        return true;
+    }
+
     public static function resolveModel(Model $model)
     {
-        if (! $model->fresh() && request()->resourceId) {
+        if (!$model->fresh() && request()->resourceId) {
             $model = get_class($model)::findOrFail(request()->resourceId);
         }
         return $model;
