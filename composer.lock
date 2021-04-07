@@ -178,7 +178,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.36.1",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -232,7 +232,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v8.36.1",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -283,7 +283,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.36.1",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -331,7 +331,7 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v8.36.1",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
@@ -399,7 +399,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.36.1",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -445,7 +445,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v8.36.1",
+            "version": "v8.36.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -643,20 +643,20 @@
         },
         {
             "name": "marshmallow/commands",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/commands.git",
-                "reference": "2928446c1fac42e1a15bb62251e7fcd55fe97f91"
+                "reference": "7006acf51ce19895c1d5f779d3b6b98836421119"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/commands/zipball/2928446c1fac42e1a15bb62251e7fcd55fe97f91",
-                "reference": "2928446c1fac42e1a15bb62251e7fcd55fe97f91",
+                "url": "https://api.github.com/repos/marshmallow-packages/commands/zipball/7006acf51ce19895c1d5f779d3b6b98836421119",
+                "reference": "7006acf51ce19895c1d5f779d3b6b98836421119",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": "^7.0|^8.0"
             },
             "type": "library",
             "extra": {
@@ -691,29 +691,29 @@
             "support": {
                 "email": "stef@marshmallow.dev",
                 "issues": "https://github.com/marshmallow-packages/commands/issues",
-                "source": "https://github.com/marshmallow-packages/commands/tree/v1.2.0"
+                "source": "https://github.com/marshmallow-packages/commands/tree/v1.2.1"
             },
-            "time": "2021-01-20T16:36:59+00:00"
+            "time": "2021-04-07T10:51:20+00:00"
         },
         {
             "name": "marshmallow/helpers",
-            "version": "v2.8.1",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/helpers.git",
-                "reference": "a5303e2c7fad513cb1d7aad13c6062a0dfd1be22"
+                "reference": "7dd7765a7decb775515e716918484bc1366fe46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/helpers/zipball/a5303e2c7fad513cb1d7aad13c6062a0dfd1be22",
-                "reference": "a5303e2c7fad513cb1d7aad13c6062a0dfd1be22",
+                "url": "https://api.github.com/repos/marshmallow-packages/helpers/zipball/7dd7765a7decb775515e716918484bc1366fe46e",
+                "reference": "7dd7765a7decb775515e716918484bc1366fe46e",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^8.0",
                 "illuminate/support": "^8.0",
                 "laravel/helpers": "^1.3",
-                "php": ">=7.0.0"
+                "php": "^7.0|^8.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^6.2",
@@ -762,26 +762,26 @@
             "support": {
                 "email": "stef@marshmallow.dev",
                 "issues": "https://github.com/marshmallow-packages/helpers/issues",
-                "source": "https://github.com/marshmallow-packages/helpers/tree/v2.8.1"
+                "source": "https://github.com/marshmallow-packages/helpers/tree/v2.8.2"
             },
-            "time": "2021-03-24T16:00:08+00:00"
+            "time": "2021-04-07T10:45:03+00:00"
         },
         {
             "name": "marshmallow/live-update",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/live-update.git",
-                "reference": "e19bc70d959ff6b4412ce90828043a9dec803599"
+                "reference": "9bee85508e9a990f2926c223f6444877b663b401"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/live-update/zipball/e19bc70d959ff6b4412ce90828043a9dec803599",
-                "reference": "e19bc70d959ff6b4412ce90828043a9dec803599",
+                "url": "https://api.github.com/repos/marshmallow-packages/live-update/zipball/9bee85508e9a990f2926c223f6444877b663b401",
+                "reference": "9bee85508e9a990f2926c223f6444877b663b401",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0"
+                "php": "^7.1|^8.0"
             },
             "type": "library",
             "extra": {
@@ -807,9 +807,9 @@
             ],
             "support": {
                 "issues": "https://github.com/marshmallow-packages/live-update/issues",
-                "source": "https://github.com/marshmallow-packages/live-update/tree/v1.0.0"
+                "source": "https://github.com/marshmallow-packages/live-update/tree/v1.0.1"
             },
-            "time": "2020-10-08T13:32:00+00:00"
+            "time": "2021-04-07T10:44:34+00:00"
         },
         {
             "name": "marshmallow/mr-mallow",
@@ -870,21 +870,21 @@
         },
         {
             "name": "marshmallow/nova-advanced-image",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/nova-advanced-image.git",
-                "reference": "f417c39f4d5d792f4ca30ea87c88182828aed724"
+                "reference": "737b4539fc3bc2a610ccd9d40d913d05231c90e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/nova-advanced-image/zipball/f417c39f4d5d792f4ca30ea87c88182828aed724",
-                "reference": "f417c39f4d5d792f4ca30ea87c88182828aed724",
+                "url": "https://api.github.com/repos/marshmallow-packages/nova-advanced-image/zipball/737b4539fc3bc2a610ccd9d40d913d05231c90e2",
+                "reference": "737b4539fc3bc2a610ccd9d40d913d05231c90e2",
                 "shasum": ""
             },
             "require": {
                 "intervention/image": "^2.5",
-                "php": ">=7.1.0"
+                "php": "^7.1|^8.0"
             },
             "type": "library",
             "extra": {
@@ -918,26 +918,26 @@
             ],
             "support": {
                 "issues": "https://github.com/marshmallow-packages/nova-advanced-image/issues",
-                "source": "https://github.com/marshmallow-packages/nova-advanced-image/tree/v1.0.3"
+                "source": "https://github.com/marshmallow-packages/nova-advanced-image/tree/v1.0.4"
             },
-            "time": "2021-01-16T17:10:49+00:00"
+            "time": "2021-04-07T10:44:30+00:00"
         },
         {
             "name": "marshmallow/nova-charcounted-fields",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/nova-charcounted-fields.git",
-                "reference": "a5517005d20097a4f3b5276532b975ce4cb43bc1"
+                "reference": "54c78a534e7fcadf14906e5c8f353967dcf06665"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/nova-charcounted-fields/zipball/a5517005d20097a4f3b5276532b975ce4cb43bc1",
-                "reference": "a5517005d20097a4f3b5276532b975ce4cb43bc1",
+                "url": "https://api.github.com/repos/marshmallow-packages/nova-charcounted-fields/zipball/54c78a534e7fcadf14906e5c8f353967dcf06665",
+                "reference": "54c78a534e7fcadf14906e5c8f353967dcf06665",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0"
+                "php": "^7.1|^8.0"
             },
             "type": "library",
             "extra": {
@@ -964,26 +964,26 @@
             ],
             "support": {
                 "issues": "https://github.com/marshmallow-packages/nova-charcounted-fields/issues",
-                "source": "https://github.com/marshmallow-packages/nova-charcounted-fields/tree/v1.0.0"
+                "source": "https://github.com/marshmallow-packages/nova-charcounted-fields/tree/v1.0.1"
             },
-            "time": "2020-07-06T10:36:56+00:00"
+            "time": "2021-04-07T10:44:37+00:00"
         },
         {
             "name": "marshmallow/nova-tags-field",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/nova-tags-field.git",
-                "reference": "e3303c8ff5177b549df186f645a2b2c10f2ca471"
+                "reference": "af956d2d338969fa756f9a1c8bbf7223112a2a67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/nova-tags-field/zipball/e3303c8ff5177b549df186f645a2b2c10f2ca471",
-                "reference": "e3303c8ff5177b549df186f645a2b2c10f2ca471",
+                "url": "https://api.github.com/repos/marshmallow-packages/nova-tags-field/zipball/af956d2d338969fa756f9a1c8bbf7223112a2a67",
+                "reference": "af956d2d338969fa756f9a1c8bbf7223112a2a67",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0"
+                "php": "^7.1|^8.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.1",
@@ -1024,9 +1024,9 @@
             ],
             "support": {
                 "issues": "https://github.com/marshmallow-packages/nova-tags-field/issues",
-                "source": "https://github.com/marshmallow-packages/nova-tags-field/tree/v1.1.0"
+                "source": "https://github.com/marshmallow-packages/nova-tags-field/tree/v1.1.1"
             },
-            "time": "2021-01-20T16:05:26+00:00"
+            "time": "2021-04-07T10:44:09+00:00"
         },
         {
             "name": "marshmallow/sluggable",
@@ -1096,16 +1096,16 @@
         },
         {
             "name": "marshmallow/translatable",
-            "version": "v1.7.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marshmallow-packages/translatable.git",
-                "reference": "04ddd615fc5bb77c266462cb712f7619e4718157"
+                "reference": "b47542770f6e48a8c70be2062e087ba39e333fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marshmallow-packages/translatable/zipball/04ddd615fc5bb77c266462cb712f7619e4718157",
-                "reference": "04ddd615fc5bb77c266462cb712f7619e4718157",
+                "url": "https://api.github.com/repos/marshmallow-packages/translatable/zipball/b47542770f6e48a8c70be2062e087ba39e333fe4",
+                "reference": "b47542770f6e48a8c70be2062e087ba39e333fe4",
                 "shasum": ""
             },
             "require": {
@@ -1114,7 +1114,7 @@
                 "marshmallow/live-update": "^1.0",
                 "marshmallow/nova-advanced-image": "^1.0",
                 "marshmallow/sluggable": "^1.0",
-                "php": ">=7.1.0"
+                "php": "^7.1|^8.0"
             },
             "type": "library",
             "extra": {
@@ -1152,9 +1152,9 @@
             ],
             "support": {
                 "issues": "https://github.com/marshmallow-packages/translatable/issues",
-                "source": "https://github.com/marshmallow-packages/translatable/tree/v1.7.0"
+                "source": "https://github.com/marshmallow-packages/translatable/tree/v1.7.1"
             },
-            "time": "2021-02-25T10:35:28+00:00"
+            "time": "2021-04-07T10:44:47+00:00"
         },
         {
             "name": "nesbot/carbon",
