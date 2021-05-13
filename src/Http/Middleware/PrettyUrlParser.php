@@ -24,12 +24,14 @@ class PrettyUrlParser
         if ($this->routeIsPretty($request)) {
             $pretty_url = PrettyUrl::byPath($request->path())->first();
             $pretty_url->checkAndSetCanonical();
+            $pretty_url->setSeoableContent();
             $request = Request::createRequestFromPrettyUrl($request);
         } elseif ($pretty_url = $this->routeIsPrettyfied($request)) {
             if ($pretty_url->shouldBeRedirected()) {
                 return $pretty_url->getRedirectToPretty();
             } elseif ($pretty_url->shouldUseAsCanonical()) {
                 $pretty_url->checkAndSetCanonical();
+                $pretty_url->setSeoableContent();
             }
         }
 

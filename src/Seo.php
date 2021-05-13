@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\Seoable\Helpers\Schemas\Schema;
+use Marshmallow\Nova\Flexible\Layouts\Collection;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
 
@@ -25,6 +26,7 @@ class Seo
     protected $schemas;
     protected $breadcrumbs;
     protected $page_type;
+    protected $seoable_content;
 
     public function set($model)
     {
@@ -343,6 +345,12 @@ class Seo
         return $this->canonical ?? request()->url();
     }
 
+    public function setSeoableContent(Collection $seoable_content)
+    {
+        $this->seoable_content = $seoable_content;
+        return $this;
+    }
+
     public function getSeoFollowType()
     {
         if ($follow_type = $this->hasSeoableValue('follow_type')) {
@@ -373,6 +381,21 @@ class Seo
                 'container' => $container,
             ]);
         }
+    }
+
+    public function content(string $type)
+    {
+        if (!$this->seoable_content) {
+            return null;
+        }
+
+        foreach ($this->seoable_content as $content) {
+            if ($content->type == $type) {
+                return $content->content;
+            }
+        }
+
+        return null;
     }
 
     public function generate()
