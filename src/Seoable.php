@@ -205,7 +205,7 @@ class Seoable
 
             if (config('seo.use_pretty_urls') === true) {
                 PrettyUrl::get()->each(function ($prettyUrl) {
-                    Route::get($prettyUrl->getRelativePath(), PrettyUrlController::class);
+                    Route::get($prettyUrl->getRelativePath(), [PrettyUrlController::class, 'pretty']);
                 });
             }
         }

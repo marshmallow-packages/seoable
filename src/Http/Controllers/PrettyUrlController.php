@@ -9,7 +9,7 @@ use Marshmallow\Seoable\Models\PrettyUrl;
 
 class PrettyUrlController extends Controller
 {
-    public function __invoke(Request $request)
+    public function pretty(Request $request)
     {
         abort(404);
     }
