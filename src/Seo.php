@@ -28,8 +28,18 @@ class Seo
     protected $page_type;
     protected $seoable_content;
 
-    public function set($model)
+    protected $model_is_set = false;
+
+    public function set($model, $fix_this_model = false)
     {
+        if ($this->model_is_set) {
+            return $this;
+        }
+
+        if ($fix_this_model === true) {
+            $this->model_is_set = true;
+        }
+
         if ($model instanceof Model) {
             $this->setFromModel($model);
         }

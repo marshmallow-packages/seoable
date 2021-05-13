@@ -3,12 +3,13 @@
 namespace Marshmallow\Seoable\Nova;
 
 use App\Nova\Resource;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Heading;
-use Laravel\Nova\Fields\Textarea;
+use Marshmallow\Seoable\Seoable;
 use Marshmallow\Nova\TinyMCE\TinyMCE;
 use Marshmallow\Nova\Fields\Help\Help;
 use Marshmallow\Nova\Flexible\Flexible;
@@ -70,7 +71,7 @@ class PrettyUrl extends Resource
                 ->required()
                 ->help('Please provide the full URL which you want to prettify. This should include https://')
                 ->displayUsing(function ($value) {
-                    return "<a href='{$value}' target='_blank'>{$value}</a>";
+                    return "<a href='{$value}' target='_blank'>{$this->getDisplayableLink($value)}</a>";
                 })->asHtml(),
 
             Text::make('Pretty Url', 'pretty_url')
@@ -88,7 +89,7 @@ class PrettyUrl extends Resource
                     new IsFullLocalUrl
                 ])
                 ->displayUsing(function ($value) {
-                    return "<a href='{$value}' target='_blank'>{$value}</a>";
+                    return "<a href='{$value}' target='_blank'>{$this->getDisplayableLink($value)}</a>";
                 })->asHtml(),
 
             Boolean::make('Is canonical', 'is_canonical')
@@ -115,7 +116,14 @@ class PrettyUrl extends Resource
                 ->fullWidth()
                 ->collapsed()
                 ->button(__('Add more content')),
+
+            Seoable::make(__('SEO')),
         ];
+    }
+
+    protected function getDisplayableLink($value, $limit = 100)
+    {
+        return Str::of($value)->replace(config('app.url'), '')->limit($limit, '...');
     }
 
     /**

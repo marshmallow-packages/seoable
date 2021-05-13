@@ -24,7 +24,7 @@ class PrettyUrlParser
         if ($this->routeIsPretty($request)) {
             $pretty_url = PrettyUrl::byPath($request->path())->first();
             $pretty_url->checkAndSetCanonical();
-            $pretty_url->setSeoableContent();
+            $pretty_url->setSeoableContent(true);
             $request = Request::createRequestFromPrettyUrl($request);
         } elseif ($pretty_url = $this->routeIsPrettyfied($request)) {
             if ($pretty_url->shouldBeRedirected()) {
