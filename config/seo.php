@@ -10,6 +10,7 @@ return [
         'follow_type' => 'index, follow',
         'page_type' => 'website',
         'author' => 'Marshmallow',
+        'logo' => null,
     ],
 
     'use_pretty_urls' => false,

@@ -12,7 +12,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\Seoable\Helpers\Schemas\Schema;
 use Marshmallow\Nova\Flexible\Layouts\Collection;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaOrganization;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaPostalAddress;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaGeoCoordinates;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaOpeningHoursSpecification;
 
 class Seo
 {
@@ -29,6 +33,59 @@ class Seo
     protected $seoable_content;
 
     protected $model_is_set = false;
+
+    public function __construct()
+    {
+        $address = SchemaPostalAddress::make()
+            ->street('Da Costastraat 8')
+            ->locality('Alphen aan den Rijn')
+            ->region('Zuid-Holland')
+            ->postalCode('2406 AT')
+            ->country('NL');
+
+        $geo = SchemaGeoCoordinates::make()
+            ->latitude(37.293058)
+            ->longitude(-121.988331);
+
+        $openingHoursSpecification = SchemaOpeningHoursSpecification::make()
+            ->dayOfWeek([
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+            ])
+            ->opens('08:00')
+            ->closes('23:00');
+
+        $openingHoursSpecificationSunday = SchemaOpeningHoursSpecification::make()
+            ->dayOfWeek('Sunday')
+            ->opens('10:00')
+            ->closes('16:00');
+
+        $business = \Marshmallow\Seoable\Helpers\Schemas\SchemaLocalBusiness::make(config('app.name'))
+            ->id(config('app.url'))
+            ->type('Store')
+            ->image('https://example.com/photo-1.jpg')
+            ->image('https://example.com/photo-2.jpg')
+            ->image('https://example.com/photo-3.jpg')
+            ->image('https://example.com/photo-4.jpg')
+            ->url(config('app.url'))
+            ->priceRange('$$$')
+            ->telephone('0628998954')
+            ->address($address)
+            ->openingHoursSpecification($openingHoursSpecification)
+            ->openingHoursSpecification($openingHoursSpecificationSunday)
+            ->geo($geo);
+
+        $this->addSchema($business);
+
+        if (config('seo.defaults.logo')) {
+            $company_schema = SchemaOrganization::make(config('seo.defaults.logo'));
+            $this->addSchema($company_schema);
+        }
+    }
 
     public function set($model, $fix_this_model = false)
     {

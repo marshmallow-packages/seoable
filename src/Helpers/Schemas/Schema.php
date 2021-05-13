@@ -3,9 +3,14 @@
 namespace Marshmallow\Seoable\Helpers\Schemas;
 
 use Carbon\Carbon;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaPostalAddress;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaGeoCoordinates;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaOpeningHoursSpecification;
 
 class Schema
 {
+    protected $id;
+
     protected $brand;
 
     protected $rating;
@@ -20,11 +25,17 @@ class Schema
 
     protected $video;
 
+    protected $address;
+
+    protected $geo;
+
     protected $offers = [];
 
     protected $images = [];
 
     protected $reviews = [];
+
+    protected $openingHoursSpecification = [];
 
     public function brand(string $name = null)
     {
@@ -32,6 +43,12 @@ class Schema
             $this->brand = SchemaBrand::make($name)->toJson();
         }
 
+        return $this;
+    }
+
+    public function id(string $id = null)
+    {
+        $this->id = $id;
         return $this;
     }
 
@@ -53,6 +70,28 @@ class Schema
                 continue;
             }
             $this->offers[] = $offer->toJson();
+        }
+
+        return $this;
+    }
+
+    public function openingHoursSpecification(SchemaOpeningHoursSpecification $specification)
+    {
+        $this->openingHoursSpecifications([$specification]);
+        return $this;
+    }
+
+    public function openingHoursSpecifications(array $specifications = [])
+    {
+        if (!$specifications) {
+            return $this;
+        }
+
+        foreach ($specifications as $specification) {
+            if (!$specification instanceof SchemaOpeningHoursSpecification) {
+                continue;
+            }
+            $this->openingHoursSpecification[] = $specification->toJson();
         }
 
         return $this;
@@ -87,6 +126,18 @@ class Schema
     {
         $this->aggregateRating = $aggregateRating->toJson();
 
+        return $this;
+    }
+
+    public function address(SchemaPostalAddress $address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    public function geo(SchemaGeoCoordinates $geo)
+    {
+        $this->geo = $geo;
         return $this;
     }
 
@@ -152,9 +203,9 @@ class Schema
         })->toArray();
 
         $duration = 'PT';
-        $duration .= $parts[0].'H';
-        $duration .= $parts[1].'M';
-        $duration .= $parts[2].'S';
+        $duration .= $parts[0] . 'H';
+        $duration .= $parts[1] . 'M';
+        $duration .= $parts[2] . 'S';
 
         $this->{$column} = $duration;
 
