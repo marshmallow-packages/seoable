@@ -20,6 +20,7 @@ class Seo
     protected $description;
     protected $keywords;
     protected $image;
+    protected $canonical;
     protected $follow_type;
     protected $schemas;
     protected $breadcrumbs;
@@ -167,7 +168,7 @@ class Seo
 
     protected function getDefaultValue($database_column)
     {
-        $method_name = 'getDefaultSeo'.Str::of($database_column)->camel()->ucfirst();
+        $method_name = 'getDefaultSeo' . Str::of($database_column)->camel()->ucfirst();
 
         return $this->$method_name();
     }
@@ -175,7 +176,7 @@ class Seo
     public function setFromModel(Model $model)
     {
         if (!in_array(Seoable::class, class_uses($model))) {
-            throw new Exception(get_class($model).' should implement '.Seoable::class);
+            throw new Exception(get_class($model) . ' should implement ' . Seoable::class);
         }
 
         $this->model = $model;
@@ -206,7 +207,7 @@ class Seo
     protected function getDefault($column)
     {
         if (!$this->{$column}) {
-            return config('seo.defaults.'.$column);
+            return config('seo.defaults.' . $column);
         }
 
         return $this->{$column};
@@ -316,7 +317,7 @@ class Seo
     {
         $locale = app()->getLocale();
         if (false === strpos($locale, '_')) {
-            $locale .= '_'.Str::upper(app()->getLocale());
+            $locale .= '_' . Str::upper(app()->getLocale());
         }
 
         return $locale;
@@ -331,9 +332,15 @@ class Seo
         return $this->getDefaultSeoImage();
     }
 
+    public function setSeoCanonicalUrl(string $canonical)
+    {
+        $this->canonical = $canonical;
+        return $this;
+    }
+
     public function getSeoCanonicalUrl()
     {
-        return request()->url();
+        return $this->canonical ?? request()->url();
     }
 
     public function getSeoFollowType()
