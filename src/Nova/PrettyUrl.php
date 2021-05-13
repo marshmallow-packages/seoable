@@ -5,7 +5,13 @@ namespace Marshmallow\Seoable\Nova;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Fields\Textarea;
+use Marshmallow\Nova\TinyMCE\TinyMCE;
+use Marshmallow\Nova\Fields\Help\Help;
+use Marshmallow\Nova\Flexible\Flexible;
 use Marshmallow\Seoable\Rules\IsFullLocalUrl;
 
 class PrettyUrl extends Resource
@@ -28,13 +34,22 @@ class PrettyUrl extends Resource
      */
     public static $title = 'pretty_url';
 
+    public function title()
+    {
+        if ($this->name) {
+            return $this->name;
+        }
+
+        return $this->{$this::$title};
+    }
+
     /**
      * The columns that should be searched.
      *
      * @var array
      */
     public static $search = [
-        'original_url', 'pretty_url',
+        'original_url', 'pretty_url', 'name',
     ];
 
     /**
@@ -45,6 +60,11 @@ class PrettyUrl extends Resource
     public function fields(Request $request)
     {
         return [
+            Text::make('Name', 'name')
+                ->sortable()
+                ->required()
+                ->help('This name is for internal use only. This will make it easer to find this pretty url in the future'),
+
             Text::make('Original Url', 'original_url')
                 ->sortable()
                 ->required()
@@ -79,6 +99,22 @@ class PrettyUrl extends Resource
             Boolean::make('Should redirect', 'should_redirect')
                 ->sortable()
                 ->help('Should a visitor that lands on the original url be redirected to the pretty version? By default, this is not the case.'),
+
+            Heading::make(__('Seoable content')),
+            Help::make(__('How does this work?'), __('You can add content here that you need to be present on this pretty version of the page. All items need to be placed on the page by a developer. These items are not fixed to a specific place. This is done to be extremly flexible on where we place this content and we can make sure the design will remain awesome')),
+            Flexible::make(__('Content'), 'seoable_content')
+                ->addLayout(__('Seoable content'), 'seoable_content', [
+                    Select::make(__('Type'))->options([
+                        'header' => 'Header',
+                        'footer' => 'Footer',
+                    ]),
+                    Text::make(__('Title'), 'title'),
+                    TinyMCE::make(__('Content'), 'content'),
+                ])
+                ->simpleMenu()
+                ->fullWidth()
+                ->collapsed()
+                ->button(__('Add more content')),
         ];
     }
 

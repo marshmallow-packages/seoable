@@ -6,9 +6,14 @@ use Illuminate\Support\Str;
 use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Marshmallow\Nova\Flexible\Casts\FlexibleCast;
 
 class PrettyUrl extends Model
 {
+    protected $casts = [
+        'seoable_content' => FlexibleCast::class,
+    ];
+
     public function getRelativePath(): string
     {
         return Str::replaceFirst(config('app.url'), '', $this->pretty_url);
@@ -35,6 +40,12 @@ class PrettyUrl extends Model
     public function setCanonical(): self
     {
         Seo::setSeoCanonicalUrl($this->pretty_url);
+        return $this;
+    }
+
+    public function setSeoableContent(): self
+    {
+        Seo::setSeoableContent($this->seoable_content);
         return $this;
     }
 
