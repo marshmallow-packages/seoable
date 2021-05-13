@@ -22,7 +22,6 @@ class PrettyUrlParser
     public function handle(Request $request, Closure $next)
     {
         if ($this->routeIsPretty($request)) {
-
             $pretty_url = PrettyUrl::byPath($request->path())->first();
             $pretty_url->checkAndSetCanonical();
             $request = Request::createRequestFromPrettyUrl($request);
@@ -60,7 +59,7 @@ class PrettyUrlParser
         try {
             $routes = Route::getRoutes();
             $match = $routes->match($request);
-            return (isset($match->action['controller']) && $match->action['controller'] == PrettyUrlController::class);
+            return (isset($match->action['controller']) && $match->action['controller'] == PrettyUrlController::class . '@pretty');
         } catch (NotFoundHttpException $e) {
             return false;
         }
