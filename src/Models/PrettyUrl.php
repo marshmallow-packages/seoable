@@ -5,11 +5,14 @@ namespace Marshmallow\Seoable\Models;
 use Illuminate\Support\Str;
 use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Database\Eloquent\Model;
+use Marshmallow\Seoable\Traits\Seoable;
 use Illuminate\Database\Eloquent\Builder;
 use Marshmallow\Nova\Flexible\Casts\FlexibleCast;
 
 class PrettyUrl extends Model
 {
+    use Seoable;
+
     protected $casts = [
         'seoable_content' => FlexibleCast::class,
     ];
@@ -43,8 +46,12 @@ class PrettyUrl extends Model
         return $this;
     }
 
-    public function setSeoableContent(): self
+    public function setSeoableContent($use_for_seo = false): self
     {
+        if ($use_for_seo && $this->seoable) {
+            Seo::set($this, true);
+        }
+
         Seo::setSeoableContent($this->seoable_content);
         return $this;
     }

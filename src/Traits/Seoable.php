@@ -2,8 +2,8 @@
 
 namespace Marshmallow\Seoable\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Marshmallow\Seoable\Facades\Seo;
+use Illuminate\Database\Eloquent\Model;
 use Marshmallow\Seoable\Models\SeoableItem;
 
 trait Seoable
