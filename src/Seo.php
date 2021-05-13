@@ -383,7 +383,7 @@ class Seo
         }
     }
 
-    public function content(string $type)
+    public function content(string $type, $column = 'content')
     {
         if (!$this->seoable_content) {
             return null;
@@ -391,7 +391,7 @@ class Seo
 
         foreach ($this->seoable_content as $content) {
             if ($content->type == $type) {
-                return $content->content;
+                return $content->{$column};
             }
         }
 
