@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Marshmallow\Seoable\Models\PrettyUrl;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\AdvancedImage\AdvancedImage;
 use Marshmallow\CharcountedFields\TextCounted;
 use Marshmallow\CharcountedFields\TextareaCounted;
 use Marshmallow\Seoable\Models\Route as RouteModel;
+use Marshmallow\Seoable\Http\Controllers\PrettyUrlController;
 
 class Seoable
 {
@@ -199,6 +201,12 @@ class Seoable
                  * error, people won't be able to fix there mistake.
                  */
                 }
+            }
+
+            if (config('seo.use_pretty_urls') === true) {
+                PrettyUrl::get()->each(function ($prettyUrl) {
+                    Route::get($prettyUrl->getRelativePath(), PrettyUrlController::class);
+                });
             }
         }
     }
