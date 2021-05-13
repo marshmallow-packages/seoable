@@ -13,6 +13,8 @@ class PrettyUrl extends Model
 {
     use Seoable;
 
+    protected $guarded = [];
+
     protected $casts = [
         'seoable_content' => FlexibleCast::class,
     ];
