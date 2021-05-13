@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pretty_urls', function (Blueprint $table) {
             $table->id();
             $table->text('original_url');
-            $table->text('pretty_url')->unique();
+            $table->text('pretty_url');
             $table->boolean('is_canonical')->default(false);
             $table->boolean('should_redirect')->default(false);
             $table->timestamps();
