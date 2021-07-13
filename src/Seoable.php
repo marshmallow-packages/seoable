@@ -4,6 +4,7 @@ namespace Marshmallow\Seoable;
 
 use Exception;
 use Laravel\Nova\Panel;
+use Marshmallow\Seoable\Seo;
 use Laravel\Nova\Fields\Select;
 use Marshmallow\TagsField\Tags;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\AdvancedImage\AdvancedImage;
 use Marshmallow\CharcountedFields\TextCounted;
 use Marshmallow\CharcountedFields\TextareaCounted;
-use Marshmallow\Seoable\Models\Route as RouteModel;
 use Marshmallow\Seoable\Http\Controllers\PrettyUrlController;
 
 class Seoable
@@ -182,12 +182,18 @@ class Seoable
     public static function routes()
     {
         if (self::shouldLoadRoutes()) {
-            $routes = RouteModel::ordered()->get();
+            $routes = Seo::$routeModel::ordered()->get();
+
             foreach ($routes as $route) {
                 $method = $route->method;
+                $route_path = $route->path;
+
+                if (method_exists($route, 'getTranslation')) {
+                    $route_path = $route->getTranslation('path', Seo::$routeLocale);
+                }
 
                 try {
-                    $_route = Route::{$method}($route->path, $route->controller);
+                    $_route = Route::{$method}($route_path, $route->controller);
                     if ($route->name) {
                         $_route = $_route->name($route->name);
                     }

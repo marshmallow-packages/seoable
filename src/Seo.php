@@ -31,8 +31,15 @@ class Seo
 
     protected $model_is_set = false;
 
+    public static $routeModel = \Marshmallow\Seoable\Models\Route::class;
+    public static $routeLocale;
+
     public function __construct()
     {
+        if (!self::$routeLocale) {
+            self::$routeLocale = config('app.locale');
+        }
+
         if (config('seo.defaults.logo')) {
             $company_schema = SchemaOrganization::make(config('seo.defaults.logo'));
             $this->addSchema($company_schema);
