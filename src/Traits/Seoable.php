@@ -4,7 +4,7 @@ namespace Marshmallow\Seoable\Traits;
 
 use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Database\Eloquent\Model;
-use Marshmallow\Seoable\Models\SeoableItem;
+use Marshmallow\Seoable\Seo as BaseSeo;
 
 trait Seoable
 {
@@ -99,6 +99,6 @@ trait Seoable
 
     public function seoable()
     {
-        return $this->morphOne(SeoableItem::class, 'seoable');
+        return $this->morphOne(BaseSeo::$seoableItemModel, 'seoable');
     }
 }
