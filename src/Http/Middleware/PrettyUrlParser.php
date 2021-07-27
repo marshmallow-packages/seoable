@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Support\Facades\Route;
+use Marshmallow\Seoable\Seo as BaseSeo;
 use Marshmallow\Seoable\Models\PrettyUrl;
 use Marshmallow\Seoable\Http\Controllers\PrettyUrlController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -22,7 +23,7 @@ class PrettyUrlParser
     public function handle(Request $request, Closure $next)
     {
         if ($this->routeIsPretty($request)) {
-            $pretty_url = PrettyUrl::byPath($request->path())->first();
+            $pretty_url = BaseSeo::$prettyUrlModel::byPath($request->path())->first();
             $pretty_url->checkAndSetCanonical();
             $pretty_url->setSeoableContent(true);
             $request = Request::createRequestFromPrettyUrl($request);
@@ -46,7 +47,7 @@ class PrettyUrlParser
      */
     protected function routeIsPrettyfied(Request $request): ?PrettyUrl
     {
-        $pretty_url = PrettyUrl::byOriginalPath($request->path())->first();
+        $pretty_url = BaseSeo::$prettyUrlModel::byOriginalPath($request->path())->first();
         return $pretty_url ?? null;
     }
 

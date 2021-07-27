@@ -32,6 +32,8 @@ class Seo
     protected $model_is_set = false;
 
     public static $routeModel = \Marshmallow\Seoable\Models\Route::class;
+    public static $prettyUrlModel = \Marshmallow\Seoable\Models\PrettyUrl::class;
+    public static $seoableItemModel = \Marshmallow\Seoable\Models\SeoableItem::class;
     public static $routeLocale;
 
     public function __construct()

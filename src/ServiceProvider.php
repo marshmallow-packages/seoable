@@ -62,7 +62,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         Request::macro('createRequestFromPrettyUrl', function (Request $from, $to = null) {
 
-            $pretty_url = PrettyUrl::byPath($from->path())->first();
+            $pretty_url = Seo::$prettyUrlModel::byPath($from->path())->first();
             if (!$pretty_url) {
                 return $from;
             }

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Marshmallow\Seoable\Models\PrettyUrl;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\AdvancedImage\AdvancedImage;
 use Marshmallow\CharcountedFields\TextCounted;
@@ -210,7 +209,7 @@ class Seoable
             }
 
             if (config('seo.use_pretty_urls') === true) {
-                PrettyUrl::get()->each(function ($prettyUrl) {
+                Seo::$prettyUrlModel::get()->each(function ($prettyUrl) {
                     Route::get($prettyUrl->getRelativePath(), [PrettyUrlController::class, 'pretty']);
                 });
             }

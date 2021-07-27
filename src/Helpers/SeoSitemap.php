@@ -2,7 +2,7 @@
 
 namespace Marshmallow\Seoable\Helpers;
 
-use Marshmallow\Seoable\Models\SeoableItem;
+use Marshmallow\Seoable\Seo;
 
 class SeoSitemap
 {
@@ -37,7 +37,7 @@ class SeoSitemap
 
             if ($items && $items->count() > 0) {
                 $this->items = array_merge($this->items, $items->reject(function ($item) {
-                    if ($item->seoable && $item->seoable instanceof SeoableItem) {
+                    if ($item->seoable && $item->seoable instanceof Seo::$seoableItemModel) {
                         if (strpos($item->seoable->follow_type, 'noindex') !== false) {
                             return true;
                         }
@@ -93,15 +93,15 @@ class SeoSitemap
      */
     public function toXml()
     {
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' .
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         $lastmod = null;
 
         foreach ($this->items as $item) {
-            $xml .= '<url>'.
-                '<loc>'.('/' == substr($item->url, 0, 1) ? url($item->url) : $item->url).'</loc>'.
-                '<lastmod>'.($item->lastmod ?? $lastmod).'</lastmod>'.
-            '</url>';
+            $xml .= '<url>' .
+                '<loc>' . ('/' == substr($item->url, 0, 1) ? url($item->url) : $item->url) . '</loc>' .
+                '<lastmod>' . ($item->lastmod ?? $lastmod) . '</lastmod>' .
+                '</url>';
 
             if ($item->lastmod) {
                 $lastmod = $item->lastmod;
