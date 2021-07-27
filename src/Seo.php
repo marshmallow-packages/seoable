@@ -173,7 +173,7 @@ class Seo
         if (!$model->seoable) {
             $model->seoable()->create($data);
         } else {
-            $model->seoable()->first()->update($data);
+            $model->seoable()->update($data);
         }
 
         /*
