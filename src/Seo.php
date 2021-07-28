@@ -243,6 +243,36 @@ class Seo
         return $this->{$column};
     }
 
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function setKeywords(array $keywords)
+    {
+        $this->keywords = $keywords;
+        return $this;
+    }
+
+    public function setImage(string $image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    public function setFollowType(string $follow_type)
+    {
+        $this->follow_type = $follow_type;
+        return $this;
+    }
+
     protected function getDefaultSeoTitle()
     {
         return $this->getDefault('title');
