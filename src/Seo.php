@@ -36,6 +36,8 @@ class Seo
     public static $seoableItemModel = \Marshmallow\Seoable\Models\SeoableItem::class;
     public static $routeLocale;
 
+    protected $manual_values = [];
+
     public function __construct()
     {
         if (!self::$routeLocale) {
@@ -219,6 +221,10 @@ class Seo
 
     protected function hasSeoableValue($field)
     {
+        if (array_key_exists($field, $this->manual_values)) {
+            return $this->manual_values[$field];
+        }
+
         if (!$this->model) {
             return false;
         }
@@ -245,31 +251,31 @@ class Seo
 
     public function setTitle(string $title)
     {
-        $this->title = $title;
+        $this->manual_values['title'] = $title;
         return $this;
     }
 
     public function setDescription(string $description)
     {
-        $this->description = $description;
+        $this->manual_values['description'] = $description;
         return $this;
     }
 
     public function setKeywords(array $keywords)
     {
-        $this->keywords = $keywords;
+        $this->manual_values['keywords'] = $keywords;
         return $this;
     }
 
     public function setImage(string $image)
     {
-        $this->image = $image;
+        $this->manual_values['image'] = $image;
         return $this;
     }
 
     public function setFollowType(string $follow_type)
     {
-        $this->follow_type = $follow_type;
+        $this->manual_values['follow_type'] = $follow_type;
         return $this;
     }
 
