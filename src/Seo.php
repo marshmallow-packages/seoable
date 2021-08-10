@@ -279,6 +279,18 @@ class Seo
         return $this;
     }
 
+    public function setLocale(string $locale)
+    {
+        $this->manual_values['locale'] = $locale;
+        return $this;
+    }
+
+    public function setHtmlLanguage(string $html_language)
+    {
+        $this->manual_values['html_language'] = $html_language;
+        return $this;
+    }
+
     protected function getDefaultSeoTitle()
     {
         return $this->getDefault('title');
@@ -381,12 +393,25 @@ class Seo
 
     public function getSeoLocale()
     {
+        if (array_key_exists('locale', $this->manual_values)) {
+            return $this->manual_values['locale'];
+        }
+
         $locale = app()->getLocale();
         if (false === strpos($locale, '_')) {
             $locale .= '_' . Str::upper(app()->getLocale());
         }
 
         return $locale;
+    }
+
+    public function getHtmlLanguage()
+    {
+        if (array_key_exists('html_language', $this->manual_values)) {
+            return $this->manual_values['html_language'];
+        }
+
+        return config('app.locale');
     }
 
     public function getSeoImageUrl()
