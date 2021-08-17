@@ -3,14 +3,17 @@
 return [
     'defaults' => [
         'sitename' => env('APP_NAME'),
-        'title' => env('APP_NAME').' from config',
+        'title' => env('APP_NAME') . ' from config',
         'description' => 'Description from config',
         'keywords' => [env('APP_NAME'), 'Marshmallow Alphen'],
         'image' => 'https://marshmallow.dev/cdn/media/mrmallow-250x250.png',
         'follow_type' => 'index, follow',
         'page_type' => 'website',
         'author' => 'Marshmallow',
+        'logo' => null,
     ],
+
+    'use_pretty_urls' => false,
 
     'google' => [
         'GTM' => env('SEO_GTM', ''),            // GTM-XXXXXXX
@@ -36,7 +39,7 @@ return [
     ],
 
     'twitter' => [
-        'site' => '', 	 // @marshmallowdev
+        'site' => '',      // @marshmallowdev
         'creator' => '', // @stefvanesch
     ],
 

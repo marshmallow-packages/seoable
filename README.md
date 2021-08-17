@@ -1,28 +1,49 @@
 # SEO meta field nova
+
 This custom nova field, can add SEO related fields to any Model through a morph relationship within one single trait.
 
 ## How to install
+
 To install the package run the install below:
+
 ```
 composer require marshmallow/seoable
 ```
 
 And then run the migrations:
+
 ```
 php artisan migrate
 ```
 
-
 And then publish the configs:
+
 ```
 php artisan vendor:publish --provider="Marshmallow\Seoable\ServiceProvider"
 ```
 
 ## PLEASE NOTE
+
 If you are using route caching you need to make sure you have a queue:work running. If you change a route we will recache your routes automaticly but this is done via a queue.
 
+## Manually
+
+You can change the SEO data with the methods below.
+
+```php
+use Marshmallow\Seoable\Facades\Seo;
+
+Seo::setTitle(string $title);
+Seo::setDescription(string $description);
+Seo::setKeywords(array $keywords);
+Seo::setImage(string $image);
+Seo::setFollowType(string $follow_type);
+```
+
 ## How to use the field
+
 Find the model you want to have the SEO fields on, example could be `App\Models\Page`, then add the `Seoable` trait:
+
 ```
 ...
 use Marshmallow\Seoable\Traits\Seoable;
@@ -35,6 +56,7 @@ class Page extends Model
 ```
 
 Then use the field in the nova resource `App\Nova\Page`:
+
 ```
 ...
 use Marshmallow\Seoable\Seoable;
@@ -53,6 +75,7 @@ class Page extends Resource
 ```
 
 Then go to the top of your layout blade as default it's `resources/views/welcome.blade.php`:
+
 ```
 ...
 <head>
@@ -62,6 +85,7 @@ Then go to the top of your layout blade as default it's `resources/views/welcome
 ```
 
 Last step! Tell the SEO Facade which model it can use to set the SEO data.
+
 ```
 use Marshmallow\Seoable\Facades\Seo;
 
@@ -77,10 +101,17 @@ class ExampleController extends Controller
     }
 }
 
+```
 
+## Publish the Nova Resources
+
+```bash
+php artisan marshmallow:resource Route Seoable
+php artisan marshmallow:resource PrettyUrl Seoable
 ```
 
 ## Use sluggable
+
 This package also includes `marshmallow/sluggable` by default. We do this because to make sure all seo driven website will use the same logic for building slugs. The package it self does not use `marshmallow/sluggable` so you can choose any other sluggable package if you wish to do so.
 
 ```php
@@ -101,19 +132,35 @@ class YourEloquentModel extends Model
 ```
 
 ## Use routes
+
 ```bash
 php artisan marshmallow:resource Route Seoable
 ```
 
 Add the following to your `routes/web.php`.
+
 ```php
 use Marshmallow\Seoable\Seoable;
 
 Seoable::routes();
 ```
 
+## Use pretty URL's
+
+If you wish to use the pretty urls module, you need to activate this in your config. This is set to `false` by default. This module will register a middleware for you. Because this functionality is currently in beta it is disabled by default. If you find any issues, please let us know.
+
+```php
+// config/seo.php
+
+return [
+    'use_pretty_urls' => true,
+];
+```
+
 ## Setup default values for a model
+
 You can overrule how the seo defaults per model are handled. You can use the methods below.
+
 ```
 // Return the SEO title for the model
 public function getSeoTitle(): ?string
@@ -132,7 +179,9 @@ public function setSeoFollowType(): ?string
 ```
 
 ## Setup Sitemap functionality
+
 If you want the sitemap functionality then activate the sitemap by changing the `seo.sitemap_status` config to `true`. Then add the models which has the `SeoSitemapTrait` trait to the `seo.sitemap_models` array, like this:
+
 ```
     ...
     'sitemap_status' => env('SITEMAP_STATUS', true),
@@ -144,7 +193,9 @@ If you want the sitemap functionality then activate the sitemap by changing the 
 ```
 
 ### Add Sitemap trait to models
+
 When you want the eloquent model to be shown in the sitemap then you need to add the `SeoSitemapTrait` trait to it:
+
 ```
 ...
 use Marshmallow\Seoable\Traits\SeoSitemapTrait;
@@ -180,6 +231,7 @@ class Page extends Model
 Know you should be able to go to the `seo.sitemap_path` which is `/sitemap` as default. Then you should get an xml in the correct sitemap structure for [Google Search Console](https://search.google.com/search-console/about).
 
 ## Structured Data
+
 ```php
 $faq = \Marshmallow\Seoable\Helpers\Schemas\SchemaFaqPage::make();
 $faq->addQuestionAndAnswer('What is the name of this company?', 'Marshmallow');
@@ -188,13 +240,13 @@ $faq->addQuestionAndAnswer('What is the name of this company?', 'Marshmallow');
 ```
 
 ## How does it look in Laravel Nova
+
 If the field is shown **in the index view** of the Resource, then you should see a column with a dot:
 ![alt text](/assets/images/seo-field-index.jpg)
 
 **In detail view** you will see a text saying `You need some SEO data` if no SEO is setup yet. But if you have any then, you will get the toggle button, which will show you an example how it will look like on Google and on Facebook:
 ![alt text](/assets/images/seo-field-detail-hidden.jpg)
 ![alt text](/assets/images/seo-field-detail-show.jpg)
-
 
 **In form view** you should see all the SEO input fields:
 ![alt text](/assets/images/seo-field-form.jpg)

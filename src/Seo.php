@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\Seoable\Helpers\Schemas\Schema;
+use Marshmallow\Nova\Flexible\Layouts\Collection;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaListItem;
+use Marshmallow\Seoable\Helpers\Schemas\SchemaOrganization;
 use Marshmallow\Seoable\Helpers\Schemas\SchemaBreadcrumbList;
 
 class Seo
@@ -20,13 +22,44 @@ class Seo
     protected $description;
     protected $keywords;
     protected $image;
+    protected $canonical;
     protected $follow_type;
     protected $schemas;
     protected $breadcrumbs;
     protected $page_type;
+    protected $seoable_content;
 
-    public function set($model)
+    protected $model_is_set = false;
+
+    public static $routeModel = \Marshmallow\Seoable\Models\Route::class;
+    public static $prettyUrlModel = \Marshmallow\Seoable\Models\PrettyUrl::class;
+    public static $seoableItemModel = \Marshmallow\Seoable\Models\SeoableItem::class;
+    public static $routeLocale;
+
+    protected $manual_values = [];
+
+    public function __construct()
     {
+        if (!self::$routeLocale) {
+            self::$routeLocale = config('app.locale');
+        }
+
+        if (config('seo.defaults.logo')) {
+            $company_schema = SchemaOrganization::make(config('seo.defaults.logo'));
+            $this->addSchema($company_schema);
+        }
+    }
+
+    public function set($model, $fix_this_model = false)
+    {
+        if ($this->model_is_set) {
+            return $this;
+        }
+
+        if ($fix_this_model === true) {
+            $this->model_is_set = true;
+        }
+
         if ($model instanceof Model) {
             $this->setFromModel($model);
         }
@@ -144,7 +177,7 @@ class Seo
         if (!$model->seoable) {
             $model->seoable()->create($data);
         } else {
-            $model->seoable()->first()->update($data);
+            $model->seoable()->update($data);
         }
 
         /*
@@ -167,7 +200,7 @@ class Seo
 
     protected function getDefaultValue($database_column)
     {
-        $method_name = 'getDefaultSeo'.Str::of($database_column)->camel()->ucfirst();
+        $method_name = 'getDefaultSeo' . Str::of($database_column)->camel()->ucfirst();
 
         return $this->$method_name();
     }
@@ -175,7 +208,7 @@ class Seo
     public function setFromModel(Model $model)
     {
         if (!in_array(Seoable::class, class_uses($model))) {
-            throw new Exception(get_class($model).' should implement '.Seoable::class);
+            throw new Exception(get_class($model) . ' should implement ' . Seoable::class);
         }
 
         $this->model = $model;
@@ -188,6 +221,10 @@ class Seo
 
     protected function hasSeoableValue($field)
     {
+        if (array_key_exists($field, $this->manual_values)) {
+            return $this->manual_values[$field];
+        }
+
         if (!$this->model) {
             return false;
         }
@@ -206,10 +243,52 @@ class Seo
     protected function getDefault($column)
     {
         if (!$this->{$column}) {
-            return config('seo.defaults.'.$column);
+            return config('seo.defaults.' . $column);
         }
 
         return $this->{$column};
+    }
+
+    public function setTitle(string $title)
+    {
+        $this->manual_values['title'] = $title;
+        return $this;
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->manual_values['description'] = $description;
+        return $this;
+    }
+
+    public function setKeywords(array $keywords)
+    {
+        $this->manual_values['keywords'] = $keywords;
+        return $this;
+    }
+
+    public function setImage(string $image)
+    {
+        $this->manual_values['image'] = $image;
+        return $this;
+    }
+
+    public function setFollowType(string $follow_type)
+    {
+        $this->manual_values['follow_type'] = $follow_type;
+        return $this;
+    }
+
+    public function setLocale(string $locale)
+    {
+        $this->manual_values['locale'] = $locale;
+        return $this;
+    }
+
+    public function setHtmlLanguage(string $html_language)
+    {
+        $this->manual_values['html_language'] = $html_language;
+        return $this;
     }
 
     protected function getDefaultSeoTitle()
@@ -314,12 +393,25 @@ class Seo
 
     public function getSeoLocale()
     {
+        if (array_key_exists('locale', $this->manual_values)) {
+            return $this->manual_values['locale'];
+        }
+
         $locale = app()->getLocale();
         if (false === strpos($locale, '_')) {
-            $locale .= '_'.Str::upper(app()->getLocale());
+            $locale .= '_' . Str::upper(app()->getLocale());
         }
 
         return $locale;
+    }
+
+    public function getHtmlLanguage()
+    {
+        if (array_key_exists('html_language', $this->manual_values)) {
+            return $this->manual_values['html_language'];
+        }
+
+        return config('app.locale');
     }
 
     public function getSeoImageUrl()
@@ -331,9 +423,21 @@ class Seo
         return $this->getDefaultSeoImage();
     }
 
+    public function setSeoCanonicalUrl(string $canonical)
+    {
+        $this->canonical = $canonical;
+        return $this;
+    }
+
     public function getSeoCanonicalUrl()
     {
-        return request()->url();
+        return $this->canonical ?? request()->url();
+    }
+
+    public function setSeoableContent(Collection $seoable_content)
+    {
+        $this->seoable_content = $seoable_content;
+        return $this;
     }
 
     public function getSeoFollowType()
@@ -366,6 +470,21 @@ class Seo
                 'container' => $container,
             ]);
         }
+    }
+
+    public function content(string $type, $column = 'content')
+    {
+        if (!$this->seoable_content) {
+            return null;
+        }
+
+        foreach ($this->seoable_content as $content) {
+            if ($content->type == $type) {
+                return $content->{$column};
+            }
+        }
+
+        return null;
     }
 
     public function generate()

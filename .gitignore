@@ -1,6 +1,10 @@
 vendor/
 node_modules/
 npm-debug.log
+.DS_Store
+composer.lock
+yarn.lock
+package-lock.json
 
 # Laravel 4 specific
 bootstrap/compiled.php

@@ -16,10 +16,12 @@
         "seoable"
     ],
     "require": {
-        "php": ">=7.1.0",
+        "php": "^7.1|^8.0",
         "marshmallow/commands": "^1.0",
         "marshmallow/mr-mallow": "^1.0",
         "marshmallow/nova-advanced-image": "^1.0",
+        "marshmallow/nova-fields-help": "^1.0",
+        "marshmallow/nova-flexible": "^1.0",
         "marshmallow/nova-charcounted-fields": "^1.0",
         "marshmallow/translatable": "^1.0",
         "marshmallow/sluggable": "^1.0",
