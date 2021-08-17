@@ -49,6 +49,13 @@ return [
         ],
     ],
 
+    'hotjar' => [
+        'active' => env('HOTJAR_ACTIVE', false),
+        'id' => env('HOTJAR_ID', null),
+        'version' => env('HOTJAR_VERSION', 6),
+        'async' => env('HOTJAR_ASYNC', 1),
+    ],
+
     /*
      * For storing the SEO images
      */

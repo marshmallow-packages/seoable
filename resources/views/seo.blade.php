@@ -47,6 +47,7 @@
 @include('seoable::google.gtm-head')
 @include('seoable::google.ga-head')
 @include('seoable::microsoft.head')
+@include('seoable::hotjar.hotjar')
 
 @if (!config('seo.hide_mr_mallow'))
     <!-- Marshmallow SEO -->
