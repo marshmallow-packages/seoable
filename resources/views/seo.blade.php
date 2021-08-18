@@ -25,12 +25,6 @@
     <meta property="og:type" content="{{ $type }}" />
 @endif
 
-@if (config('seo.facebook.admins'))
-    <meta property="fb:admins" content="{{ config('seo.facebook.admins') }}" />
-@endif
-@if (config('seo.facebook.app_id'))
-    <meta property="fb:app_id" content="{{ config('seo.facebook.app_id') }}" />
-@endif
 @if (config('seo.twitter.site'))
     <meta name="twitter:site" content="{{ config('seo.twitter.site') }}" />
 @endif
@@ -46,6 +40,7 @@
 
 @include('seoable::google.gtm-head')
 @include('seoable::google.ga-head')
+@include('seoable::facebook.fb-head')
 @include('seoable::microsoft.head')
 @include('seoable::hotjar.hotjar')
 

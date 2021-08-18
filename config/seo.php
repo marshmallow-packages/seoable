@@ -36,6 +36,7 @@ return [
     'facebook' => [
         'admins' => env('FACEBOOK_ADMINS', ''),
         'app_id' => env('FACEBOOK_APP_ID', ''),
+        'pixel_id' => env('FACEBOOK_PIXEL_ID', ''),
     ],
 
     'twitter' => [
