@@ -153,4 +153,8 @@ return [
     |
     */
     'sitemap_path' => '/sitemap',
+
+    'database' => [
+        'connection' => null,
+    ],
 ];
