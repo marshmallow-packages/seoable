@@ -123,9 +123,6 @@ class PrettyUrl extends Resource
 
     protected function getTableWithConnectionName()
     {
-        if ($connection = config('seo.database.connection')) {
-            return "{$connection}.pretty_urls";
-        }
         return 'pretty_urls';
     }
 
