@@ -4,6 +4,7 @@ namespace Marshmallow\Seoable;
 
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Contracts\Http\Kernel;
 use Marshmallow\Seoable\Models\PrettyUrl;
@@ -75,12 +76,6 @@ class ServiceProvider extends BaseServiceProvider
 
             $files = is_array($files) ? array_filter($files) : $files;
 
-
-
-            // if ('/henk-jan-smit' == $from->server->all()['REQUEST_URI']) {
-            //
-            // }
-
             $request->initialize(
                 $from->query->all(),
                 $from->request->all(),
@@ -102,6 +97,22 @@ class ServiceProvider extends BaseServiceProvider
             $request->setUserResolver($from->getUserResolver());
 
             $request->setRouteResolver($from->getRouteResolver());
+
+            $original = $pretty_url->original_url . '?prettyfy';
+            $response = Http::get($original);
+            $original_route = $response->json();
+
+            $request->route()->uri = (string) $original_route['uri'];
+            $request->route()->methods = (array) $original_route['methods'];
+            $request->route()->action = (array) $original_route['action'];
+            $request->route()->isFallback = (bool) $original_route['isFallback'];
+            $request->route()->controller = (array) $original_route['controller'];
+            $request->route()->defaults = (array) $original_route['defaults'];
+            $request->route()->wheres = $original_route['wheres'];
+            $request->route()->parameters = (array) $original_route['parameters'];
+            $request->route()->parameterNames = (array) $original_route['parameterNames'];
+            $request->route()->computedMiddleware = (array) $original_route['computedMiddleware'];
+            $request->route()->compiled = $original_route['compiled'];
 
             return $request;
         });
