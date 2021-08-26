@@ -38,8 +38,9 @@ class ServiceProvider extends BaseServiceProvider
             __DIR__ . '/../config/seo.php' => config_path('seo.php'),
         ]);
 
+        $this->registerPrettyUrlMacro();
+
         if (config('seo.use_pretty_urls') === true) {
-            $this->registerPrettyUrlMacro();
             $this->registerMiddleware();
         }
     }
