@@ -197,7 +197,11 @@ class Seoable
                         $_route = $_route->name($route->name);
                     }
                     if ($route->middleware) {
-                        $_route = $_route->middleware($route->middleware);
+                        $middlewares = explode(',', $route->middleware);
+                        collect($middlewares)->filter()->each(function ($middleware) use ($_route) {
+                            $middleware = trim($middleware);
+                            $_route = $_route->middleware($middleware);
+                        });
                     }
                 } catch (Exception $e) {
                     /*
