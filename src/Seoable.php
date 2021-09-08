@@ -198,12 +198,10 @@ class Seoable
                     }
                     if ($route->middleware) {
                         $middlewares = explode(',', $route->middleware);
-                        if (count($middlewares)) {
-                            collect($middlewares)->each(function ($middleware) use ($_route) {
-                                $middleware = trim($middleware);
-                                $_route = $_route->middleware($middleware);
-                            });
-                        }
+                        collect($middlewares)->filter()->each(function ($middleware) use ($_route) {
+                            $middleware = trim($middleware);
+                            $_route = $_route->middleware($middleware);
+                        });
                     }
                 } catch (Exception $e) {
                     /*
