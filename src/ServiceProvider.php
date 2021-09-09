@@ -4,9 +4,11 @@ namespace Marshmallow\Seoable;
 
 use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Contracts\Http\Kernel;
 use Marshmallow\Seoable\Models\PrettyUrl;
+use Marshmallow\Seoable\Helpers\PrettyUrlResolver;
 use Marshmallow\Seoable\Http\Middleware\PrettyUrlParser;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -37,8 +39,9 @@ class ServiceProvider extends BaseServiceProvider
             __DIR__ . '/../config/seo.php' => config_path('seo.php'),
         ]);
 
+        $this->registerPrettyUrlMacro();
+
         if (config('seo.use_pretty_urls') === true) {
-            $this->registerPrettyUrlMacro();
             $this->registerMiddleware();
         }
     }
@@ -62,48 +65,11 @@ class ServiceProvider extends BaseServiceProvider
     {
         Request::macro('createRequestFromPrettyUrl', function (Request $from, $to = null) {
 
-            $pretty_url = Seo::$prettyUrlModel::byPath($from->path())->first();
-            if (!$pretty_url) {
-                return $from;
-            }
-
-            $from->server->set('REQUEST_URI', $pretty_url->getCleanPath('original_url'));
-
-            $request = $to ?: new static;
-
-            $files = $from->files->all();
-
-            $files = is_array($files) ? array_filter($files) : $files;
-
-
-
-            // if ('/henk-jan-smit' == $from->server->all()['REQUEST_URI']) {
-            //
-            // }
-
-            $request->initialize(
-                $from->query->all(),
-                $from->request->all(),
-                $from->attributes->all(),
-                $from->cookies->all(),
-                $files,
-                $from->server->all(),
-                $from->getContent()
-            );
-
-            $request->headers->replace($from->headers->all());
-
-            $request->setJson($from->json());
-
-            if ($session = $from->getSession()) {
-                $request->setLaravelSession($session);
-            }
-
-            $request->setUserResolver($from->getUserResolver());
-
-            $request->setRouteResolver($from->getRouteResolver());
-
-            return $request;
+            $to = ($to) ? $to : new static;
+            $resolver = new Seo::$prettyUrlResolver($from, $to);
+            return $resolver->resolve()
+                ->append()
+                ->run();
         });
     }
 

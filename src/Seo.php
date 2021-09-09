@@ -34,6 +34,7 @@ class Seo
     public static $routeModel = \Marshmallow\Seoable\Models\Route::class;
     public static $prettyUrlModel = \Marshmallow\Seoable\Models\PrettyUrl::class;
     public static $seoableItemModel = \Marshmallow\Seoable\Models\SeoableItem::class;
+    public static $prettyUrlResolver = \Marshmallow\Seoable\Helpers\PrettyUrlResolver::class;
     public static $routeLocale;
 
     protected $manual_values = [];

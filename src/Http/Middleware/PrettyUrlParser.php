@@ -22,6 +22,10 @@ class PrettyUrlParser
      */
     public function handle(Request $request, Closure $next)
     {
+        if ($request->has('prettier_route_response')) {
+            return response()->json($request->route());
+        }
+
         if ($this->routeIsPretty($request)) {
             $pretty_url = BaseSeo::$prettyUrlModel::byPath($request->path())->first();
             $pretty_url->checkAndSetCanonical();

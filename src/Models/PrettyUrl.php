@@ -3,10 +3,13 @@
 namespace Marshmallow\Seoable\Models;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Database\Eloquent\Model;
 use Marshmallow\Seoable\Traits\Seoable;
 use Illuminate\Database\Eloquent\Builder;
+use Marshmallow\Seoable\Events\PrettyUrlCreated;
+use Marshmallow\Seoable\Events\PrettyUrlUpdated;
 use Marshmallow\Nova\Flexible\Casts\FlexibleCast;
 
 class PrettyUrl extends Model
@@ -18,6 +21,25 @@ class PrettyUrl extends Model
     protected $casts = [
         'seoable_content' => FlexibleCast::class,
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(
+            function (PrettyUrl $prettyUrl) {
+                event(new PrettyUrlCreated($prettyUrl));
+            }
+        );
+
+        static::updated(
+            function (PrettyUrl $prettyUrl) {
+                if ($prettyUrl->isDirty('original_url')) {
+                    event(new PrettyUrlUpdated($prettyUrl));
+                }
+            }
+        );
+    }
 
     public function getRelativePath(): string
     {
@@ -80,6 +102,22 @@ class PrettyUrl extends Model
             $url = $url->append('/');
         }
         return $url;
+    }
+
+    public function getOriginalRouteJsonFromUrl()
+    {
+        $original = $this->original_url;
+        $original = explode('#', $original);
+        $original = Str::of($original[0]);
+
+        if ($original->contains('?')) {
+            $original = $original->append('&prettier_route_response');
+        } else {
+            $original = $original->append('?prettier_route_response');
+        }
+
+        $response = Http::withoutVerifying()->get($original);
+        return $response->json();
     }
 
     public function scopeByPath(Builder $builder, string $path): void
