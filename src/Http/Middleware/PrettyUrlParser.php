@@ -51,7 +51,7 @@ class PrettyUrlParser
      */
     protected function routeIsPrettyfied(Request $request): ?PrettyUrl
     {
-        $pretty_url = BaseSeo::$prettyUrlModel::byOriginalPath($request->path())->first();
+        $pretty_url = BaseSeo::$prettyUrlModel::byOriginalPath($request->getRequestUri())->first();
         return $pretty_url ?? null;
     }
 

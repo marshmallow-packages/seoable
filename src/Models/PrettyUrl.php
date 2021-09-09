@@ -26,9 +26,21 @@ class PrettyUrl extends Model
     {
         parent::boot();
 
+        static::creating(
+            function (PrettyUrl $prettyUrl) {
+                $prettyUrl->cleanUrls();
+            }
+        );
+
         static::created(
             function (PrettyUrl $prettyUrl) {
                 event(new PrettyUrlCreated($prettyUrl));
+            }
+        );
+
+        static::updating(
+            function (PrettyUrl $prettyUrl) {
+                $prettyUrl->cleanUrls();
             }
         );
 
@@ -92,7 +104,21 @@ class PrettyUrl extends Model
 
     protected function buildFullUrl($path): string
     {
-        return Str::of($this->getFullDomainPath())->append($path);
+        $path = Str::of($path);
+        $full_path = Str::of($this->getFullDomainPath());
+
+        if ($full_path->endsWith('/')) {
+            $full_path = $full_path->limit(
+                $full_path->length() - 1,
+                ''
+            );
+        }
+
+        if (!$path->startsWith('/')) {
+            $full_path = $full_path->append('/');
+        }
+
+        return $full_path->append($path);
     }
 
     protected function getFullDomainPath(): string
@@ -102,6 +128,19 @@ class PrettyUrl extends Model
             $url = $url->append('/');
         }
         return $url;
+    }
+
+    public function cleanUrls()
+    {
+        $this->original_url = $this->cleanUrl('original_url');
+        $this->pretty_url = $this->cleanUrl('pretty_url');
+    }
+
+    public function cleanUrl($column)
+    {
+        $url = $this->{$column};
+        $url = explode('#', $url);
+        return $url[0];
     }
 
     public function getOriginalRouteJsonFromUrl()
