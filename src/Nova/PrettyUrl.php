@@ -58,6 +58,8 @@ class PrettyUrl extends Resource
      */
     public function fields(Request $request)
     {
+        $table = $this->getTableWithConnectionName();
+
         return [
             Text::make('Name', 'name')
                 ->sortable()
@@ -77,12 +79,12 @@ class PrettyUrl extends Resource
                 ->required()
                 ->help('Please provide the full pretty URL. This should include https://')
                 ->creationRules([
-                    'unique:pretty_urls,pretty_url',
+                    "unique:{$table},pretty_url",
                     'different:original_url',
                     new IsFullLocalUrl
                 ])
                 ->updateRules([
-                    'unique:pretty_urls,pretty_url,{{resourceId}}',
+                    "unique:{$table},pretty_url,{{resourceId}}",
                     'different:original_url',
                     new IsFullLocalUrl
                 ])
@@ -117,6 +119,11 @@ class PrettyUrl extends Resource
 
             Seoable::make(__('SEO')),
         ];
+    }
+
+    protected function getTableWithConnectionName()
+    {
+        return 'pretty_urls';
     }
 
     protected function getDisplayableLink($value, $limit = 100)
