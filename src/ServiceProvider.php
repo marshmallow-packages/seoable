@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Contracts\Http\Kernel;
 use Marshmallow\Seoable\Models\PrettyUrl;
+use Marshmallow\Seoable\Helpers\PrettyUrlResolver;
 use Marshmallow\Seoable\Http\Middleware\PrettyUrlParser;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
@@ -64,58 +65,11 @@ class ServiceProvider extends BaseServiceProvider
     {
         Request::macro('createRequestFromPrettyUrl', function (Request $from, $to = null) {
 
-            $pretty_url = Seo::$prettyUrlModel::byPath($from->path())->first();
-            if (!$pretty_url) {
-                return $from;
-            }
-
-            $from->server->set('REQUEST_URI', $pretty_url->getCleanPath('original_url'));
-
-            $request = $to ?: new static;
-
-            $files = $from->files->all();
-
-            $files = is_array($files) ? array_filter($files) : $files;
-
-            $request->initialize(
-                $from->query->all(),
-                $from->request->all(),
-                $from->attributes->all(),
-                $from->cookies->all(),
-                $files,
-                $from->server->all(),
-                $from->getContent()
-            );
-
-            $request->headers->replace($from->headers->all());
-
-            $request->setJson($from->json());
-
-            if ($session = $from->getSession()) {
-                $request->setLaravelSession($session);
-            }
-
-            $request->setUserResolver($from->getUserResolver());
-
-            $request->setRouteResolver($from->getRouteResolver());
-
-            $original = $pretty_url->original_url . '?prettyfy';
-            $response = Http::get($original);
-            $original_route = $response->json();
-
-            $request->route()->uri = (string) $original_route['uri'];
-            $request->route()->methods = (array) $original_route['methods'];
-            $request->route()->action = (array) $original_route['action'];
-            $request->route()->isFallback = (bool) $original_route['isFallback'];
-            $request->route()->controller = (array) $original_route['controller'];
-            $request->route()->defaults = (array) $original_route['defaults'];
-            $request->route()->wheres = $original_route['wheres'];
-            $request->route()->parameters = (array) $original_route['parameters'];
-            $request->route()->parameterNames = (array) $original_route['parameterNames'];
-            $request->route()->computedMiddleware = (array) $original_route['computedMiddleware'];
-            $request->route()->compiled = $original_route['compiled'];
-
-            return $request;
+            $to = ($to) ? $to : new static;
+            $resolver = new Seo::$prettyUrlResolver($from, $to);
+            return $resolver->resolve()
+                ->append()
+                ->run();
         });
     }
 
