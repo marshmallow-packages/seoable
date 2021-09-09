@@ -105,7 +105,7 @@ class PrettyUrl extends Resource
             Help::make(__('How does this work?'), __('You can add content here that you need to be present on this pretty version of the page. All items need to be placed on the page by a developer. These items are not fixed to a specific place. This is done to be extremly flexible on where we place this content and we can make sure the design will remain awesome')),
             Flexible::make(__('Content'), 'seoable_content')
                 ->addLayout(__('Seoable content'), 'seoable_content', [
-                    Select::make(__('Type'))->options([
+                    Select::make(__('Type'), 'type')->options([
                         'header' => 'Header',
                         'footer' => 'Footer',
                     ]),
