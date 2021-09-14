@@ -4,6 +4,8 @@ namespace Marshmallow\Seoable\Helpers\Schemas;
 
 class SchemaAggregateRating extends Schema
 {
+    protected $name;
+
     protected $bestRating;
 
     protected $worstRating;
@@ -17,14 +19,26 @@ class SchemaAggregateRating extends Schema
         return $schema;
     }
 
+    public function name($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
     public function toJson()
     {
-        return [
+        $data = [
             '@type' => 'AggregateRating',
             'ratingValue' => $this->ratingValue,
             'reviewCount' => $this->reviewCount,
             'bestRating' => $this->bestRating,
             'worstRating' => $this->worstRating,
         ];
+
+        if ($this->name) {
+            $data['name'] = $this->name;
+        }
+
+        return $data;
     }
 }
