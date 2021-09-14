@@ -43,6 +43,7 @@ class SchemaLocalBusiness extends Schema
             'url' => $this->url,
             'priceRange' => $this->priceRange,
             'telephone' => $this->telephone,
+            'aggregateRating' => $this->aggregateRating,
             'openingHoursSpecification' => $this->openingHoursSpecification,
         ];
     }
