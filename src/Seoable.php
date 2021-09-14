@@ -183,6 +183,12 @@ class Seoable
         if (self::shouldLoadRoutes()) {
             $routes = Seo::$routeModel::ordered()->get();
 
+            if (config('seo.use_pretty_urls') === true) {
+                Seo::$prettyUrlModel::get()->each(function ($prettyUrl) {
+                    Route::get($prettyUrl->getRelativePath(), [PrettyUrlController::class, 'pretty']);
+                });
+            }
+
             foreach ($routes as $route) {
                 $method = $route->method;
                 $route_path = $route->path;
@@ -210,12 +216,6 @@ class Seoable
                  * error, people won't be able to fix there mistake.
                  */
                 }
-            }
-
-            if (config('seo.use_pretty_urls') === true) {
-                Seo::$prettyUrlModel::get()->each(function ($prettyUrl) {
-                    Route::get($prettyUrl->getRelativePath(), [PrettyUrlController::class, 'pretty']);
-                });
             }
         }
     }
