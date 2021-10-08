@@ -153,4 +153,15 @@ return [
     |
     */
     'sitemap_path' => '/sitemap',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Robots.txt
+    |--------------------------------------------------------------------------
+    |
+    | Override the class which builds the robots.txt file. If you are using this,
+    | do not forget to delete the original public/robots.txt file.
+    |
+    */
+    'robots_resolver' => Marshmallow\Seoable\Helpers\DefaultRobotsTxt::class,
 ];
