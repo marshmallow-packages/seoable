@@ -239,6 +239,53 @@ $faq->addQuestionAndAnswer('What is the name of this company?', 'Marshmallow');
 \Marshmallow\Seoable\Facades\Seo::addSchema($faq);
 ```
 
+## Robots
+
+This package also allows you to use a customer Robots.txt. You should create a helper class where you will add your Robots.txt content. For instance, create a class in `app/Helpers/RobotTxt.php`. In this class you should implement a `handle` method. This package will call the method for you and output the result.
+
+```php
+
+# app/Helpers/RobotTxt.php
+
+namespace App\Helpers;
+
+use Marshmallow\Seoable\Objects\Robots;
+use Marshmallow\Seoable\Contracts\RobotTxtInterface;
+
+class RobotTxt implements RobotTxtInterface
+{
+    public function handle(Robots $robots): Robots
+    {
+        return $robots->userAgent('*')
+            ->allow('/')
+            ->disallow('/login');
+    }
+}
+
+```
+
+### Implementation robots
+
+Once you've created the helper class you should let the seoable config know where to find this helper.
+
+```php
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Robots.txt
+    |--------------------------------------------------------------------------
+    |
+    | Override the class which builds the robots.txt file. If you are using this,
+    | do not forget to delete the original public/robots.txt file.
+    |
+    */
+    'robots_resolver' => App\Helpers\DefaultRobotsTxt::class,
+];
+```
+
+To complete the implementation, you only need the remove the default `public/robots.txt` file and you are good to go!
+
 ## How does it look in Laravel Nova
 
 If the field is shown **in the index view** of the Resource, then you should see a column with a dot:
