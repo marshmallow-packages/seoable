@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Marshmallow\Seoable\Helpers\SeoSitemap;
+use Marshmallow\Seoable\Http\Controllers\RobotsController;
 
 if (config('seo.sitemap_status')) {
     Route::get(config('seo.sitemap_path'), function () {
@@ -12,3 +13,5 @@ if (config('seo.sitemap_status')) {
         ]);
     });
 }
+
+Route::get('robots.txt', [RobotsController::class, 'render']);
