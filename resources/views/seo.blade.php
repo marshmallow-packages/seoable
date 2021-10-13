@@ -21,6 +21,10 @@
 <meta property="og:site_name" content="{{ config('seo.defaults.sitename') }}" />
 <meta property="og:locale" content="{{ Seo::getSeoLocale() }}" />
 
+@if ($canonical = Seo::getSeoCanonicalUrl())
+<link rel="canonical" href="{{ $canonical }}" />
+@endif
+
 @if ($type = Seo::getSeoPageType())
     <meta property="og:type" content="{{ $type }}" />
 @endif
