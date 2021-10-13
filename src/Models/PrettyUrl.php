@@ -94,7 +94,7 @@ class PrettyUrl extends Model
 
     public function getRedirectToPretty()
     {
-        return redirect()->to($this->pretty_url);
+        return redirect()->to($this->pretty_url, 301);
     }
 
     public function getCleanPath(string $column): string
