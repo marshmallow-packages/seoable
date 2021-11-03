@@ -50,6 +50,10 @@ class SeoSitemap
                         return true;
                     }
 
+                    if ($this->shouldBeExcluded($item)) {
+                        return true;
+                    }
+
                     if ($this->hasCanonicalPrettyUrl($item)) {
                         return true;
                     }
@@ -63,6 +67,14 @@ class SeoSitemap
                 })->toArray());
             }
         }
+    }
+
+    protected function shouldBeExcluded($item)
+    {
+        if ($exclude = $item->seoable?->hide_in_sitemap) {
+            return $exclude;
+        }
+        return false;
     }
 
     /**

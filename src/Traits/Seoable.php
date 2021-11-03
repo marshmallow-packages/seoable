@@ -93,6 +93,11 @@ trait Seoable
         return null;
     }
 
+    public function setHideInSitemap(): ?bool
+    {
+        return false;
+    }
+
     public function setSeoableImageAttribute($value)
     {
     }
