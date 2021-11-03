@@ -25,7 +25,6 @@ class SeoSitemap
         $sitemap_models = config('seo.sitemap_models');
 
         $this->attachModelItems($sitemap_models);
-        $this->attachPrettyUrls();
     }
 
     /**
@@ -75,22 +74,6 @@ class SeoSitemap
             return $exclude;
         }
         return false;
-    }
-
-    /**
-     * Attach the pretty url items.
-     *
-     * @return void
-     */
-    protected function attachPrettyUrls()
-    {
-        try {
-            PrettyUrl::get()->each(function ($url) {
-                $this->attachCustom($url->pretty_url);
-            });
-        } catch (Error $e) {
-            //
-        }
     }
 
     /**
