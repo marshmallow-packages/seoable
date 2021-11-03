@@ -85,7 +85,7 @@ class SeoSitemap
     {
         try {
             $url = $item->getSitemapItemUrl();
-            $pretty_url = PrettyUrl::where('original_url', url($url))->first();
+            $pretty_url = Seo::$prettyUrlModel::where('original_url', url($url))->first();
             return $pretty_url && $pretty_url->is_canonical;
         } catch (Error $e) {
             return false;
