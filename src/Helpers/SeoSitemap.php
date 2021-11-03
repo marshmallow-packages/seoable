@@ -2,7 +2,9 @@
 
 namespace Marshmallow\Seoable\Helpers;
 
+use Error;
 use Marshmallow\Seoable\Seo;
+use Marshmallow\Seoable\Models\PrettyUrl;
 
 class SeoSitemap
 {
@@ -23,6 +25,7 @@ class SeoSitemap
         $sitemap_models = config('seo.sitemap_models');
 
         $this->attachModelItems($sitemap_models);
+        $this->attachPrettyUrls();
     }
 
     /**
@@ -47,6 +50,14 @@ class SeoSitemap
                         return true;
                     }
 
+                    if ($this->shouldBeExcluded($item)) {
+                        return true;
+                    }
+
+                    if ($this->hasCanonicalPrettyUrl($item)) {
+                        return true;
+                    }
+
                     return false;
                 })->map(function ($item) {
                     return (object) [
@@ -55,6 +66,46 @@ class SeoSitemap
                     ];
                 })->toArray());
             }
+        }
+    }
+
+    protected function shouldBeExcluded($item)
+    {
+        if ($exclude = $item->seoable?->hide_in_sitemap) {
+            return $exclude;
+        }
+        return false;
+    }
+
+    /**
+     * Attach the pretty url items.
+     *
+     * @return void
+     */
+    protected function attachPrettyUrls()
+    {
+        try {
+            PrettyUrl::get()->each(function ($url) {
+                $this->attachCustom($url->pretty_url);
+            });
+        } catch (Error $e) {
+            //
+        }
+    }
+
+    /**
+     * If there is a canonical version of the URL available then we should
+     * not load this route in the sitemap because it would be a duplicate url.
+     * We magicaly load in all the pretty urls.
+     */
+    protected function hasCanonicalPrettyUrl($item)
+    {
+        try {
+            $url = $item->getSitemapItemUrl();
+            $pretty_url = PrettyUrl::where('original_url', url($url))->first();
+            return $pretty_url && $pretty_url->is_canonical;
+        } catch (Error $e) {
+            return false;
         }
     }
 

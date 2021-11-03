@@ -7,6 +7,7 @@ use Laravel\Nova\Panel;
 use Marshmallow\Seoable\Seo;
 use Laravel\Nova\Fields\Select;
 use Marshmallow\TagsField\Tags;
+use Laravel\Nova\Fields\Boolean;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -171,6 +172,26 @@ class Seoable
                     function ($name, Model $model) {
                         $model = self::resolveModel($model);
                         return app('seo')->set($model)->getSeoPageType();
+                    }
+                )
+                ->hideFromIndex()
+                ->hideWhenCreating(),
+
+
+            Boolean::make('Hide in sitemap', 'seoable_hide_in_sitemap')
+                ->fillUsing(
+                    function (NovaRequest $request, Model $model, $field) {
+                        /*
+                         * Only call the store method on the title.
+                         * This method will store all the available fields.
+                         */
+                        app('seo')->set($model)->store($request, $field, 'hide_in_sitemap');
+                    }
+                )
+                ->resolveUsing(
+                    function ($name, Model $model) {
+                        $model = self::resolveModel($model);
+                        return app('seo')->set($model)->getHideInSitemap();
                     }
                 )
                 ->hideFromIndex()

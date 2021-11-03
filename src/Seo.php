@@ -24,6 +24,7 @@ class Seo
     protected $image;
     protected $canonical;
     protected $follow_type;
+    protected $hide_in_sitemap;
     protected $schemas;
     protected $breadcrumbs;
     protected $page_type;
@@ -218,6 +219,7 @@ class Seo
         $this->keywords = $model->setSeoKeywords();
         $this->image = $model->setSeoImage();
         $this->follow_type = $model->setSeoFollowType();
+        $this->hide_in_sitemap = $model->setHideInSitemap();
     }
 
     protected function hasSeoableValue($field)
@@ -280,6 +282,12 @@ class Seo
         return $this;
     }
 
+    public function setHideInSitemap(bool $hide_in_sitemap)
+    {
+        $this->manual_values['hide_in_sitemap'] = $hide_in_sitemap;
+        return $this;
+    }
+
     public function setLocale(string $locale)
     {
         $this->manual_values['locale'] = $locale;
@@ -310,6 +318,11 @@ class Seo
     protected function getDefaultSeoFollowType()
     {
         return $this->getDefault('follow_type');
+    }
+
+    protected function getDefaultSeoHideInSitemap()
+    {
+        return $this->getDefault('hide_in_sitemap');
     }
 
     protected function getDefaultSeoImage()
@@ -390,6 +403,14 @@ class Seo
         }
 
         return $this->page_type;
+    }
+
+    public function getHideInSitemap()
+    {
+        if ($hide_in_sitemap = $this->hasSeoableValue('hide_in_sitemap')) {
+            return $hide_in_sitemap;
+        }
+        return $this->hide_in_sitemap;
     }
 
     public function getSeoLocale()
