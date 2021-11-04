@@ -11,7 +11,7 @@ if (config('seo.sitemap_status')) {
         return response($sitemap->toXml(), 200, [
             'Content-Type' => 'application/xml',
         ]);
-    });
+    })->name('seoable.sitemap');
 }
 
-Route::get('robots.txt', [RobotsController::class, 'render']);
+Route::get('robots.txt', [RobotsController::class, 'render'])->name('seoable.robots');
