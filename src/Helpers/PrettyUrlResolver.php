@@ -4,6 +4,7 @@ namespace Marshmallow\Seoable\Helpers;
 
 use Illuminate\Http\Request;
 use Marshmallow\Seoable\Seo;
+use Marshmallow\Seoable\Models\PrettyUrl;
 
 class PrettyUrlResolver
 {
@@ -16,6 +17,17 @@ class PrettyUrlResolver
     {
         $this->from = $from;
         $this->to = $to;
+    }
+
+    public static function byPath(Request $request)
+    {
+        return Seo::$prettyUrlModel::byPath($request->path())->first();
+    }
+
+    public static function byOriginalPath(Request $request): ?PrettyUrl
+    {
+        $pretty_url = Seo::$prettyUrlModel::byOriginalPath($request->getRequestUri())->first();
+        return $pretty_url ?? null;
     }
 
     public function resolve(): PrettyUrlResolver

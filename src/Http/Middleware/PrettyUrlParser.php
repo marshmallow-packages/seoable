@@ -26,7 +26,7 @@ class PrettyUrlParser
         }
 
         if ($this->routeIsPretty($request)) {
-            $pretty_url = BaseSeo::$prettyUrlModel::byPath($request->path())->first();
+            $pretty_url = BaseSeo::$prettyUrlResolver::byPath($request);
             $pretty_url->checkAndSetCanonical();
             $pretty_url->setSeoableContent(true);
             $request = Request::createRequestFromPrettyUrl($request);
@@ -49,8 +49,7 @@ class PrettyUrlParser
      */
     protected function routeIsPrettyfied(Request $request): ?PrettyUrl
     {
-        $pretty_url = BaseSeo::$prettyUrlModel::byOriginalPath($request->getRequestUri())->first();
-        return $pretty_url ?? null;
+        return BaseSeo::$prettyUrlResolver::byOriginalPath($request);
     }
 
     /**
