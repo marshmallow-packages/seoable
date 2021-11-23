@@ -4,7 +4,6 @@ namespace Marshmallow\Seoable\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Support\Facades\Route;
 use Marshmallow\Seoable\Seo as BaseSeo;
 use Marshmallow\Seoable\Models\PrettyUrl;
@@ -36,7 +35,6 @@ class PrettyUrlParser
                 return $pretty_url->getRedirectToPretty();
             } elseif ($pretty_url->shouldUseAsCanonical()) {
                 $pretty_url->checkAndSetCanonical();
-                $pretty_url->setSeoableContent();
             }
         }
 
