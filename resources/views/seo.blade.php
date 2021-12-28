@@ -22,7 +22,13 @@
 <meta property="og:locale" content="{{ Seo::getSeoLocale() }}" />
 
 @if ($canonical = Seo::getSeoCanonicalUrl())
-<link rel="canonical" href="{{ $canonical }}" />
+    <link rel="canonical" href="{{ $canonical }}" />
+@endif
+
+@if ($hrefs = Seo::getHrefLang())
+    @foreach ($hrefs as $lang => $route)
+        <link rel="alternate" href="{{ $route }}" hreflang="{{ $lang }}" />
+    @endforeach
 @endif
 
 @if ($type = Seo::getSeoPageType())

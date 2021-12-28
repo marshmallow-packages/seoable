@@ -29,6 +29,7 @@ class Seo
     protected $breadcrumbs;
     protected $page_type;
     protected $seoable_content;
+    protected $href_langs = [];
 
     protected $model_is_set = false;
 
@@ -270,6 +271,12 @@ class Seo
         return $this;
     }
 
+    public function setHrefs(array $hrefs)
+    {
+        $this->href_langs = array_merge($hrefs, $this->href_langs);
+        return $this;
+    }
+
     public function setImage(string $image)
     {
         $this->manual_values['image'] = $image;
@@ -454,6 +461,11 @@ class Seo
     public function getSeoCanonicalUrl()
     {
         return $this->canonical ?? request()->url();
+    }
+
+    public function getHrefLang()
+    {
+        return $this->href_langs;
     }
 
     public function setSeoableContent(Collection $seoable_content)
