@@ -189,7 +189,7 @@ class Seo
          */
 
         if ($seoable = $this->model->fresh()->seoable) {
-            if (!Storage::disk(config('seo.storage.disk'))->exists($seoable->image)) {
+            if (!$seoable->image || ($seoable->image && Storage::disk(config('seo.storage.disk'))->missing($seoable->image))) {
                 $seoable->update([
                     'image' => null,
                 ]);
