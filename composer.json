@@ -23,7 +23,7 @@
         "marshmallow/nova-fields-help": "^1.0",
         "marshmallow/nova-flexible": "dev-nova4",
         "marshmallow/nova-charcounted-fields": "^1.0",
-        "marshmallow/translatable": "^1.0",
+        "marshmallow/translatable": "dev-nova4",
         "marshmallow/sluggable": "^1.0",
         "laravel/nova": "^4.0",
         "marshmallow/nova-tags-field": "^1.0"
