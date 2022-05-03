@@ -3,6 +3,7 @@
 namespace Marshmallow\Seoable\Helpers;
 
 use Error;
+use Carbon\Carbon;
 use Marshmallow\Seoable\Seo;
 use Marshmallow\Seoable\Models\PrettyUrl;
 
@@ -96,12 +97,16 @@ class SeoSitemap
      * Attach a custom sitemap item.
      *
      * @param string $path    Path on the current site
-     * @param string $lastmod Date of last edit
+     * @param Carbon $lastmod Date of last edit
      *
      * @return SeoSitemap
      */
-    public function attachCustom($path, $lastmod = null)
+    public function attachCustom($path, Carbon $lastmod = null)
     {
+        $date_format = config('seo.sitemap_date_format') ?? 'Y-m-d\TH:i:s.u\Z';
+
+        $lastmod = $lastmod ? $lastmod->format($date_format) : null;
+
         $this->items[] = (object) [
             'url' => url($path),
             'lastmod' => $lastmod,
