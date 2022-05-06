@@ -20,14 +20,14 @@
         "marshmallow/commands": "^1.0",
         "marshmallow/mr-mallow": "^1.0",
         "marshmallow/nova-advanced-image": "v2.0",
-        "marshmallow/nova-fields-help": "dev-nova4",
-        "marshmallow/nova-flexible": "dev-nova4",
+        "marshmallow/nova-flexible": "^v2.0",
         "marshmallow/nova-charcounted-fields": "^v2.0",
+        "marshmallow/nova-tinymce": "^v2.0",
+        "marshmallow/nova-fields-help": "^v2.0",
         "marshmallow/translatable": "^v2.0",
         "marshmallow/sluggable": "^1.0",
         "laravel/nova": "^4.0",
-        "marshmallow/nova-tags-field": "dev-nova4",
-        "marshmallow/nova-multiselect-field": "dev-nova4"
+        "marshmallow/nova-multiselect-field": "^v5.0"
     },
     "autoload": {
         "psr-4": {
@@ -38,24 +38,6 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "path",
-            "url": "../*",
-            "only": [
-                "marshmallow/nova-flexible",
-                "marshmallow/pages",
-                "marshmallow/gtmetrix",
-                "marshmallow/seoable",
-                "marshmallow/nova-styling",
-                "marshmallow/nova-fields-help",
-                "marshmallow/nova-tinymce",
-                "marshmallow/nova-tags-field",
-                "marshmallow/nova-multiselect-field"
-            ],
-            "options": {
-                "symlink": true
-            }
         }
     ],
     "extra": {
