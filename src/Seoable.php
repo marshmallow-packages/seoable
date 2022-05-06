@@ -6,7 +6,7 @@ use Exception;
 use Laravel\Nova\Panel;
 use Marshmallow\Seoable\Seo;
 use Laravel\Nova\Fields\Select;
-use Marshmallow\TagsField\Tags;
+use Outl1ne\MultiselectField\Multiselect as MMMultiselect;
 use Laravel\Nova\Fields\Boolean;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -72,8 +72,9 @@ class Seoable
                 ->warningAt(150)
                 ->hideWhenCreating(),
 
-            Tags::make('Tags', 'seoable_tags')
+            MMMultiselect::make('Tags', 'seoable_tags')
                 ->hideFromIndex()
+                ->taggable()
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
                         /*

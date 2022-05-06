@@ -3,11 +3,11 @@
 namespace Marshmallow\Seoable\Nova;
 
 use App\Nova\Resource;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Marshmallow\HelperFunctions\Facades\User;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Route extends Resource
 {
@@ -43,7 +43,7 @@ class Route extends Resource
      *
      * @return array
      */
-    public function fields(Request $request)
+    public function fields(NovaRequest $request)
     {
         return [
             Text::make('Path')
@@ -116,7 +116,7 @@ class Route extends Resource
      *
      * @return array
      */
-    public function cards(Request $request)
+    public function cards(NovaRequest $request)
     {
         return [];
     }
@@ -126,7 +126,7 @@ class Route extends Resource
      *
      * @return array
      */
-    public function filters(Request $request)
+    public function filters(NovaRequest $request)
     {
         return [];
     }
@@ -136,7 +136,7 @@ class Route extends Resource
      *
      * @return array
      */
-    public function lenses(Request $request)
+    public function lenses(NovaRequest $request)
     {
         return [];
     }
@@ -146,7 +146,7 @@ class Route extends Resource
      *
      * @return array
      */
-    public function actions(Request $request)
+    public function actions(NovaRequest $request)
     {
         return [];
     }
