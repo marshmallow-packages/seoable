@@ -4,7 +4,6 @@ namespace Marshmallow\Seoable;
 
 use Exception;
 use Illuminate\Support\Str;
-use Marshmallow\TagsField\Tags;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
@@ -145,7 +144,7 @@ class Seo
         }
 
         return array_filter(
-            explode(Tags::EXPLODE_BY, $value)
+            explode('-----', $value)
         );
     }
 
