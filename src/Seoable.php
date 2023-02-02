@@ -25,92 +25,93 @@ class Seoable
         'seoable_description',
     ];
 
+    public static function fillField(NovaRequest $request, Model $model, $field)
+    {
+        $value = $request->input($field);
+        if ($field == 'seoable_hide_in_sitemap') {
+            $value = $value == 0 ? false : true;
+        }
+
+        $request->request->remove($field);
+        $field = str_after($field, 'seoable_');
+        return $model->seoable->update([
+            $field => $value,
+        ]);
+    }
+
+    public static function resolveField($name, Model $model, $field)
+    {
+        $field = str_after($field, 'seoable_');
+
+        $value = $model->seoable?->$field;
+
+        if ($field == 'hide_in_sitemap') {
+            $value = $value == 0 ? false : true;
+        }
+
+        return $value;
+    }
+
+    public static function saveFile(NovaRequest $request, Model $model, $field)
+    {
+        $disk = config('seo.storage.disk');
+        $path = config('seo.storage.path');
+        $file = $request->file($field);
+        $storage_location = Storage::disk($disk)->putFile($path, $file);
+        $request->request->remove($field);
+
+        $field = str_after($field, 'seoable_');
+        return $model->seoable->update([
+            $field => $storage_location,
+        ]);
+    }
+
     public static function make($title)
     {
         return new Panel($title, [
             TextCounted::make('Title', 'seoable_title')
-                ->fillUsing(
-                    function (NovaRequest $request, Model $model, $field) {
-                        /*
-                         * Only call the store method on the title.
-                         * This method will store all the available fields.
-                         */
-                        app('seo')->set($model)->store($request, $field, 'title');
-                    }
-                )
-                ->resolveUsing(
-                    function ($name, Model $model, $field) {
-                        $model = self::resolveModel($model);
-                        return app('seo')->set($model)->getSeoTitle();
-                    }
-                )
                 ->hideFromIndex()
                 ->minChars(30)
                 ->maxChars(60)
                 ->warningAt(50)
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->fillUsing(function (NovaRequest $request, Model $model, $field) {
+                    return self::fillField($request, $model, $field);
+                })->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                }),
 
             TextareaCounted::make('Description', 'seoable_description')
-                ->fillUsing(
-                    function (NovaRequest $request, Model $model, $field) {
-                        /*
-                         * Only call the store method on the title.
-                         * This method will store all the available fields.
-                         */
-                        app('seo')->set($model)->store($request, $field, 'description');
-                    }
-                )
-                ->resolveUsing(
-                    function ($name, Model $model) {
-                        $model = self::resolveModel($model);
-                        return app('seo')->set($model)->getSeoDescription();
-                    }
-                )
                 ->hideFromIndex()
                 ->minChars(70)
                 ->maxChars(160)
                 ->warningAt(150)
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->fillUsing(function (NovaRequest $request, Model $model, $field) {
+                    return self::fillField($request, $model, $field);
+                })->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                }),
 
-            MMMultiselect::make('Tags', 'seoable_tags')
+            MMMultiselect::make('Keywords', 'seoable_keywords')
                 ->hideFromIndex()
                 ->taggable()
-                ->fillUsing(
-                    function (NovaRequest $request, Model $model, $field) {
-                        /*
-                         * Only call the store method on the title.
-                         * This method will store all the available fields.
-                         */
-                        app('seo')->set($model)->store($request, $field, 'keywords');
-                    }
-                )
-                ->resolveUsing(
-                    function ($name, Model $model) {
-                        $model = self::resolveModel($model);
-                        return app('seo')->set($model)->getSeoKeywords();
-                    }
-                )
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->fillUsing(function (NovaRequest $request, Model $model, $field) {
+                    return self::fillField($request, $model, $field);
+                })->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                }),
 
             Select::make('Follow type', 'seoable_follow_type')
                 ->options(config('seo.follow_type_options'))
-                ->fillUsing(
-                    function (NovaRequest $request, Model $model, $field) {
-                        /*
-                         * Only call the store method on the title.
-                         * This method will store all the available fields.
-                         */
-                        app('seo')->set($model)->store($request, $field, 'follow_type');
-                    }
-                )
-                ->resolveUsing(
-                    function ($name, Model $model) {
-                        $model = self::resolveModel($model);
-                        return app('seo')->set($model)->getSeoFollowType();
-                    }
-                )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->fillUsing(function (NovaRequest $request, Model $model, $field) {
+                    return self::fillField($request, $model, $field);
+                })->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                }),
 
             AdvancedImage::make(
                 'Image',
@@ -120,83 +121,33 @@ class Seoable
                 ->croppable(1.91 / 1)
                 ->resize(1200, 630)
                 ->help('Your social share image should have a ratio of 1.91:1. We will resize the selected image to 1200x630')
-                ->setCustomCallback(function ($request, $requestAttribute, $model, $attribute, $fileName) {
-                    $request->{$requestAttribute} = $fileName;
-                    app('seo')
-                        ->set($model)
-                        ->store($request, $requestAttribute, 'image');
-                })
-                ->store(
-                    function (NovaRequest $request, Model $model, $attribute, $requestAttribute, $disk, $storagePath) {
-                        $model = self::resolveModel($model);
-                        $storage_location = Storage::disk(config('seo.storage.disk'))
-                            ->putFile(
-                                config('seo.storage.path'),
-                                $request->file($requestAttribute)
-                            );
-
-                        $request->{$requestAttribute} = $storage_location;
-                        app('seo')
-                            ->set($model)
-                            ->store($request, $requestAttribute, 'image');
-                    }
-                )
-                ->customPreview(
-                    function ($value, $disk, Model $model) {
-                        return app('seo')
-                            ->set($model)
-                            ->getSeoImageUrl();
-                    }
-                )
-                ->customThumbnail(
-                    function ($value, $disk, Model $model) {
-                        return app('seo')
-                            ->set($model)
-                            ->getSeoImageUrl();
-                    }
-                )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                })
+                ->store(function ($request, $model, $attribute) {
+                    return self::saveFile($request, $model, $attribute);
+                }),
 
             Select::make('Page type', 'seoable_page_type')
                 ->options(config('seo.page_types'))
-                ->fillUsing(
-                    function (NovaRequest $request, Model $model, $field) {
-                        /*
-                         * Only call the store method on the title.
-                         * This method will store all the available fields.
-                         */
-                        app('seo')->set($model)->store($request, $field, 'page_type');
-                    }
-                )
-                ->resolveUsing(
-                    function ($name, Model $model) {
-                        $model = self::resolveModel($model);
-                        return app('seo')->set($model)->getSeoPageType();
-                    }
-                )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
-
+                ->hideWhenCreating()
+                ->fillUsing(function (NovaRequest $request, Model $model, $field) {
+                    return self::fillField($request, $model, $field);
+                })->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                }),
 
             Boolean::make('Hide in sitemap', 'seoable_hide_in_sitemap')
-                ->fillUsing(
-                    function (NovaRequest $request, Model $model, $field) {
-                        /*
-                         * Only call the store method on the title.
-                         * This method will store all the available fields.
-                         */
-                        app('seo')->set($model)->store($request, $field, 'hide_in_sitemap');
-                    }
-                )
-                ->resolveUsing(
-                    function ($name, Model $model) {
-                        $model = self::resolveModel($model);
-                        return app('seo')->set($model)->getHideInSitemap();
-                    }
-                )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating()
+                ->fillUsing(function (NovaRequest $request, Model $model, $field) {
+                    return self::fillField($request, $model, $field);
+                })->resolveUsing(function ($name, Model $model, $field) {
+                    return self::resolveField($name, $model, $field);
+                }),
         ]);
     }
 
