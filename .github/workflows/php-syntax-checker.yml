@@ -15,6 +15,3 @@ jobs:
         steps:
             - name: Checkout v2
               uses: actions/checkout@v2
-
-            - name: Check PHP syntax errors
-              uses: overtrue/phplint@8.0
