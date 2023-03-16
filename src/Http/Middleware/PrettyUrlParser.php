@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Marshmallow\Seoable\Seo as BaseSeo;
 use Marshmallow\Seoable\Models\PrettyUrl;
+use Marshmallow\HelperFunctions\Facades\URL;
 use Marshmallow\Seoable\Http\Controllers\PrettyUrlController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -23,6 +24,10 @@ class PrettyUrlParser
     {
         if ($request->has('prettier_route_response')) {
             return response()->json($request->route());
+        }
+
+        if (URL::isNova($request)) {
+            return $next($request);
         }
 
         if ($this->routeIsPretty($request)) {
