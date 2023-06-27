@@ -10,6 +10,10 @@ class SchemaAggregateRating extends Schema
 
     protected $worstRating;
 
+    protected $ratingValue;
+
+    protected $reviewCount;
+
     public static function make(float $ratingValue, float $reviewCount)
     {
         $schema = new self();

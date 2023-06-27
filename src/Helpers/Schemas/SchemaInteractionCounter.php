@@ -13,7 +13,7 @@ class SchemaInteractionCounter extends Schema
         $counter = new self();
 
         return $counter->type($type)
-                       ->count($count);
+            ->count($count);
     }
 
     public function toJson()
@@ -21,7 +21,7 @@ class SchemaInteractionCounter extends Schema
         return [
             '@type' => 'InteractionCounter',
             'interactionType' => [
-                '@type' => 'http://schema.org/'.$this->type,
+                '@type' => 'http://schema.org/' . $this->type,
             ],
             'userInteractionCount' => $this->count,
         ];

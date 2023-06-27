@@ -15,7 +15,7 @@ class SchemaFaqPage extends Schema
 
     public function addQuestionAndAnswer($question = null, $answer = null)
     {
-        if (! $question || ! $answer) {
+        if (!$question || !$answer) {
             return $this;
         }
 
