@@ -6,6 +6,7 @@ class SchemaRating extends Schema
 {
     protected $worstRating = 0;
     protected $bestRating = 5;
+    protected $ratingValue;
 
     public static function make(float $ratingValue)
     {

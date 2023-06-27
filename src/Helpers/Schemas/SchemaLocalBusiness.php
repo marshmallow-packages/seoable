@@ -9,6 +9,7 @@ class SchemaLocalBusiness extends Schema
     use Makeable;
 
     public $url;
+    public $type;
     public $priceRange;
     public $telephone;
 
