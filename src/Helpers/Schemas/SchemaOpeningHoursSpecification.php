@@ -10,6 +10,9 @@ class SchemaOpeningHoursSpecification extends Schema
 
     public $latitude;
     public $longitude;
+    public $dayOfWeek;
+    public $opens;
+    public $closes;
 
     public function toArray()
     {

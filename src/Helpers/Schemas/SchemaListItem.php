@@ -8,6 +8,9 @@ class SchemaListItem extends Schema
 {
     use Makeable;
 
+    protected $item;
+    protected $position;
+
     public function position($position = null)
     {
         if ($position) {

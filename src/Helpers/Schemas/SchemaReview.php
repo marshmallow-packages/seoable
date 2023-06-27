@@ -8,6 +8,9 @@ class SchemaReview extends Schema
 {
     use Makeable;
 
+    protected $author;
+    protected $ratingValue;
+
     public function author($author)
     {
         $this->author = $author;
