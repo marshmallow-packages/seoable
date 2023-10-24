@@ -446,6 +446,9 @@ class Seo
     public function getSeoImageUrl()
     {
         if ($image = $this->hasSeoableValue('image')) {
+            if (Str::of($image)->startsWith('http')) {
+                return $image;
+            }
             return Storage::disk('public')->url($image);
         }
 
