@@ -5,6 +5,7 @@ namespace Marshmallow\Seoable;
 use Exception;
 use Illuminate\Support\Str;
 use Marshmallow\TagsField\Tags;
+use Illuminate\Support\Stringable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
@@ -507,6 +508,49 @@ class Seo
                 'container' => $container,
             ]);
         }
+    }
+
+    public function addGtagFunction(): bool
+    {
+        return config('seo.google.gtag_function') && !config('seo.google.GA');
+    }
+
+    public function googleTagManagerId()
+    {
+        $gtmId = config('seo.google.tagmanager.id');
+        if (!$gtmId) {
+            $gtmId = config('seo.google.GTM');
+        }
+        return $gtmId;
+    }
+
+    public function googleTagManagerEnabled(): bool
+    {
+        if (!$this->googleTagManagerId()) {
+            return false;
+        }
+
+        $enabled = config('seo.google.tagmanager.enabled');
+        if (is_null($enabled)) {
+            return true;
+        }
+
+        return $enabled;
+    }
+
+    public function googleTagManagerUrlSuffix(): string
+    {
+        $gtmEnv = config('seo.google.tagmanager.env');
+        $gtmAuth = config('seo.google.tagmanager.auth');
+
+        if (!$this->googleTagManagerEnabled() || !$gtmEnv) {
+            return '';
+        }
+
+        return Str::of("&gtm_preview={$gtmEnv}")
+            ->when($gtmAuth, function (Stringable $string) use ($gtmAuth) {
+                return $string->append("&gtm_auth={$gtmAuth}");
+            })->append("&gtm_cookies_win=x")->toHtmlString();
     }
 
     public function content(string $type, $column = 'content')
