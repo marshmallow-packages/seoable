@@ -509,6 +509,23 @@ class Seo
         }
     }
 
+    public function googleTagManagerUrlSuffix(): string
+    {
+        $gtmEnv = config('seo.google.custom_env.env');
+
+        if (!config('seo.google.GTM') || !$gtmEnv) {
+            return '';
+        }
+
+        $gtmUrlSuffix = Str::of("&gtm_preview={$gtmEnv}");
+
+        if ($gtmAuth = config('seo.google.custom_env.auth')) {
+            $gtmUrlSuffix->append("&gtm_auth={$gtmAuth}");
+        }
+
+        return $gtmUrlSuffix->append("&gtm_cookies_win=x")->toString();
+    }
+
     public function content(string $type, $column = 'content')
     {
         if (!$this->seoable_content) {

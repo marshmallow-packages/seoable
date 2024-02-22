@@ -44,6 +44,11 @@ class ServiceProvider extends BaseServiceProvider
         if (config('seo.use_pretty_urls') === true) {
             $this->registerMiddleware();
         }
+
+        $this->app['view']->creator(
+            ['seoable::google.gtm-head', 'seoable::google.gtm-body'],
+            'Marshmallow\Seoable\ViewCreators\GoogleTagManagerScriptCreator'
+        );
     }
 
     /**

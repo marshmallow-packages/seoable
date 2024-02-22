@@ -1,6 +1,6 @@
 @if (!config('seo.hide_mr_mallow'))
     <x-mr-mallow-ascii />
-    <!-- Marshmallow SEO -->
+    <!-- Marshmallow SEO - HEADER -->
 @endif
 
 {{ Seo::googleOptimize() }}
@@ -55,5 +55,5 @@
 @include('seoable::hotjar.hotjar')
 
 @if (!config('seo.hide_mr_mallow'))
-    <!-- Marshmallow SEO -->
+    <!-- Marshmallow SEO - HEADER END -->
 @endif
