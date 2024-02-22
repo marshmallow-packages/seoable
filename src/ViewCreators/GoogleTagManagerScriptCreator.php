@@ -8,20 +8,25 @@ use Spatie\GoogleTagManager\Exceptions\ApiKeyNotSetException;
 
 class GoogleTagManagerScriptCreator
 {
+    protected $googleTagManagerEnabled;
     protected $googleTagManagerId;
     protected $googleTagManagerUrlSuffix;
+    protected $addGtagFunction;
 
     public function __construct()
     {
-        $this->googleTagManagerId = config('seo.google.GTM');
+        $this->googleTagManagerEnabled = Seo::googleTagManagerEnabled();
+        $this->googleTagManagerId = Seo::googleTagManagerId();
         $this->googleTagManagerUrlSuffix =  Seo::googleTagManagerUrlSuffix();
+        $this->addGtagFunction = Seo::addGtagFunction();
     }
 
     public function create(View $view)
     {
         $view
-            ->with('enabled', $this->googleTagManagerId ? true : false)
+            ->with('enabled', $this->googleTagManagerEnabled)
             ->with('id', $this->googleTagManagerId)
-            ->with('urlSuffix', $this->googleTagManagerUrlSuffix);
+            ->with('urlSuffix', $this->googleTagManagerUrlSuffix)
+            ->with('addGtagFunction', $this->addGtagFunction);
     }
 }

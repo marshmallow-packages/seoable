@@ -21,3 +21,11 @@
     </script>
     <!-- GTM Head END -->
 @endif
+
+@if ($addGtagFunction)
+    <script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+    </script>
+@endif

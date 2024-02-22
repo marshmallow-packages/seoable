@@ -509,17 +509,45 @@ class Seo
         }
     }
 
+    public function addGtagFunction(): bool
+    {
+        return config('seo.google.gtag_function') && !config('seo.google.GA');
+    }
+
+    public function googleTagManagerId()
+    {
+        $gtmId = config('seo.google.tagmanager.id');
+        if (!$gtmId) {
+            $gtmId = config('seo.google.GTM');
+        }
+        return $gtmId;
+    }
+
+    public function googleTagManagerEnabled(): bool
+    {
+        if (!$this->googleTagManagerId()) {
+            return false;
+        }
+
+        $enabled = config('seo.google.tagmanager.enabled');
+        if (is_null($enabled)) {
+            return true;
+        }
+
+        return $enabled;
+    }
+
     public function googleTagManagerUrlSuffix(): string
     {
-        $gtmEnv = config('seo.google.custom_env.env');
+        $gtmEnv = config('seo.google.tagmanager.env');
 
-        if (!config('seo.google.GTM') || !$gtmEnv) {
+        if (!$this->googleTagManagerEnabled() || !$gtmEnv) {
             return '';
         }
 
         $gtmUrlSuffix = Str::of("&gtm_preview={$gtmEnv}");
 
-        if ($gtmAuth = config('seo.google.custom_env.auth')) {
+        if ($gtmAuth = config('seo.google.tagmanager.auth')) {
             $gtmUrlSuffix->append("&gtm_auth={$gtmAuth}");
         }
 

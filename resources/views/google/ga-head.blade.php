@@ -10,12 +10,4 @@
         gtag('js', new Date());
         gtag('config', '{{ config('seo.google.GA') }}');
     </script>
-@elseif (config('seo.google.gtag_function'))
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-    </script>
 @endif

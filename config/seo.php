@@ -16,12 +16,14 @@ return [
     'use_pretty_urls' => false,
 
     'google' => [
-        'GTM' => env('SEO_GTM', ''),            // GTM-XXXXXXX
+        'GTM' => env('SEO_GTM'),            // GTM-XXXXXXX
         'GA' => env('SEO_GA', ''),              // GA-XXXXXXX-XX
-        'gtag_function' => env('SEO_ADD_GTAG_FUNCTION', false), // IS SKIPPED WHEN GA IS SET
-        'custom_env' => [
-            'env' => env('SEO_GTM_ENV', null), // env-61
-            'auth' => env('SEO_GTM_AUTH', null), // 91oe5FeBfW_***
+        'gtag_function' => env('SEO_GTAG', true), // IS SKIPPED WHEN GA IS SET
+        'tagmanager' => [
+            'enabled' => env('SEO_GTM_ENABLED', true), // true
+            'id' => env('SEO_GTM', env('SEO_GTM_ID')),      // GTM-XXXXXXX
+            'env' => env('SEO_GTM_ENV'), // env-61
+            'auth' => env('SEO_GTM_AUTH'), // 91oe5FeBfW_***
         ],
     ],
 
