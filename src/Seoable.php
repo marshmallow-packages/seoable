@@ -27,7 +27,12 @@ class Seoable
 
     public static function make($title)
     {
-        return new Panel($title, [
+        return new Panel($title, self::getFields());
+    }
+
+    public static function getFields()
+    {
+        return [
             TextCounted::make('Title', 'seoable_title')
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
@@ -197,7 +202,7 @@ class Seoable
                 )
                 ->hideFromIndex()
                 ->hideWhenCreating(),
-        ]);
+        ];
     }
 
     public static function routes()

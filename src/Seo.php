@@ -5,6 +5,7 @@ namespace Marshmallow\Seoable;
 use Exception;
 use Illuminate\Support\Str;
 use Marshmallow\TagsField\Tags;
+use Illuminate\Support\Stringable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Marshmallow\Seoable\Traits\Seoable;
@@ -540,18 +541,16 @@ class Seo
     public function googleTagManagerUrlSuffix(): string
     {
         $gtmEnv = config('seo.google.tagmanager.env');
+        $gtmAuth = config('seo.google.tagmanager.auth');
 
         if (!$this->googleTagManagerEnabled() || !$gtmEnv) {
             return '';
         }
 
-        $gtmUrlSuffix = Str::of("&gtm_preview={$gtmEnv}");
-
-        if ($gtmAuth = config('seo.google.tagmanager.auth')) {
-            $gtmUrlSuffix->append("&gtm_auth={$gtmAuth}");
-        }
-
-        return $gtmUrlSuffix->append("&gtm_cookies_win=x")->toString();
+        return Str::of("&gtm_preview={$gtmEnv}")
+            ->when($gtmAuth, function (Stringable $string) use ($gtmAuth) {
+                return $string->append("&gtm_auth={$gtmAuth}");
+            })->append("&gtm_cookies_win=x")->toHtmlString();
     }
 
     public function content(string $type, $column = 'content')

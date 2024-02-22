@@ -15,7 +15,7 @@
                 dl = l != 'dataLayer' ? '&l=' + l : '';
             j.async = true;
             j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl + '{{ $urlSuffix }}';
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl + '{!! $urlSuffix !!}';
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', '{{ $id }}');
     </script>
