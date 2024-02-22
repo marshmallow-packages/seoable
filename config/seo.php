@@ -17,11 +17,11 @@ return [
 
     'google' => [
         'GTM' => env('SEO_GTM'),            // GTM-XXXXXXX
-        'GA' => env('SEO_GA', ''),              // GA-XXXXXXX-XX
+        'GA' => env('SEO_GA'),              // GA-XXXXXXX-XX
         'gtag_function' => env('SEO_GTAG', true), // IS SKIPPED WHEN GA IS SET
         'tagmanager' => [
             'enabled' => env('SEO_GTM_ENABLED', true), // true
-            'id' => env('SEO_GTM', env('SEO_GTM_ID')),      // GTM-XXXXXXX
+            'id' => env('SEO_GTM_ID'), // GTM-XXXXXXX
             'env' => env('SEO_GTM_ENV'), // env-61
             'auth' => env('SEO_GTM_AUTH'), // 91oe5FeBfW_***
         ],
