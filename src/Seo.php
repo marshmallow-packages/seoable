@@ -106,7 +106,7 @@ class Seo
             $schema_output[] = $breadcrumb_list->toJson();
         }
 
-        return json_encode($schema_output);
+        return json_encode($schema_output, JSON_UNESCAPED_SLASHES);
     }
 
     public function hasSchema()
