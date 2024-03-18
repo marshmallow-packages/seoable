@@ -20,10 +20,12 @@ class SchemaInteractionCounter extends Schema
     {
         return [
             '@type' => 'InteractionCounter',
-            'interactionType' => [
-                '@type' => 'http://schema.org/' . $this->type,
-            ],
-            'userInteractionCount' => $this->count,
+            '@graph' => [
+                'interactionType' => [
+                    '@type' => 'http://schema.org/' . $this->type,
+                ],
+                'userInteractionCount' => $this->count,
+            ]
         ];
     }
 }

@@ -18,9 +18,11 @@ class SchemaOpeningHoursSpecification extends Schema
     {
         return [
             '@type' => 'OpeningHoursSpecification',
-            'dayOfWeek' => $this->dayOfWeek,
-            'opens' => $this->opens,
-            'closes' => $this->closes,
+            '@graph' => [
+                'dayOfWeek' => $this->dayOfWeek,
+                'opens' => $this->opens,
+                'closes' => $this->closes,
+            ]
         ];
     }
 }

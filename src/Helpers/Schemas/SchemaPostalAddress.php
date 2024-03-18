@@ -18,11 +18,13 @@ class SchemaPostalAddress extends Schema
     {
         return [
             '@type' => 'PostalAddress',
-            'streetAddress' => $this->address,
-            'addressLocality' => $this->locality,
-            'addressRegion' => $this->region,
-            'postalCode' => $this->postalCode,
-            'addressCountry' => $this->country,
+            '@graph' => [
+                'streetAddress' => $this->address,
+                'addressLocality' => $this->locality,
+                'addressRegion' => $this->region,
+                'postalCode' => $this->postalCode,
+                'addressCountry' => $this->country,
+            ]
         ];
     }
 }

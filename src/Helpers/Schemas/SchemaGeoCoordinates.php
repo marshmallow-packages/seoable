@@ -15,8 +15,10 @@ class SchemaGeoCoordinates extends Schema
     {
         return [
             '@type' => 'GeoCoordinates',
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
+            '@graph' => [
+                'latitude' => $this->latitude,
+                'longitude' => $this->longitude,
+            ]
         ];
     }
 }

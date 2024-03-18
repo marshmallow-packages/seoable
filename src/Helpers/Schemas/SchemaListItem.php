@@ -32,7 +32,6 @@ class SchemaListItem extends Schema
     public function toJson()
     {
         $array = [
-            '@type' => 'ListItem',
             'position' => $this->position,
             'name' => $this->name,
         ];
@@ -41,6 +40,9 @@ class SchemaListItem extends Schema
             $array['item'] = $this->item;
         }
 
-        return $array;
+        return [
+            '@type' => 'ListItem',
+            '@graph' => $array,
+        ];
     }
 }
