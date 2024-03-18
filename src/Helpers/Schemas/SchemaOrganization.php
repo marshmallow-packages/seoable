@@ -12,9 +12,11 @@ class SchemaOrganization extends Schema
     {
         return [
             '@context' => 'https://schema.org',
-            '@type' => 'Organization',
-            'url' => config('app.url'),
-            'logo' => $this->name,
+            '@graph' => [
+                '@type' => 'Organization',
+                'url' => config('app.url'),
+                'logo' => $this->name,
+            ],
         ];
     }
 }

@@ -32,7 +32,6 @@ class SchemaAggregateRating extends Schema
     public function toJson()
     {
         $data = [
-            '@type' => 'AggregateRating',
             'ratingValue' => $this->ratingValue,
             'reviewCount' => $this->reviewCount,
             'bestRating' => $this->bestRating,
@@ -43,6 +42,9 @@ class SchemaAggregateRating extends Schema
             $data['name'] = $this->name;
         }
 
-        return $data;
+        return [
+            '@type' => 'AggregateRating',
+            '@graph' => $data,
+        ];
     }
 }

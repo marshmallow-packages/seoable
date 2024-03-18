@@ -33,8 +33,10 @@ class SchemaFaqPage extends Schema
     {
         return [
             '@context' => 'https://schema.org',
-            '@type' => 'FAQPage',
-            'mainEntity' => $this->questions,
+            '@graph' => [
+                '@type' => 'FAQPage',
+                'mainEntity' => $this->questions,
+            ],
         ];
     }
 }

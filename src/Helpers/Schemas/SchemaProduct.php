@@ -51,18 +51,20 @@ class SchemaProduct extends Schema
     {
         return [
             '@context' => 'https://schema.org/',
-            '@type' => 'Product',
-            'name' => $this->name,
-            'image' => $this->images,
-            'description' => $this->description,
-            'brand' => $this->brand,
-            'offers' => $this->offers,
-            'sku' => $this->sku,
-            'mpn' => $this->mpn,
-            'gtin' => $this->gtin,
-            'isbn' => $this->isbn,
-            'aggregateRating' => $this->aggregateRating,
-            'review' => $this->reviews,
+            '@graph' => [
+                '@type' => 'Product',
+                'name' => $this->name,
+                'image' => $this->images,
+                'description' => $this->description,
+                'brand' => $this->brand,
+                'offers' => $this->offers,
+                'sku' => $this->sku,
+                'mpn' => $this->mpn,
+                'gtin' => $this->gtin,
+                'isbn' => $this->isbn,
+                'aggregateRating' => $this->aggregateRating,
+                'review' => $this->reviews,
+            ],
         ];
     }
 }

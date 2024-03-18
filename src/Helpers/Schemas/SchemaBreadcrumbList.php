@@ -32,8 +32,10 @@ class SchemaBreadcrumbList extends Schema
     {
         return [
             '@context' => 'https://schema.org',
-            '@type' => 'BreadcrumbList',
-            'itemListElement' => $this->itemListElement,
+            '@graph' => [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => $this->itemListElement,
+            ]
         ];
     }
 }
