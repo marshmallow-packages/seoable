@@ -35,17 +35,19 @@ class SchemaLocalBusiness extends Schema
     {
         return [
             '@context' => 'https://schema.org/',
-            '@type' => $this->type,
-            '@id' => $this->id,
-            'name' => $this->name,
-            'image' => $this->images,
-            'address' => $this->getJsonSchema('address'),
-            'geo' => $this->getJsonSchema('geo'),
-            'url' => $this->url,
-            'priceRange' => $this->priceRange,
-            'telephone' => $this->telephone,
-            'aggregateRating' => $this->aggregateRating,
-            'openingHoursSpecification' => $this->openingHoursSpecification,
+            '@graph' => [
+                '@type' => $this->type,
+                '@id' => $this->id,
+                'name' => $this->name,
+                'image' => $this->images,
+                'address' => $this->getJsonSchema('address'),
+                'geo' => $this->getJsonSchema('geo'),
+                'url' => $this->url,
+                'priceRange' => $this->priceRange,
+                'telephone' => $this->telephone,
+                'aggregateRating' => $this->aggregateRating,
+                'openingHoursSpecification' => $this->openingHoursSpecification,
+            ],
         ];
     }
 }
