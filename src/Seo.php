@@ -106,6 +106,11 @@ class Seo
             $schema_output[] = $breadcrumb_list->toJson();
         }
 
+        $schema_output = [
+            "@context" => "https://schema.org",
+            "@graph" => $schema_output,
+        ];
+
         return json_encode($schema_output, JSON_UNESCAPED_SLASHES);
     }
 
