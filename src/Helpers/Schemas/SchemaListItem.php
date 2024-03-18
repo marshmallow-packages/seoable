@@ -32,17 +32,17 @@ class SchemaListItem extends Schema
     public function toJson()
     {
         $array = [
-            'position' => $this->position,
             'name' => $this->name,
         ];
 
         if (isset($this->item) && $this->item) {
-            $array['item'] = $this->item;
+            $array['@id'] = $this->item;
         }
 
-        return [
+        return ['@graph' => [
             '@type' => 'ListItem',
-            '@graph' => $array,
-        ];
+            'position' => $this->position,
+            'item' => $array,
+        ]];
     }
 }
