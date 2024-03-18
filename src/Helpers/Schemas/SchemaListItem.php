@@ -39,10 +39,10 @@ class SchemaListItem extends Schema
             $array['@id'] = $this->item;
         }
 
-        return ['@graph' => [
+        return [
             '@type' => 'ListItem',
             'position' => $this->position,
             'item' => $array,
-        ]];
+        ];
     }
 }
