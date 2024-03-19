@@ -22,6 +22,7 @@ class SchemaQuestion extends Schema
         return [
             '@type' => 'Question',
             '@graph' => [
+                '@type' => 'Question',
                 'name' => $this->name,
                 'acceptedAnswer' => $this->answer->toArray(),
             ]

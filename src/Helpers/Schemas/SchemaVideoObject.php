@@ -78,6 +78,7 @@ class SchemaVideoObject extends Schema
         return [
             '@type' => 'VideoObject',
             '@graph' => [
+                '@type' => 'VideoObject',
                 'name' => $this->name,
                 'description' => $this->description,
                 'thumbnailUrl' => $this->thumbnailUrl,

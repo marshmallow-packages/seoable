@@ -102,6 +102,7 @@ class SchemaNutritionInformation extends Schema
         return [
             '@type' => 'NutritionInformation',
             '@graph' => [
+                '@type' => 'NutritionInformation',
                 'calories' => $this->calories,
                 'carbohydrateContent' => $this->carbohydrateContent,
                 'cholesterolContent' => $this->cholesterolContent,

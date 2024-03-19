@@ -32,6 +32,7 @@ class SchemaAggregateRating extends Schema
     public function toJson()
     {
         $data = [
+            '@type' => 'AggregateRating',
             'ratingValue' => $this->ratingValue,
             'reviewCount' => $this->reviewCount,
             'bestRating' => $this->bestRating,

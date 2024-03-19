@@ -19,6 +19,7 @@ class SchemaPostalAddress extends Schema
         return [
             '@type' => 'PostalAddress',
             '@graph' => [
+                '@type' => 'PostalAddress',
                 'streetAddress' => $this->address,
                 'addressLocality' => $this->locality,
                 'addressRegion' => $this->region,

@@ -78,6 +78,7 @@ class SchemaOffer extends Schema
         return [
             '@type' => 'Offer',
             '@graph' => [
+                '@type' => 'Offer',
                 'url' => $this->url,
                 'availability' => 'http://schema.org/' . $this->availability,
                 'itemCondition' => 'http://schema.org/' . $this->itemCondition,

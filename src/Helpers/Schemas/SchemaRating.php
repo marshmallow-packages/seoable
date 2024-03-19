@@ -21,6 +21,7 @@ class SchemaRating extends Schema
         return [
             '@type' => 'Rating',
             '@graph' => [
+                '@type' => 'Rating',
                 'bestRating' => $this->bestRating,
                 'ratingValue' => $this->ratingValue,
                 'worstRating' => $this->worstRating,
