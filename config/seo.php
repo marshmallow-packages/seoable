@@ -11,6 +11,7 @@ return [
         'page_type' => 'website',
         'author' => 'Marshmallow',
         'logo' => null,
+        'phonenumber' => null,
     ],
 
     'use_pretty_urls' => false,
@@ -25,6 +26,11 @@ return [
             'env' => env('SEO_GTM_ENV'), // env-61
             'auth' => env('SEO_GTM_AUTH'), // 91oe5FeBfW_***
         ],
+    ],
+
+    'cookiebot' => [
+        'enabled' => env('SEO_COOKIEBOT_ENABLED', true), // true
+        'id' => env('SEO_COOKIEBOT_ID'), // 00000000-0000-0000-0000-000000000000
     ],
 
     'google_optimize' => [
