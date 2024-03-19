@@ -10,13 +10,18 @@ class SchemaOrganization extends Schema
 
     public function toArray()
     {
+        $data = [
+            '@type' => 'Organization',
+            'url' => config('app.url'),
+            'logo' => $this->name,
+        ];
+        if (config('seo.defaults.phonenumber')) {
+            $data['telephone'] = config('seo.defaults.phonenumber');
+        }
+
         return [
             '@context' => 'https://schema.org',
-            '@graph' => [
-                '@type' => 'Organization',
-                'url' => config('app.url'),
-                'logo' => $this->name,
-            ],
+            '@graph' => $data,
         ];
     }
 }
