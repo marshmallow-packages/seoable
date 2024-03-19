@@ -30,6 +30,7 @@ class SchemaReview extends Schema
         return [
             '@type' => 'Review',
             '@graph' => [
+                '@type' => 'Review',
                 'author' => $this->author,
                 'datePublished' => $this->datePublished,
                 'name' => $this->name,
