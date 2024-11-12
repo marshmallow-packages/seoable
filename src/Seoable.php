@@ -25,15 +25,15 @@ class Seoable
         'seoable_description',
     ];
 
-    public static function make($title)
+    public static function make(string $title = 'SEO')
     {
         return new Panel($title, self::getFields());
     }
 
     public static function getFields()
     {
-        return [
-            TextCounted::make('Title', 'seoable_title')
+        return array_filter([
+            config('seo.fields.title', true) ? TextCounted::make('Title', 'seoable_title')
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
                         /*
@@ -53,9 +53,9 @@ class Seoable
                 ->minChars(30)
                 ->maxChars(60)
                 ->warningAt(50)
-                ->hideWhenCreating(),
+                ->hideWhenCreating() : null,
 
-            TextareaCounted::make('Description', 'seoable_description')
+            config('seo.fields.description') ? TextareaCounted::make('Description', 'seoable_description')
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
                         /*
@@ -75,9 +75,9 @@ class Seoable
                 ->minChars(70)
                 ->maxChars(160)
                 ->warningAt(150)
-                ->hideWhenCreating(),
+                ->hideWhenCreating() : null,
 
-            MMMultiselect::make('Tags', 'seoable_tags')
+            config('seo.fields.keywords') ? MMMultiselect::make('Tags', 'seoable_tags')
                 ->hideFromIndex()
                 ->taggable()
                 ->fillUsing(
@@ -95,9 +95,9 @@ class Seoable
                         return app('seo')->set($model)->getSeoKeywords();
                     }
                 )
-                ->hideWhenCreating(),
+                ->hideWhenCreating() : null,
 
-            Select::make('Follow type', 'seoable_follow_type')
+            config('seo.fields.follow_type') ? Select::make('Follow type', 'seoable_follow_type')
                 ->options(config('seo.follow_type_options'))
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
@@ -115,9 +115,9 @@ class Seoable
                     }
                 )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating() : null,
 
-            AdvancedImage::make(
+            config('seo.fields.image') ? AdvancedImage::make(
                 'Image',
                 'seoable_image',
                 config('seo.storage.disk')
@@ -161,9 +161,9 @@ class Seoable
                     }
                 )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating() : null,
 
-            Select::make('Page type', 'seoable_page_type')
+            config('seo.fields.page_type') ? Select::make('Page type', 'seoable_page_type')
                 ->options(config('seo.page_types'))
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
@@ -181,10 +181,9 @@ class Seoable
                     }
                 )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
+                ->hideWhenCreating() : null,
 
-
-            Boolean::make('Hide in sitemap', 'seoable_hide_in_sitemap')
+            config('seo.fields.sitemap') ? Boolean::make('Hide in sitemap', 'seoable_hide_in_sitemap')
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
                         /*
@@ -201,8 +200,8 @@ class Seoable
                     }
                 )
                 ->hideFromIndex()
-                ->hideWhenCreating(),
-        ];
+                ->hideWhenCreating() : null,
+        ]);
     }
 
     public static function routes()

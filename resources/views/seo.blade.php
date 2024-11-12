@@ -4,19 +4,31 @@
 @endif
 
 {{ Seo::googleOptimize() }}
-<title>{{ Seo::getSeoTitle() }}</title>
-<meta name="description" content="{{ Seo::getSeoDescription() }}" />
-@if (Seo::getSeoKeywordsAsString())
+@if (config('seo.fields.title'))
+    <title>{{ Seo::getSeoTitle() }}</title>
+@endif
+@if (config('seo.fields.description'))
+    <meta name="description" content="{{ Seo::getSeoDescription() }}" />
+@endif
+@if (config('seo.fields.keywords') && Seo::getSeoKeywordsAsString())
     <meta name="keywords" content="{{ Seo::getSeoKeywordsAsString() }}" />
 @endif
-<meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
+@if (config('seo.fields.follow_type'))
+    <meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
+@endif
 <meta name="author" content="{{ config('seo.defaults.author') }}">
 <meta name="twitter:card" content="{{ Seo::getSeoDescription() }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<meta property="og:title" content="{{ Seo::getSeoTitle() }}" />
-<meta property="og:description" content="{{ Seo::getSeoDescription() }}" />
-<meta property="og:image" content="{{ Seo::getSeoImageUrl() }}" />
+@if (config('seo.fields.title'))
+    <meta property="og:title" content="{{ Seo::getSeoTitle() }}" />
+@endif
+@if (config('seo.fields.description'))
+    <meta property="og:description" content="{{ Seo::getSeoDescription() }}" />
+@endif
+@if (config('seo.fields.image'))
+    <meta property="og:image" content="{{ Seo::getSeoImageUrl() }}" />
+@endif
 <meta property="og:url" content="{{ Seo::getSeoCanonicalUrl() }}" />
 <meta property="og:site_name" content="{{ config('seo.defaults.sitename') }}" />
 <meta property="og:locale" content="{{ Seo::getSeoLocale() }}" />
@@ -31,7 +43,7 @@
     @endforeach
 @endif
 
-@if ($type = Seo::getSeoPageType())
+@if (config('seo.fields.page_type') && ($type = Seo::getSeoPageType()))
     <meta property="og:type" content="{{ $type }}" />
 @endif
 
