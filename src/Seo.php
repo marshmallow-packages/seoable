@@ -455,7 +455,10 @@ class Seo
             if (Str::of($image)->startsWith('http')) {
                 return $image;
             }
-            return Storage::disk('public')->url($image);
+
+            return Storage::disk(
+                config('seo.storage.disk')
+            )->url($image);
         }
 
         return $this->getDefaultSeoImage();
