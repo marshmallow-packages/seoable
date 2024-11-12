@@ -16,6 +16,16 @@ return [
 
     'use_pretty_urls' => false,
 
+    'fields' => [
+        'title' => true,
+        'description' => true,
+        'keywords' => false,
+        'follow_type' => true,
+        'image' => true,
+        'page_type' => true,
+        'sitemap' => true,
+    ],
+
     'google' => [
         'GTM' => env('SEO_GTM'),            // GTM-XXXXXXX
         'GA' => env('SEO_GA'),              // GA-XXXXXXX-XX
