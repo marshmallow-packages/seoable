@@ -19,7 +19,7 @@
         "php": "^8.0",
         "marshmallow/commands": "^1.0",
         "marshmallow/mr-mallow": "^1.0",
-        "marshmallow/nova-advanced-image": "2.0",
+        "marshmallow/nova-advanced-image": "^2.0",
         "marshmallow/nova-flexible": "^2.0",
         "marshmallow/nova-charcounted-fields": "^2.0",
         "marshmallow/nova-tinymce": "^2.1",
