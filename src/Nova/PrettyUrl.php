@@ -6,11 +6,11 @@ use App\Nova\Resource;
 use Illuminate\Support\Str;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Heading;
 use Marshmallow\Seoable\Seoable;
-use Marshmallow\Nova\TinyMCE\TinyMCE;
 use Marshmallow\Nova\Fields\Help\Help;
 use Marshmallow\Nova\Flexible\Flexible;
 use Marshmallow\Seoable\Rules\IsFullLocalUrl;
@@ -48,7 +48,9 @@ class PrettyUrl extends Resource
      * @var array
      */
     public static $search = [
-        'original_url', 'pretty_url', 'name',
+        'original_url',
+        'pretty_url',
+        'name',
     ];
 
     /**
@@ -110,7 +112,7 @@ class PrettyUrl extends Resource
                         'footer' => 'Footer',
                     ]),
                     Text::make(__('Title'), 'title'),
-                    TinyMCE::make(__('Content'), 'content'),
+                    Trix::make(__('Content'), 'content'),
                 ])
                 ->simpleMenu()
                 ->fullWidth()
