@@ -6,16 +6,14 @@ use Exception;
 use Laravel\Nova\Panel;
 use Marshmallow\Seoable\Seo;
 use Laravel\Nova\Fields\Select;
-use Outl1ne\MultiselectField\Multiselect as MMMultiselect;
 use Laravel\Nova\Fields\Boolean;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Outl1ne\MultiselectField\Multiselect;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Marshmallow\AdvancedImage\AdvancedImage;
-use Marshmallow\CharcountedFields\TextCounted;
-use Marshmallow\CharcountedFields\TextareaCounted;
 use Marshmallow\Seoable\Http\Controllers\PrettyUrlController;
 
 class Seoable
@@ -30,10 +28,25 @@ class Seoable
         return new Panel($title, self::getFields());
     }
 
+    public static function makeAsTab(string $title = 'SEO')
+    {
+        $nova_tabs = '\Laravel\Nova\Tabs\Tab';
+        if (class_exists($nova_tabs)) {
+            return $nova_tabs::make(__('SEO'), self::getFields());
+        }
+
+        return self::make($title);
+    }
+
+    public static function asArray(): array
+    {
+        return self::getFields();
+    }
+
     public static function getFields()
     {
         return array_filter([
-            config('seo.fields.title', true) ? TextCounted::make('Title', 'seoable_title')
+            config('seo.fields.title', true) ? \Laravel\Nova\Fields\Text::make('Title', 'seoable_title')
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
                         /*
@@ -50,12 +63,10 @@ class Seoable
                     }
                 )
                 ->hideFromIndex()
-                ->minChars(30)
-                ->maxChars(60)
-                ->warningAt(50)
+                ->maxlength(60)
                 ->hideWhenCreating() : null,
 
-            config('seo.fields.description') ? TextareaCounted::make('Description', 'seoable_description')
+            config('seo.fields.description') ? \Laravel\Nova\Fields\Textarea::make('Description', 'seoable_description')
                 ->fillUsing(
                     function (NovaRequest $request, Model $model, $field) {
                         /*
@@ -72,12 +83,10 @@ class Seoable
                     }
                 )
                 ->hideFromIndex()
-                ->minChars(70)
-                ->maxChars(160)
-                ->warningAt(150)
+                ->maxlength(160)
                 ->hideWhenCreating() : null,
 
-            config('seo.fields.keywords') ? MMMultiselect::make('Tags', 'seoable_tags')
+            config('seo.fields.keywords') ? Multiselect::make('Tags', 'seoable_tags')
                 ->hideFromIndex()
                 ->taggable()
                 ->fillUsing(
