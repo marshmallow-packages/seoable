@@ -26,8 +26,8 @@
         "marshmallow/nova-fields-help": "^v2.0",
         "marshmallow/translatable": "^2.0",
         "marshmallow/sluggable": "^1.0",
-        "laravel/nova": "^4.0|^5.0",
-        "marshmallow/nova-multiselect-field": "^5.0"
+        "laravel/nova": "^4.0",
+        "marshmallow/nova-multiselect-field": "^4.0"
     },
     "autoload": {
         "psr-4": {
