@@ -29,12 +29,15 @@ class SchemaReview extends Schema
     {
         return [
             '@type' => 'Review',
-            'author' => $this->author,
-            'datePublished' => $this->datePublished,
-            'name' => $this->name,
-            'reviewRating' => $this->rating(
-                SchemaRating::make($this->ratingValue)
-            ),
+            '@graph' => [
+                '@type' => 'Review',
+                'author' => $this->author,
+                'datePublished' => $this->datePublished,
+                'name' => $this->name,
+                'reviewRating' => $this->rating(
+                    SchemaRating::make($this->ratingValue)
+                ),
+            ]
         ];
     }
 }

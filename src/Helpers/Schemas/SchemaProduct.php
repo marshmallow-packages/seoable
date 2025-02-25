@@ -50,18 +50,21 @@ class SchemaProduct extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'Product',
-            'name' => $this->name,
-            'image' => $this->images,
-            'description' => $this->description,
-            'brand' => $this->brand,
-            'offers' => $this->offers,
-            'sku' => $this->sku,
-            'mpn' => $this->mpn,
-            'gtin' => $this->gtin,
-            'isbn' => $this->isbn,
-            'aggregateRating' => $this->aggregateRating,
-            'review' => $this->reviews,
+            '@context' => 'https://schema.org/',
+            '@graph' => [
+                '@type' => 'Product',
+                'name' => $this->name,
+                'image' => $this->images,
+                'description' => $this->description,
+                'brand' => $this->brand,
+                'offers' => $this->offers,
+                'sku' => $this->sku,
+                'mpn' => $this->mpn,
+                'gtin' => $this->gtin,
+                'isbn' => $this->isbn,
+                'aggregateRating' => $this->aggregateRating,
+                'review' => $this->reviews,
+            ],
         ];
     }
 }

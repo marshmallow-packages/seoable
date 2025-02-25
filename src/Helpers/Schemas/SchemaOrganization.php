@@ -19,6 +19,9 @@ class SchemaOrganization extends Schema
             $data['telephone'] = config('seo.defaults.phonenumber');
         }
 
-        return $data;
+        return [
+            '@context' => 'https://schema.org',
+            '@graph' => $data,
+        ];
     }
 }

@@ -77,12 +77,15 @@ class SchemaOffer extends Schema
     {
         return [
             '@type' => 'Offer',
-            'url' => $this->url,
-            'availability' => 'http://schema.org/' . $this->availability,
-            'itemCondition' => 'http://schema.org/' . $this->itemCondition,
-            'price' => $this->price,
-            'priceValidUntil' => $this->priceValidUntil,
-            'priceCurrency' => $this->priceCurrency,
+            '@graph' => [
+                '@type' => 'Offer',
+                'url' => $this->url,
+                'availability' => 'http://schema.org/' . $this->availability,
+                'itemCondition' => 'http://schema.org/' . $this->itemCondition,
+                'price' => $this->price,
+                'priceValidUntil' => $this->priceValidUntil,
+                'priceCurrency' => $this->priceCurrency,
+            ]
         ];
     }
 }
