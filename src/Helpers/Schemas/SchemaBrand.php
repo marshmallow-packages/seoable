@@ -12,10 +12,7 @@ class SchemaBrand extends Schema
     {
         return [
             '@type' => 'Brand',
-            '@graph' => [
-                '@type' => 'Brand',
-                'name' => $this->name,
-            ]
+            'name' => $this->name,
         ];
     }
 }

@@ -31,11 +31,8 @@ class SchemaBreadcrumbList extends Schema
     public function toArray()
     {
         return [
-            '@context' => 'https://schema.org',
-            '@graph' => [
-                '@type' => 'BreadcrumbList',
-                'itemListElement' => $this->itemListElement,
-            ]
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => $this->itemListElement,
         ];
     }
 }

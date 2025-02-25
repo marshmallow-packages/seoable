@@ -12,10 +12,7 @@ class SchemaPerson extends Schema
     {
         return [
             '@type' => 'Person',
-            '@graph' => [
-                '@type' => 'Person',
-                'name' => $this->name,
-            ]
+            'name' => $this->name,
         ];
     }
 }

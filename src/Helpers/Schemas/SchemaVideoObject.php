@@ -77,18 +77,15 @@ class SchemaVideoObject extends Schema
     {
         return [
             '@type' => 'VideoObject',
-            '@graph' => [
-                '@type' => 'VideoObject',
-                'name' => $this->name,
-                'description' => $this->description,
-                'thumbnailUrl' => $this->thumbnailUrl,
-                'contentUrl' => $this->contentUrl,
-                'embedUrl' => $this->embedUrl,
-                'uploadDate' => $this->uploadDate,
-                'duration' => $this->duration,
-                'interactionStatistic' => $this->getJsonSchema('interactionStatistic'),
-                'expires' => $this->expires,
-            ]
+            'name' => $this->name,
+            'description' => $this->description,
+            'thumbnailUrl' => $this->thumbnailUrl,
+            'contentUrl' => $this->contentUrl,
+            'embedUrl' => $this->embedUrl,
+            'uploadDate' => $this->uploadDate,
+            'duration' => $this->duration,
+            'interactionStatistic' => $this->getJsonSchema('interactionStatistic'),
+            'expires' => $this->expires,
         ];
     }
 }
