@@ -32,11 +32,8 @@ class SchemaFaqPage extends Schema
     public function toArray()
     {
         return [
-            '@context' => 'https://schema.org',
-            '@graph' => [
-                '@type' => 'FAQPage',
-                'mainEntity' => $this->questions,
-            ],
+            '@type' => 'FAQPage',
+            'mainEntity' => $this->questions,
         ];
     }
 }

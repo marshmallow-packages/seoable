@@ -34,20 +34,17 @@ class SchemaLocalBusiness extends Schema
     public function toArray()
     {
         return [
-            '@context' => 'https://schema.org/',
-            '@graph' => [
-                '@type' => $this->type,
-                '@id' => $this->id,
-                'name' => $this->name,
-                'image' => $this->images,
-                'address' => $this->getJsonSchema('address'),
-                'geo' => $this->getJsonSchema('geo'),
-                'url' => $this->url,
-                'priceRange' => $this->priceRange,
-                'telephone' => $this->telephone,
-                'aggregateRating' => $this->aggregateRating,
-                'openingHoursSpecification' => $this->openingHoursSpecification,
-            ],
+            '@type' => $this->type,
+            '@id' => $this->id,
+            'name' => $this->name,
+            'image' => $this->images,
+            'address' => $this->getJsonSchema('address'),
+            'geo' => $this->getJsonSchema('geo'),
+            'url' => $this->url,
+            'priceRange' => $this->priceRange,
+            'telephone' => $this->telephone,
+            'aggregateRating' => $this->aggregateRating,
+            'openingHoursSpecification' => $this->openingHoursSpecification,
         ];
     }
 }

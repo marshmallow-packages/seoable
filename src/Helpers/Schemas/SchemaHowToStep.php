@@ -27,13 +27,10 @@ class SchemaHowToStep extends Schema
     {
         return [
             '@type' => 'HowToStep',
-            '@graph' => [
-                '@type' => 'HowToStep',
-                'name' => $this->name,
-                'text' => $this->text,
-                'url' => $this->url,
-                'image' => $this->image,
-            ]
+            'name' => $this->name,
+            'text' => $this->text,
+            'url' => $this->url,
+            'image' => $this->image,
         ];
     }
 }

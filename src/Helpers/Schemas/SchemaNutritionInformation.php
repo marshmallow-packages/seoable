@@ -101,21 +101,18 @@ class SchemaNutritionInformation extends Schema
     {
         return [
             '@type' => 'NutritionInformation',
-            '@graph' => [
-                '@type' => 'NutritionInformation',
-                'calories' => $this->calories,
-                'carbohydrateContent' => $this->carbohydrateContent,
-                'cholesterolContent' => $this->cholesterolContent,
-                'fatContent' => $this->fatContent,
-                'fiberContent' => $this->fiberContent,
-                'proteinContent' => $this->proteinContent,
-                'saturatedFatContent' => $this->saturatedFatContent,
-                'servingSize' => $this->servingSize,
-                'sodiumContent' => $this->sodiumContent,
-                'sugarContent' => $this->sugarContent,
-                'transFatContent' => $this->transFatContent,
-                'unsaturatedFatContent' => $this->unsaturatedFatContent,
-            ]
+            'calories' => $this->calories,
+            'carbohydrateContent' => $this->carbohydrateContent,
+            'cholesterolContent' => $this->cholesterolContent,
+            'fatContent' => $this->fatContent,
+            'fiberContent' => $this->fiberContent,
+            'proteinContent' => $this->proteinContent,
+            'saturatedFatContent' => $this->saturatedFatContent,
+            'servingSize' => $this->servingSize,
+            'sodiumContent' => $this->sodiumContent,
+            'sugarContent' => $this->sugarContent,
+            'transFatContent' => $this->transFatContent,
+            'unsaturatedFatContent' => $this->unsaturatedFatContent,
         ];
     }
 }
