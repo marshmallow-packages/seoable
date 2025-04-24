@@ -14,7 +14,7 @@ class SchemaHowToStep extends Schema
 
     protected $image;
 
-    public function image(string $public_path = null)
+    public function image(?string $public_path = null)
     {
         if ($public_path) {
             $this->image = $public_path;
