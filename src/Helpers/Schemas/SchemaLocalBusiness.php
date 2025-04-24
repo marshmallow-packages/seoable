@@ -13,19 +13,19 @@ class SchemaLocalBusiness extends Schema
     public $priceRange;
     public $telephone;
 
-    public function url(string $url = null)
+    public function url(?string $url = null)
     {
         $this->url = $url;
         return $this;
     }
 
-    public function priceRange(string $priceRange = null)
+    public function priceRange(?string $priceRange = null)
     {
         $this->priceRange = $priceRange;
         return $this;
     }
 
-    public function telephone(string $telephone = null)
+    public function telephone(?string $telephone = null)
     {
         $this->telephone = $telephone;
         return $this;

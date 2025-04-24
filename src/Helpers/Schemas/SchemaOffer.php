@@ -64,7 +64,7 @@ class SchemaOffer extends Schema
         return $this;
     }
 
-    public function url(string $url = null): self
+    public function url(?string $url = null): self
     {
         if ($url) {
             $this->url = $url;

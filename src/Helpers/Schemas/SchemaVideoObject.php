@@ -23,7 +23,7 @@ class SchemaVideoObject extends Schema
 
     protected $expires;
 
-    public function thumbnail(string $public_path = null)
+    public function thumbnail(?string $public_path = null)
     {
         if ($public_path) {
             $this->thumbnailUrl[] = $public_path;
@@ -32,7 +32,7 @@ class SchemaVideoObject extends Schema
         return $this;
     }
 
-    public function contentUrl(string $video_url = null)
+    public function contentUrl(?string $video_url = null)
     {
         if ($video_url) {
             $this->contentUrl = $video_url;
@@ -41,7 +41,7 @@ class SchemaVideoObject extends Schema
         return $this;
     }
 
-    public function embedUrl(string $embed_url = null)
+    public function embedUrl(?string $embed_url = null)
     {
         if ($embed_url) {
             $this->embedUrl = $embed_url;
@@ -50,7 +50,7 @@ class SchemaVideoObject extends Schema
         return $this;
     }
 
-    public function uploadDate(Carbon $date = null)
+    public function uploadDate(?Carbon $date = null)
     {
         if ($date) {
             $this->uploadDate = $date;
@@ -59,12 +59,12 @@ class SchemaVideoObject extends Schema
         return $this;
     }
 
-    public function duration(int $seconds = null)
+    public function duration(?int $seconds = null)
     {
         return $this->getDurationStringFromSeconds('duration', $seconds);
     }
 
-    public function expires(Carbon $date = null)
+    public function expires(?Carbon $date = null)
     {
         if ($date) {
             $this->expires = $date;
