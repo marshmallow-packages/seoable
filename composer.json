@@ -22,7 +22,7 @@
         "marshmallow/nova-advanced-image": "^2.0",
         "marshmallow/nova-flexible": "^5.0",
         "marshmallow/nova-fields-help": "^v2.0",
-        "marshmallow/translatable": "^2.0",
+        "marshmallow/translatable": "^5.0",
         "laravel/nova": "^5.0",
         "marshmallow/nova-multiselect-field": "^5.0"
     },
