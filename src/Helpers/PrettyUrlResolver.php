@@ -5,6 +5,7 @@ namespace Marshmallow\Seoable\Helpers;
 use Illuminate\Http\Request;
 use Marshmallow\Seoable\Seo;
 use Marshmallow\Seoable\Models\PrettyUrl;
+use Illuminate\Session\SymfonySessionDecorator;
 
 class PrettyUrlResolver
 {
@@ -60,7 +61,11 @@ class PrettyUrlResolver
             $request->setJson($this->from->json());
 
             if ($session = $this->from->getSession()) {
-                $request->setLaravelSession($session);
+                if ($session instanceof SymfonySessionDecorator) {
+                    $request->setLaravelSession($session->store);
+                } else {
+                    $request->setLaravelSession($session);
+                }
             }
 
             $request->setUserResolver($this->from->getUserResolver());
