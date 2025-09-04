@@ -48,7 +48,7 @@ class Seo
             self::$routeLocale = config('app.locale');
         }
 
-        if (config('seo.use_schema_organization')) {
+        if (config('seo.orginization_schema.enabled')) {
             $company_schema = SchemaOrganization::make(config('seo.defaults.sitename'));
             $this->addSchema($company_schema);
         }
