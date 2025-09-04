@@ -17,7 +17,6 @@
     <meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
 @endif
 <meta name="author" content="{{ config('seo.defaults.author') }}">
-<meta name="twitter:card" content="{{ Seo::getSeoDescription() }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @if (config('seo.fields.title'))
@@ -29,6 +28,21 @@
 @if (config('seo.fields.image'))
     <meta property="og:image" content="{{ Seo::getSeoImageUrl() }}" />
 @endif
+
+@if (config('seo.twitter.site'))
+    <meta name="twitter:card" content="{{ config('seo.twitter.card') }}" />
+    <meta name="twitter:site" content="{{ config('seo.twitter.site') }}" />
+    @if (config('seo.fields.title'))
+        <meta property="twitter:title" content="{{ Seo::getSeoTitle() }}" />
+    @endif
+    @if (config('seo.fields.description'))
+        <meta property="twitter:description" content="{{ Seo::getSeoDescription() }}" />
+    @endif
+    @if (config('seo.fields.image'))
+        <meta property="twitter:image" content="{{ Seo::getSeoImageUrl() }}" />
+    @endif
+@endif
+
 <meta property="og:url" content="{{ Seo::getSeoCanonicalUrl() }}" />
 <meta property="og:site_name" content="{{ config('seo.defaults.sitename') }}" />
 <meta property="og:locale" content="{{ Seo::getSeoLocale() }}" />
@@ -47,9 +61,6 @@
     <meta property="og:type" content="{{ $type }}" />
 @endif
 
-@if (config('seo.twitter.site'))
-    <meta name="twitter:site" content="{{ config('seo.twitter.site') }}" />
-@endif
 @if (config('seo.twitter.creator'))
     <meta name="twitter:creator" content="{{ config('seo.twitter.creator') }}" />
 @endif

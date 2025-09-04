@@ -13,10 +13,27 @@ class SchemaOrganization extends Schema
         $data = [
             '@type' => 'Organization',
             'url' => config('app.url'),
-            'logo' => $this->name,
+            'name' => $this->name,
         ];
+
+        if (config('seo.defaults.logo')) {
+            $data['logo'] = config('seo.defaults.logo');
+        }
+
+        if (config('seo.defaults.description')) {
+            $data['description'] = config('seo.defaults.description');
+        }
+
+        if (config('seo.defaults.email')) {
+            $data['email'] = config('seo.defaults.email');
+        }
+
         if (config('seo.defaults.phonenumber')) {
             $data['telephone'] = config('seo.defaults.phonenumber');
+        }
+
+        if (config('seo.defaults.vat_id')) {
+            $data['vatID'] = config('seo.defaults.vat_id');
         }
 
         return [
