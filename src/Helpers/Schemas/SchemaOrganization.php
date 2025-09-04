@@ -11,7 +11,7 @@ class SchemaOrganization extends Schema
     public function toArray()
     {
         $data = [
-            '@type' => 'Organization',
+            '@type' => config('seo.orginization_schema.type') ?? 'Organization',
             'url' => config('app.url'),
             'name' => $this->name,
         ];

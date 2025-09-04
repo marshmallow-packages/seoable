@@ -18,7 +18,10 @@ return [
 
     'use_pretty_urls' => false,
 
-    'use_schema_organization' => false,
+    'orginization_schema' => [
+        'enabled' => env('SEO_ORG_SCHEMA_ENABLED', false),
+        'type' => env('SEO_ORG_SCHEMA_TYPE', 'Organization'), // Organization, LocalBusiness or OnlineStore
+    ],
 
     'fields' => [
         'title' => true,
