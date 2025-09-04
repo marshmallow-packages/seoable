@@ -49,22 +49,22 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    public function prepTime(int $minutes = null)
+    public function prepTime(?int $minutes = null)
     {
         return $this->setTimeUnit('prepTime', $minutes);
     }
 
-    public function cookTime(int $minutes = null)
+    public function cookTime(?int $minutes = null)
     {
         return $this->setTimeUnit('cookTime', $minutes);
     }
 
-    public function totalTime(int $minutes = null)
+    public function totalTime(?int $minutes = null)
     {
         return $this->setTimeUnit('totalTime', $minutes);
     }
 
-    public function keywords(array $keywords = null)
+    public function keywords(?array $keywords = null)
     {
         if ($keywords) {
             $this->keywords = join(', ', $keywords);
@@ -73,7 +73,7 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    public function recipeYield(int $recipeYield = null)
+    public function recipeYield(?int $recipeYield = null)
     {
         if ($recipeYield) {
             $this->recipeYield = $recipeYield;
@@ -82,7 +82,7 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    public function recipeCategory(string $recipeCategory = null)
+    public function recipeCategory(?string $recipeCategory = null)
     {
         if ($recipeCategory) {
             $this->recipeCategory = $recipeCategory;
@@ -91,7 +91,7 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    public function recipeCuisine(string $recipeCuisine = null)
+    public function recipeCuisine(?string $recipeCuisine = null)
     {
         if ($recipeCuisine) {
             $this->recipeCuisine = $recipeCuisine;
@@ -125,7 +125,7 @@ class SchemaRecipe extends Schema
         return $this;
     }
 
-    protected function setTimeUnit(string $column, int $minutes = null)
+    protected function setTimeUnit(string $column, ?int $minutes = null)
     {
         if ($minutes) {
             $this->{$column} = "PT{$minutes}M";

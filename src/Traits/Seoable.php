@@ -2,6 +2,7 @@
 
 namespace Marshmallow\Seoable\Traits;
 
+use Illuminate\Support\Facades\DB;
 use Marshmallow\Seoable\Facades\Seo;
 use Illuminate\Database\Eloquent\Model;
 use Marshmallow\Seoable\Seo as BaseSeo;
@@ -12,14 +13,18 @@ trait Seoable
     {
         static::created(function (Model $resource) {
             if ($resource->shouldStoreRecordOnInsert()) {
-                $resource->seoable()->create([
-                    'title' => app('seo')->set($resource)->getSeoTitle(),
-                    'description' => app('seo')->set($resource)->getSeoDescription(),
-                    'keywords' => app('seo')->set($resource)->getSeoKeywords(),
-                    'follow_type' => app('seo')->set($resource)->getSeoFollowType(),
-                    'image' => app('seo')->set($resource)->getSeoImageUrl(),
-                    'page_type' => app('seo')->set($resource)->getSeoPageType(),
-                ]);
+                DB::afterCommit(
+                    function () use ($resource) {
+                        $resource->seoable()->create([
+                            'title' => app('seo')->set($resource)->getSeoTitle(),
+                            'description' => app('seo')->set($resource)->getSeoDescription(),
+                            'keywords' => app('seo')->set($resource)->getSeoKeywords(),
+                            'follow_type' => app('seo')->set($resource)->getSeoFollowType(),
+                            'image' => app('seo')->set($resource)->getSeoImageUrl(),
+                            'page_type' => app('seo')->set($resource)->getSeoPageType(),
+                        ]);
+                    }
+                );
             }
         });
 

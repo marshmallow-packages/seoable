@@ -101,7 +101,7 @@ class SeoSitemap
      *
      * @return SeoSitemap
      */
-    public function attachCustom($path, Carbon $lastmod = null)
+    public function attachCustom($path, ?Carbon $lastmod = null)
     {
         $date_format = config('seo.sitemap_date_format') ?? 'Y-m-d\TH:i:s.u\Z';
 

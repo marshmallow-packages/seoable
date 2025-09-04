@@ -16,17 +16,14 @@
         "seoable"
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "marshmallow/commands": "^1.0",
         "marshmallow/mr-mallow": "^1.0",
-        "marshmallow/nova-advanced-image": "2.0",
-        "marshmallow/nova-flexible": "^2.0",
-        "marshmallow/nova-charcounted-fields": "^2.0",
-        "marshmallow/nova-tinymce": "^2.1",
+        "marshmallow/nova-advanced-image": "^2.0",
+        "marshmallow/nova-flexible": "^5.0",
         "marshmallow/nova-fields-help": "^v2.0",
-        "marshmallow/translatable": "^2.0",
-        "marshmallow/sluggable": "^1.0",
-        "laravel/nova": "^4.0",
+        "marshmallow/translatable": "^5.0",
+        "laravel/nova": "^5.0",
         "marshmallow/nova-multiselect-field": "^5.0"
     },
     "autoload": {

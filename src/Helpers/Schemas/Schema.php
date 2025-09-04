@@ -37,7 +37,7 @@ class Schema
 
     protected $openingHoursSpecification = [];
 
-    public function brand(string $name = null)
+    public function brand(?string $name)
     {
         if ($name) {
             $this->brand = SchemaBrand::make($name)->toJson();
@@ -46,7 +46,7 @@ class Schema
         return $this;
     }
 
-    public function id(string $id = null)
+    public function id(?string $id)
     {
         $this->id = $id;
         return $this;
@@ -141,7 +141,7 @@ class Schema
         return $this;
     }
 
-    public function image(string $image = null)
+    public function image(?string $image)
     {
         if ($image) {
             $this->images[] = $image;
@@ -159,7 +159,7 @@ class Schema
         return $this;
     }
 
-    public function datePublished(Carbon $date = null)
+    public function datePublished(?Carbon $date)
     {
         if ($date) {
             $this->datePublished = $date;
@@ -168,7 +168,7 @@ class Schema
         return $this;
     }
 
-    public function description(string $description = null)
+    public function description(?string $description)
     {
         if ($description) {
             $this->description = $description;
@@ -191,7 +191,7 @@ class Schema
         return $this;
     }
 
-    protected function getDurationStringFromSeconds(string $column, int $seconds = null)
+    protected function getDurationStringFromSeconds(string $column, ?int $seconds)
     {
         if (!$seconds) {
             return $this;
