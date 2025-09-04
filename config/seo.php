@@ -3,18 +3,22 @@
 return [
     'defaults' => [
         'sitename' => env('APP_NAME'),
-        'title' => env('APP_NAME') . ' from config',
-        'description' => 'Description from config',
-        'keywords' => [env('APP_NAME'), 'Marshmallow Alphen'],
-        'image' => 'https://marshmallow.dev/cdn/media/mrmallow-250x250.png',
+        'title' => env('APP_NAME') . ' - Website',
+        'description' => null, //'Description from config',
+        'keywords' => [env('APP_NAME')],
+        'image' => null, // https://marshmallow.dev/cdn/media/mrmallow-250x250.png
         'follow_type' => 'index, follow',
         'page_type' => 'website',
-        'author' => 'Marshmallow',
+        'author' => null,
         'logo' => null,
-        'phonenumber' => null,
+        'email' => null, // contact@example.com
+        'phonenumber' => null, //+47-99-999-9999
+        'vat_id' => null, //FR12345678901
     ],
 
     'use_pretty_urls' => false,
+
+    'use_schema_organization' => false,
 
     'fields' => [
         'title' => true,

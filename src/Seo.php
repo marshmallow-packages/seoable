@@ -48,8 +48,8 @@ class Seo
             self::$routeLocale = config('app.locale');
         }
 
-        if (config('seo.defaults.logo')) {
-            $company_schema = SchemaOrganization::make(config('seo.defaults.logo'));
+        if (config('seo.use_schema_organization')) {
+            $company_schema = SchemaOrganization::make(config('seo.defaults.sitename'));
             $this->addSchema($company_schema);
         }
     }
