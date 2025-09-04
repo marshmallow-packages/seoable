@@ -63,8 +63,9 @@ return [
     ],
 
     'twitter' => [
-        'site' => '',      // @marshmallowdev
+        'site' => '', // @marshmallowdev
         'creator' => '', // @stefvanesch
+        'card' => 'summary_large_image', // summary, summary_large_image, app or player.
     ],
 
     'microsoft' => [

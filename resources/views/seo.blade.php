@@ -17,17 +17,20 @@
     <meta name="robots" content="{{ Seo::getSeoFollowType() }}" />
 @endif
 <meta name="author" content="{{ config('seo.defaults.author') }}">
-<meta name="twitter:card" content="{{ Seo::getSeoDescription() }}" />
+<meta name="twitter:card" content="{{ config('seo.twitter.card') }}" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @if (config('seo.fields.title'))
     <meta property="og:title" content="{{ Seo::getSeoTitle() }}" />
+    <meta property="twitter:title" content="{{ Seo::getSeoTitle() }}" />
 @endif
 @if (config('seo.fields.description'))
     <meta property="og:description" content="{{ Seo::getSeoDescription() }}" />
+    <meta property="twitter:description" content="{{ Seo::getSeoDescription() }}" />
 @endif
 @if (config('seo.fields.image'))
     <meta property="og:image" content="{{ Seo::getSeoImageUrl() }}" />
+    <meta property="twitter:image" content="{{ Seo::getSeoImageUrl() }}" />
 @endif
 <meta property="og:url" content="{{ Seo::getSeoCanonicalUrl() }}" />
 <meta property="og:site_name" content="{{ config('seo.defaults.sitename') }}" />
