@@ -17,6 +17,13 @@ class SeoSitemap
     private $items = [];
 
     /**
+     * Cache of canonical pretty URLs to avoid N+1 queries.
+     *
+     * @var array|null
+     */
+    private $canonicalPrettyUrls = null;
+
+    /**
      * Construct the sitemap class.
      *
      * @return void
@@ -39,6 +46,9 @@ class SeoSitemap
             $items = $sitemap_model::getSitemapItems();
 
             if ($items && $items->count() > 0) {
+                // Pre-load canonical pretty URLs to avoid N+1 queries
+                $this->preloadCanonicalPrettyUrls($items);
+
                 $this->items = array_merge($this->items, $items->reject(function ($item) {
                     if ($item->seoable && $item->seoable instanceof Seo::$seoableItemModel) {
                         if (strpos($item->seoable->follow_type, 'noindex') !== false) {
@@ -65,7 +75,44 @@ class SeoSitemap
                         'lastmod' => $item->getSitemapItemLastModified(),
                     ];
                 })->toArray());
+
+                // Clear cache after processing each model
+                $this->canonicalPrettyUrls = null;
             }
+        }
+    }
+
+    /**
+     * Pre-load all canonical pretty URLs for the given items in a single query.
+     *
+     * @param \Illuminate\Support\Collection $items
+     * @return void
+     */
+    protected function preloadCanonicalPrettyUrls($items)
+    {
+        try {
+            // Collect all URLs from items
+            $urls = $items->map(function ($item) {
+                try {
+                    return url($item->getSitemapItemUrl());
+                } catch (Error $e) {
+                    return null;
+                }
+            })->filter()->unique()->values()->toArray();
+
+            if (empty($urls)) {
+                $this->canonicalPrettyUrls = [];
+                return;
+            }
+
+            // Fetch all canonical pretty URLs in one query
+            $this->canonicalPrettyUrls = Seo::$prettyUrlModel::whereIn('original_url', $urls)
+                ->where('is_canonical', true)
+                ->pluck('original_url')
+                ->flip()
+                ->toArray();
+        } catch (Error $e) {
+            $this->canonicalPrettyUrls = [];
         }
     }
 
@@ -85,8 +132,15 @@ class SeoSitemap
     protected function hasCanonicalPrettyUrl($item)
     {
         try {
-            $url = $item->getSitemapItemUrl();
-            $pretty_url = Seo::$prettyUrlModel::where('original_url', url($url))->first();
+            $url = url($item->getSitemapItemUrl());
+
+            // Use pre-loaded cache if available (O(1) lookup)
+            if ($this->canonicalPrettyUrls !== null) {
+                return isset($this->canonicalPrettyUrls[$url]);
+            }
+
+            // Fallback to individual query if cache not loaded
+            $pretty_url = Seo::$prettyUrlModel::where('original_url', $url)->first();
             return $pretty_url && $pretty_url->is_canonical;
         } catch (Error $e) {
             return false;
