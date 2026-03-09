@@ -9,6 +9,18 @@ use Marshmallow\Seoable\Seo as BaseSeo;
 
 trait Seoable
 {
+    /**
+     * Initialize the Seoable trait for an instance.
+     * Automatically eager loads the seoable relationship to prevent N+1 queries
+     * when accessing SEO data on collections of models.
+     */
+    public function initializeSeoable(): void
+    {
+        if (!in_array('seoable', $this->with)) {
+            $this->with[] = 'seoable';
+        }
+    }
+
     public static function bootSeoable()
     {
         static::created(function (Model $resource) {
