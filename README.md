@@ -1,6 +1,15 @@
-# SEO meta field nova
+# Seoable — SEO meta fields for Laravel Nova
 
-This custom nova field, can add SEO related fields to any Model through a morph relationship within one single trait.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/marshmallow/seoable.svg?style=flat-square)](https://packagist.org/packages/marshmallow/seoable)
+[![Total Downloads](https://img.shields.io/packagist/dt/marshmallow/seoable.svg?style=flat-square)](https://packagist.org/packages/marshmallow/seoable)
+[![License](https://img.shields.io/packagist/l/marshmallow/seoable.svg?style=flat-square)](https://packagist.org/packages/marshmallow/seoable)
+
+A Laravel Nova field that adds all SEO related meta fields to any Resource. SEO data is attached to any Eloquent model through a morph relationship using a single trait, and rendered into your layout with one facade call. The package also ships sitemap generation, a customisable `robots.txt`, structured data (JSON-LD) schemas, pretty URLs, and built-in support for Google Tag Manager, Google Analytics, Cookiebot, Hotjar, Microsoft Clarity and Facebook tags.
+
+## Requirements
+
+- PHP `^8.1`
+- [Laravel Nova](https://nova.laravel.com/) `^5.0`
 
 ## How to install
 
@@ -38,6 +47,11 @@ Seo::setDescription(string $description);
 Seo::setKeywords(array $keywords);
 Seo::setImage(string $image);
 Seo::setFollowType(string $follow_type);
+Seo::setHrefs(array $hrefs);
+Seo::setHideInSitemap(bool $hide_in_sitemap);
+Seo::setLocale(string $locale);
+Seo::setHtmlLanguage(string $html_language);
+Seo::setSeoCanonicalUrl(string $canonical);
 ```
 
 ## How to use the field
@@ -73,6 +87,8 @@ class Page extends Resource
   }
 }
 ```
+
+You can also render the field inside a Nova tab with `Seoable::makeAsTab('Seo')`.
 
 Then go to the top of your layout blade as default it's `resources/views/welcome.blade.php`:
 
@@ -110,9 +126,13 @@ php artisan marshmallow:resource Route Seoable
 php artisan marshmallow:resource PrettyUrl Seoable
 ```
 
-## Use sluggable
+## Use sluggable (optional)
 
-This package also includes `marshmallow/sluggable` by default. We do this because to make sure all seo driven website will use the same logic for building slugs. The package it self does not use `marshmallow/sluggable` so you can choose any other sluggable package if you wish to do so.
+SEO-driven websites usually need clean, slug-based URLs. This package does **not** depend on any slug package itself, so you are free to use whichever one you like. At Marshmallow we use [`marshmallow/sluggable`](https://github.com/marshmallow-packages/sluggable) so every SEO site shares the same slug-building logic — install it separately if you want the same setup:
+
+```bash
+composer require marshmallow/sluggable
+```
 
 ```php
 class YourEloquentModel extends Model
@@ -202,7 +222,7 @@ use Marshmallow\Seoable\Traits\SeoSitemapTrait;
 
 class Page extends Model
 {
-    use SeoableTrait, SeoSitemapTrait;
+    use Seoable, SeoSitemapTrait;
     ...
 
     /**
@@ -297,3 +317,16 @@ If the field is shown **in the index view** of the Resource, then you should see
 
 **In form view** you should see all the SEO input fields:
 ![alt text](/assets/images/seo-field-form.jpg)
+
+## Credits
+
+- [Stef van Esch](https://github.com/marshmallow-packages)
+- [All Contributors](https://github.com/marshmallow-packages/seoable/contributors)
+
+## Security
+
+If you discover any security related issues, please email stef@marshmallow.dev instead of using the issue tracker.
+
+## License
+
+The MIT License (MIT). Please see the [License File](https://packagist.org/packages/marshmallow/seoable) for more information.
