@@ -14,6 +14,17 @@ class SchemaPostalAddress extends Schema
     public $postalCode;
     public $country;
 
+    /**
+     * The magic __call would set an unused $street property, so
+     * streetAddress silently never rendered.
+     */
+    public function street(?string $street)
+    {
+        $this->address = $street;
+
+        return $this;
+    }
+
     public function toArray()
     {
         return [
