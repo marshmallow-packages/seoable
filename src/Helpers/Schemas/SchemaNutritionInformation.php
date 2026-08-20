@@ -100,8 +100,6 @@ class SchemaNutritionInformation extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'NutritionInformation',
-            '@graph' => [
                 '@type' => 'NutritionInformation',
                 'calories' => $this->calories,
                 'carbohydrateContent' => $this->carbohydrateContent,
@@ -115,7 +113,6 @@ class SchemaNutritionInformation extends Schema
                 'sugarContent' => $this->sugarContent,
                 'transFatContent' => $this->transFatContent,
                 'unsaturatedFatContent' => $this->unsaturatedFatContent,
-            ]
         ];
     }
 }

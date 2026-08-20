@@ -76,8 +76,6 @@ class SchemaOffer extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'Offer',
-            '@graph' => [
                 '@type' => 'Offer',
                 'url' => $this->url,
                 'availability' => 'http://schema.org/' . $this->availability,
@@ -85,7 +83,6 @@ class SchemaOffer extends Schema
                 'price' => $this->price,
                 'priceValidUntil' => $this->priceValidUntil,
                 'priceCurrency' => $this->priceCurrency,
-            ]
         ];
     }
 }

@@ -11,11 +11,8 @@ class SchemaAnswer extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'Answer',
-            '@graph' => [
                 '@type' => 'Answer',
                 'text' => $this->name,
-            ]
         ];
     }
 }

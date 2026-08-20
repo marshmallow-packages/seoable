@@ -11,11 +11,8 @@ class SchemaPerson extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'Person',
-            '@graph' => [
                 '@type' => 'Person',
                 'name' => $this->name,
-            ]
         ];
     }
 }
