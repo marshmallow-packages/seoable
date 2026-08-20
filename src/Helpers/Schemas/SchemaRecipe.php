@@ -137,8 +137,6 @@ class SchemaRecipe extends Schema
     public function toArray()
     {
         return [
-            '@context' => 'https://schema.org/',
-            '@graph' => [
                 '@type' => 'Recipe',
                 'name' => $this->name,
                 'image' => $this->images,
@@ -157,7 +155,6 @@ class SchemaRecipe extends Schema
                 'recipeIngredient' => $this->recipeIngredient,
                 'recipeInstructions' => $this->recipeInstructions,
                 'video' => $this->getJsonSchema('video'),
-            ],
         ];
     }
 }

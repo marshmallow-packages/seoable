@@ -17,15 +17,12 @@ class SchemaPostalAddress extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'PostalAddress',
-            '@graph' => [
                 '@type' => 'PostalAddress',
                 'streetAddress' => $this->address,
                 'addressLocality' => $this->locality,
                 'addressRegion' => $this->region,
                 'postalCode' => $this->postalCode,
                 'addressCountry' => $this->country,
-            ]
         ];
     }
 }

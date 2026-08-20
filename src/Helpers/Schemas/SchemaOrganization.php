@@ -36,9 +36,6 @@ class SchemaOrganization extends Schema
             $data['vatID'] = config('seo.defaults.vat_id');
         }
 
-        return [
-            '@context' => 'https://schema.org',
-            '@graph' => $data,
-        ];
+        return $data;
     }
 }

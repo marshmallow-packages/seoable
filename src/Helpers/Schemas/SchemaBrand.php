@@ -11,11 +11,8 @@ class SchemaBrand extends Schema
     public function toJson()
     {
         return [
-            '@type' => 'Brand',
-            '@graph' => [
                 '@type' => 'Brand',
                 'name' => $this->name,
-            ]
         ];
     }
 }
