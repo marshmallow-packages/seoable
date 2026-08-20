@@ -19,13 +19,10 @@ class SchemaRating extends Schema
     public function toJson()
     {
         return [
-            '@type' => 'Rating',
-            '@graph' => [
                 '@type' => 'Rating',
                 'bestRating' => $this->bestRating,
                 'ratingValue' => $this->ratingValue,
                 'worstRating' => $this->worstRating,
-            ]
         ];
     }
 }

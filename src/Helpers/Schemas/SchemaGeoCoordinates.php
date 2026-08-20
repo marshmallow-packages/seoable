@@ -14,12 +14,9 @@ class SchemaGeoCoordinates extends Schema
     public function toArray()
     {
         return [
-            '@type' => 'GeoCoordinates',
-            '@graph' => [
                 '@type' => 'GeoCoordinates',
                 'latitude' => $this->latitude,
                 'longitude' => $this->longitude,
-            ]
         ];
     }
 }
