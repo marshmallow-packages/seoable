@@ -26,14 +26,11 @@ class SchemaHowToStep extends Schema
     public function toJson()
     {
         return [
-            '@type' => 'HowToStep',
-            '@graph' => [
                 '@type' => 'HowToStep',
                 'name' => $this->name,
                 'text' => $this->text,
                 'url' => $this->url,
                 'image' => $this->image,
-            ]
         ];
     }
 }

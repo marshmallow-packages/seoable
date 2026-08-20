@@ -27,17 +27,23 @@ class SchemaReview extends Schema
 
     public function toJson()
     {
-        return [
+        $data = [
             '@type' => 'Review',
-            '@graph' => [
-                '@type' => 'Review',
-                'author' => $this->author,
-                'datePublished' => $this->datePublished,
-                'name' => $this->name,
-                'reviewRating' => $this->rating(
-                    SchemaRating::make($this->ratingValue)
-                ),
-            ]
+            'datePublished' => $this->datePublished,
+            'name' => $this->name,
         ];
+
+        if ($this->author) {
+            $data['author'] = [
+                '@type' => 'Person',
+                'name' => $this->author,
+            ];
+        }
+
+        if ($this->ratingValue !== null) {
+            $data['reviewRating'] = SchemaRating::make((float) $this->ratingValue)->toJson();
+        }
+
+        return $data;
     }
 }

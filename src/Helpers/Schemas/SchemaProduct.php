@@ -50,8 +50,6 @@ class SchemaProduct extends Schema
     public function toArray()
     {
         return [
-            '@context' => 'https://schema.org/',
-            '@graph' => [
                 '@type' => 'Product',
                 'name' => $this->name,
                 'image' => $this->images,
@@ -64,7 +62,6 @@ class SchemaProduct extends Schema
                 'isbn' => $this->isbn,
                 'aggregateRating' => $this->aggregateRating,
                 'review' => $this->reviews,
-            ],
         ];
     }
 }

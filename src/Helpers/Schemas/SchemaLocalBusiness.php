@@ -34,8 +34,6 @@ class SchemaLocalBusiness extends Schema
     public function toArray()
     {
         return [
-            '@context' => 'https://schema.org/',
-            '@graph' => [
                 '@type' => $this->type,
                 '@id' => $this->id,
                 'name' => $this->name,
@@ -47,7 +45,6 @@ class SchemaLocalBusiness extends Schema
                 'telephone' => $this->telephone,
                 'aggregateRating' => $this->aggregateRating,
                 'openingHoursSpecification' => $this->openingHoursSpecification,
-            ],
         ];
     }
 }

@@ -43,9 +43,6 @@ class SchemaAggregateRating extends Schema
             $data['name'] = $this->name;
         }
 
-        return [
-            '@type' => 'AggregateRating',
-            '@graph' => $data,
-        ];
+        return $data;
     }
 }

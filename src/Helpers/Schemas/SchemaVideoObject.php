@@ -76,8 +76,6 @@ class SchemaVideoObject extends Schema
     public function toJson()
     {
         return [
-            '@type' => 'VideoObject',
-            '@graph' => [
                 '@type' => 'VideoObject',
                 'name' => $this->name,
                 'description' => $this->description,
@@ -88,7 +86,6 @@ class SchemaVideoObject extends Schema
                 'duration' => $this->duration,
                 'interactionStatistic' => $this->getJsonSchema('interactionStatistic'),
                 'expires' => $this->expires,
-            ]
         ];
     }
 }
