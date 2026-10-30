@@ -3,6 +3,7 @@
 namespace Marshmallow\Seoable;
 
 use Exception;
+use PDOException;
 use Laravel\Nova\Panel;
 use Marshmallow\Seoable\Seo;
 use Laravel\Nova\Fields\Select;
@@ -10,6 +11,7 @@ use Laravel\Nova\Fields\Boolean;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use Outl1ne\MultiselectField\Multiselect;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -257,12 +259,23 @@ class Seoable
 
     protected static function shouldLoadRoutes(): bool
     {
-        if (!Schema::hasTable('routes')) {
+        try {
+            if (!Schema::hasTable('routes')) {
+                /**
+                 * Don't load the routes if the pages table
+                 * doesnt exist. If this is the case, the
+                 * migrations haven't fully run yet.
+                 */
+                return false;
+            }
+        } catch (QueryException|PDOException $e) {
             /**
-             * Don't load the routes if the pages table
-             * doesnt exist. If this is the case, the
-             * migrations haven't fully run yet.
+             * This runs while the application boots. If the
+             * database is unreachable, report it and skip the
+             * routes so queue workers survive the outage.
              */
+            report($e);
+
             return false;
         }
 
